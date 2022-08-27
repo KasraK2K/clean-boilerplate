@@ -15,7 +15,7 @@ export const locals = {
   application: {
     name: "Clean Boilerplate",
   },
-};
+}
 
 // ──────────────────────────────────────────────────────────────────────────────────
 //   :::::: G L O B A L   V A R I A B L E S : :  :   :    :     :        :          :
@@ -25,11 +25,11 @@ export const globals = {
     name: "Global Service Name",
     version: "0.0.1",
   },
-};
+}
 
 // ──────────────────────────────────────────────────────────────────────────────────────────────────
 //   :::::: D E C L E A R   G L O B A L   V A R I A B L E S : :  :   :    :     :        :          :
 // ──────────────────────────────────────────────────────────────────────────────────────────────────
 declare global {
-  const service: typeof globals.service;
+  const service: typeof globals.service
 }

@@ -1,9 +1,10 @@
-import express, { Request, Response } from "express";
+/* -------------------------------------------------------------------------- */
+/*                               General Domain                               */
+/* -------------------------------------------------------------------------- */
+import controller from "./controller"
+import service from "./service"
+import repository from "./repository"
+import routes from "./routes"
+/* -------------------------------------------------------------------------- */
 
-const router = express.Router();
-
-router.get("/", (req: Request, res: Response) => {
-  return res.json("Shake Hand");
-});
-
-export default router;
+export { controller, service, repository, routes }
