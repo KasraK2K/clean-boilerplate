@@ -1,18 +1,18 @@
-import Request from "builtin-request"
+// import Request from "builtin-request"
+// const request = new Request()
 import { IPromiseResponseObject } from "../../common/interfaces/response"
-const request = new Request()
+import axios from "axios"
 
 /* -------------------------------------------------------------------------- */
 /*                              External Domains                              */
 /* -------------------------------------------------------------------------- */
 // import userDomain from "../user"
-const userDomainOptions = {
-  hostname: "http://localhost:3000/v1",
-  method: "GET",
-}
 const userDomain = {
-  getUserList: (): IPromiseResponseObject => {
-    return request.execute({ ...userDomainOptions, path: "/user" })
+  getUserList: async (): IPromiseResponseObject => {
+    return await axios
+      .get("http://localhost:3000/v1/user")
+      .then((response) => response.data)
+      .catch((error) => error)
   },
 }
 

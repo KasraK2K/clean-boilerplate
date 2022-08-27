@@ -1,13 +1,9 @@
 import { Request, Response } from "express"
 import { IPromiseResponseObject } from "../../common/interfaces/response"
-import { service, external } from "."
+import { service } from "."
 
 export const shakeHand = async (req: Request, res: Response): IPromiseResponseObject => {
-  const userList = await external.userDomain
-    .getUserList()
-    .then((response) => response.result)
-    .catch((err) => err)
-  return res.json(userList)
+  return res.json(await service.shakeHand())
 }
 
 export default {
