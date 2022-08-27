@@ -5,6 +5,7 @@ coverage/
 docs/
 out/
 .vscode/
+.dist/
 
 package-lock.json
 yarn-error.log
