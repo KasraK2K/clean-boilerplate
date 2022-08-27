@@ -1,0 +1,37 @@
+mode: development
+
+application:
+  port: 3000
+  print_info: false
+  logger:
+    logOnConsole: true
+    logOnFile: false
+    logOnDatabase: false
+
+database:
+  mongodb:
+    name: "node_starter"
+    default_collection: "default"
+    uri: "mongodb://0.0.0.0:27017/node_starter"
+  postgres:
+    user: "postgres"
+    host: "0.0.0.0"
+    database: "node_starter"
+    password: "postgres"
+    port: 5432
+    idleTimeoutMillis: 10000
+    connectionTimeoutMillis: 10000
+    ssl:
+      rejectUnauthorized: false
+  redis:
+    uri: "redis://localhost:6379"
+
+cors:
+  allow_origin: "*"
+  allow_method: ["POST"]
+
+rate_limiter:
+  windowMs: 60000
+  max: 100
+  standardHeaders: true
+  legacyHeaders: false

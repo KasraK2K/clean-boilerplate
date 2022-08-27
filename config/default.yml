@@ -1,0 +1,12 @@
+mode: default
+
+application:
+  port: 3000
+  api_version: "1.0.0"
+  front_version: "1.0.0"
+  portal_version: "1.0.0"
+
+  monitoring:
+    treblle:
+      apiKey: "_YOUR_API_KEY_"
+      projectId: "_YOUR_PROJECT_ID_"
