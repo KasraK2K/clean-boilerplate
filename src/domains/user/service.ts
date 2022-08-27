@@ -1,4 +1,3 @@
-import { Request, Response } from "express"
 import { DefaultArgs } from "../../common/interfaces/repository"
 import { IPromiseResponseObject } from "../../common/interfaces/response"
 import { repository } from "."
