@@ -33,13 +33,13 @@ if (appConfig.logger.logOnFile) {
     ...options,
   })
 
-  errorTransport.on("new", (newFilename) => console.log({ newFilename }))
-  errorTransport.on("archive", (zipFilename) => console.log({ zipFilename }))
+  errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+  errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
   errorTransport.on(
     "rotate",
     (oldFilename) => fs.existsSync(oldFilename) && setImmediate(() => fs.unlinkSync(oldFilename))
   )
-  errorTransport.on("logRemoved", (removedFilename) => console.log({ removedFilename }))
+  errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
@@ -52,13 +52,13 @@ if (appConfig.logger.logOnFile) {
     ...options,
   })
 
-  combinedTransport.on("new", (newFilename) => console.log({ newFilename }))
-  combinedTransport.on("archive", (zipFilename) => console.log({ zipFilename }))
+  combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+  combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
   combinedTransport.on(
     "rotate",
     (oldFilename) => fs.existsSync(oldFilename) && setImmediate(() => fs.unlinkSync(oldFilename))
   )
-  combinedTransport.on("logRemoved", (removedFilename) => console.log({ removedFilename }))
+  combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
