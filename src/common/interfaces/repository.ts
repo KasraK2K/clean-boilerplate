@@ -1,3 +1,3 @@
-export interface DefaultArgs {
+export interface IDefaultArgs {
   [key: string]: any
 }

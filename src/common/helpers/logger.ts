@@ -2,7 +2,7 @@ import { createLogger, transports, format } from "winston"
 import fs from "fs"
 import path from "path"
 import config from "config"
-import { IApplicationConfig } from "../../config/config.interface"
+import { IApplicationConfig } from "../../../config/config.interface"
 import DailyRotateFile from "winston-daily-rotate-file"
 
 /* -------------------------------- Constants ------------------------------- */
