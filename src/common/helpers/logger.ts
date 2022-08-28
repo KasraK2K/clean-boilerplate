@@ -4,6 +4,7 @@ import path from "path"
 import config from "config"
 import { IApplicationConfig } from "../../../config/config.interface"
 import DailyRotateFile from "winston-daily-rotate-file"
+import deleteFile from "../utils/deleteFile"
 
 /* -------------------------------- Constants ------------------------------- */
 const appConfig: IApplicationConfig = config.get("application")
@@ -35,10 +36,7 @@ if (appConfig.logger.logOnFile) {
 
   errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
   errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  errorTransport.on(
-    "rotate",
-    (oldFilename) => fs.existsSync(oldFilename) && setImmediate(() => fs.unlinkSync(oldFilename))
-  )
+  errorTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger.ts" }))
   errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
@@ -54,10 +52,7 @@ if (appConfig.logger.logOnFile) {
 
   combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
   combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  combinedTransport.on(
-    "rotate",
-    (oldFilename) => fs.existsSync(oldFilename) && setImmediate(() => fs.unlinkSync(oldFilename))
-  )
+  combinedTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger.ts" }))
   combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
