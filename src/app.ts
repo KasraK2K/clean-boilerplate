@@ -11,6 +11,7 @@ import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
 import { rateLimiter } from "./common/middlewares/limiter.middleware"
 import { multipartMiddleware } from "./common/middlewares/multipart.middleware"
+import verifyToken from "./common/middlewares/token.middleware"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
@@ -32,6 +33,7 @@ app.use(
 )
 app.use(rateLimiter())
 app.use(multipartMiddleware)
+app.use(verifyToken)
 
 app.use("/v1", routesV1)
 

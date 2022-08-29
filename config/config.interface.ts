@@ -8,6 +8,7 @@ export interface IConfig {
 
 // ────────────────────────────────────────────────────────────── APPLICATION ─────
 export interface IApplicationConfig {
+  bearer: string
   port: number
   print_info: boolean
   api_version: string

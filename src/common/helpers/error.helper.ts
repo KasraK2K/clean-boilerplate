@@ -39,6 +39,12 @@ export const error = (code: string | number): IError => {
     case 1009:
       return { code, message: "Uploaded more than max files", status: 400 }
 
+    case 1010:
+      return { code, message: "Token invalid", status: 401 }
+
+    case 1011:
+      return { code, message: "Token missing", status: 400 }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Strings                                  */
     /* -------------------------------------------------------------------------- */

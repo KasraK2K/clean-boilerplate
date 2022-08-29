@@ -1,6 +1,7 @@
 mode: production
 
 application:
+  bearer: "Bearer"
   port: 3000
   print_info: false
   logger:
