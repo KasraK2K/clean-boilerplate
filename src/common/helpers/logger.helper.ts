@@ -2,58 +2,54 @@ import { createLogger, transports, format } from "winston"
 import fs from "fs"
 import path from "path"
 import config from "config"
-import { IApplicationConfig } from "../../../config/config.interface"
+import { ILoggerConfig } from "../../../config/config.interface"
 import DailyRotateFile from "winston-daily-rotate-file"
 import deleteFile from "../utils/deleteFile.util"
 
 /* -------------------------------- Constants ------------------------------- */
-const appConfig: IApplicationConfig = config.get("application")
+const loggerConfig: ILoggerConfig = config.get("logger")
 
-const dir = process.env.LOG_DIR || path.resolve("logs")
+const dir = path.resolve(loggerConfig.winston.dirname)
 if (!fs.existsSync(dir)) fs.mkdirSync(dir)
 
 const logLevel = process.env.NODE_ENV === "development" ? "debug" : "warn"
 
 const options = {
+  ...loggerConfig.winston,
   dirname: dir,
-  datePattern: "YYYY-MM-DD",
-  extension: ".log",
-  zippedArchive: true,
-  maxSize: "1k",
-  maxFiles: "1d",
 }
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Error Log ------------------------------- */
 let errorTransport: DailyRotateFile = {} as DailyRotateFile
 
-if (appConfig.logger.logOnFile) {
+if (loggerConfig.logOnFile) {
   errorTransport = new DailyRotateFile({
     level: "error",
     filename: "%DATE%__error",
     ...options,
   })
 
-  errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
-  errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
+  // errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+  // errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
   errorTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger" }))
-  errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
+  // errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------- Combine Log ------------------------------ */
 let combinedTransport: DailyRotateFile = {} as DailyRotateFile
 
-if (appConfig.logger.logOnFile) {
+if (loggerConfig.logOnFile) {
   combinedTransport = new DailyRotateFile({
     filename: "%DATE%__combined",
     ...options,
   })
 
-  combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
-  combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
+  // combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+  // combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
   combinedTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger" }))
-  combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
+  // combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
@@ -69,7 +65,7 @@ const logger = createLogger({
   level: logLevel,
   format: jsonLogFileFormat,
   defaultMeta: { service: "default-service" },
-  transports: appConfig.logger.logOnFile ? [errorTransport, combinedTransport] : [],
+  transports: loggerConfig.logOnFile ? [errorTransport, combinedTransport] : [],
   // exceptionHandlers: any
   // rejectionHandlers: any
   exitOnError: false,
@@ -77,7 +73,7 @@ const logger = createLogger({
 /* -------------------------------------------------------------------------- */
 
 /* ----------------------------- Log on Console ----------------------------- */
-if (appConfig.logger.logOnConsole) {
+if (loggerConfig.logOnConsole) {
   logger.add(
     new transports.Console({
       format: format.combine(

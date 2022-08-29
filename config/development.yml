@@ -3,11 +3,19 @@ mode: development
 application:
   bearer: "Bearer"
   port: 3000
-  print_info: true
-  logger:
-    logOnConsole: true
-    logOnFile: true
-    logOnDatabase: false
+  information: false
+
+logger:
+  logOnConsole: true
+  logOnFile: true
+  logOnDatabase: false
+  winston:
+    dirname: "logs"
+    datePattern: "YYYY-MM-DD"
+    extension: ".log"
+    zippedArchive: true
+    maxSize: "20m"
+    maxFiles: "14d"
 
 database:
   mongodb:

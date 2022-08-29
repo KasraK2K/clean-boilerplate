@@ -10,16 +10,25 @@ export interface IConfig {
 export interface IApplicationConfig {
   bearer: string
   port: number
-  print_info: boolean
+  information: boolean
   api_version: string
   front_version: string
   portal_version: string
-  logger: {
-    logOnConsole: boolean
-    logOnFile: boolean
-    logOnDatabase: boolean
-  }
   monitoring: IMonitoringConfig
+}
+
+export interface ILoggerConfig {
+  logOnConsole: boolean
+  logOnFile: boolean
+  logOnDatabase: boolean
+  winston: {
+    dirname: string
+    datePattern: string
+    extension: string
+    zippedArchive: boolean
+    maxSize: string
+    maxFiles: string
+  }
 }
 
 export interface IMonitoringConfig {

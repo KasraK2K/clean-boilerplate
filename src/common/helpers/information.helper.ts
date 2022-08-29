@@ -15,7 +15,7 @@ import { IApplicationConfig } from "../../../config/config.interface"
 const applicationConfig: IApplicationConfig = config.get("application")
 
 export const getUserInformation = (port: number) => {
-  if (applicationConfig.print_info) {
+  if (applicationConfig.information) {
     console.group("Server Information:")
     console.table([
       {
