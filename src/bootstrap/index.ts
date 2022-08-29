@@ -16,6 +16,7 @@ import "./extend"
 import "./envirement"
 import mongoClient from "./mongodb"
 import postgresPool from "./postgresql"
+import { createRedisClient } from "./redis"
 import "./cron-jobs/index"
 
 // starterConfig.boot.forEach(async (moduleName) => {
@@ -34,3 +35,4 @@ import "./cron-jobs/index"
 
 export { mongoClient }
 export { postgresPool }
+export { createRedisClient }
