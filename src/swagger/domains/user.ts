@@ -1,4 +1,4 @@
-import { TagsEnum } from "./enums"
+import { TagsEnum } from "../enums"
 
 export default {
   // ──────────────────────────────────────────────────────────────────────────

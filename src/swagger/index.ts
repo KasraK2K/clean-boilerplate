@@ -1,7 +1,7 @@
 import config from "config"
 import { IConfig } from "../../config/config.interface"
-import general from "./general-endpoints"
-import managerUser from "./manager-user-endpoints"
+import general from "./domains/general"
+import managerUser from "./domains/user"
 
 const configs: IConfig = config.util.toObject()
 
@@ -14,8 +14,8 @@ export default {
   },
   servers: [
     {
-      url: process.env.IS_ON_SERVER ? "https://api.mng.dev.embargoapp.com" : "http://localhost:3000",
-      description: "Manager API",
+      url: process.env.IS_ON_SERVER ? "https://example.com" : "http://localhost:3000/v1",
+      description: "Example API",
     },
   ],
 
@@ -24,7 +24,7 @@ export default {
   // ────────────────────────────────────────────────────────────────────
   paths: {
     // ─────────────────────────────────────────────────── GENERAL ─────
-    "/shake-hand": general["/shake-hand"],
+    "/general/shake-hand": general["/shake-hand"],
     "/login": general["/login"],
     // ────────────────────────────────────────────── MANAGER USER ─────
     "/mng-users/list": managerUser["/mng-users/list"],

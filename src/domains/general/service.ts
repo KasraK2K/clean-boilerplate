@@ -1,15 +1,15 @@
 import { IDefaultArgs } from "../../common/interfaces/repository.interface"
 import { repository } from "."
 
-export const shakeHand = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {
+export const getUserList = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {
   return new Promise(async (resolve, reject) => {
     await repository
-      .shakeHand()
+      .getUserList()
       .then((result) => resolve({ data: result }))
       .catch((err) => reject({ errCode: err.code }))
   })
 }
 
 export default {
-  shakeHand,
+  getUserList,
 }

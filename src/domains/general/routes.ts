@@ -3,7 +3,8 @@ import { controller } from "."
 
 const router = express.Router()
 
-router.get("/", controller.shakeHand)
-router.get("/upload", controller.upload)
+router.get("/shake-hand", controller.shakeHand)
+router.post("/user-list", controller.getUserList)
+router.post("/upload", controller.upload)
 
 export default router

@@ -1,5 +1,3 @@
-// import Request from "builtin-request"
-// const request = new Request()
 import axios from "axios"
 
 /* -------------------------------------------------------------------------- */
@@ -10,8 +8,11 @@ const userDomain = {
   getUserList: async (): Promise<Record<string, any>> => {
     return new Promise(async (resolve, reject) => {
       await axios
-        .get("http://localhost:3000/v1/user")
-        .then((response) => resolve(response.data))
+        .post("http://localhost:3000/v1/user/list")
+        .then((response) => {
+          console.log(response)
+          return resolve(response.data)
+        })
         .catch((error) => reject(error))
     })
   },

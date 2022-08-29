@@ -3,6 +3,7 @@ import { controller } from "."
 
 const router = express.Router()
 
-router.get("/", controller.getUserList)
+router.get("/shake-hand", controller.shakeHand)
+router.post("/list", controller.getUserList)
 
 export default router
