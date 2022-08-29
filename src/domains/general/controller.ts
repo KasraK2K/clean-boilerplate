@@ -5,9 +5,7 @@ import { addMetaData } from "../../common/helpers/addMetaData"
 export const shakeHand = async (req: Request, res: Response): Promise<Record<string, any>> => {
   return await service
     .shakeHand()
-    .then((result) => {
-      return addMetaData(req, res, { ...result })
-    })
+    .then((result) => addMetaData(req, res, { ...result }))
     .catch((err) => addMetaData(req, res, { errCode: err.code }))
 }
 
