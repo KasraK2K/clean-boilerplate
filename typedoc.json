@@ -1,0 +1,33 @@
+{
+  "entryPointStrategy": "expand",
+  "entryPoints": [
+    "./src/app.ts",
+    "./src/server.ts",
+    "./src/common/helpers/addMetaData.ts"
+  ],
+  "categorizeByGroup": false,
+  "categoryOrder": [
+    "*",
+    "Uncategorized"
+  ],
+  "defaultCategory": "Uncategorized",
+  "disableSources": false,
+  "includeVersion": true,
+  "out": "docs",
+  "sort": "alphabetical",
+  "exclude": [
+    "node_modules",
+    "docs",
+    "webpack.config.js",
+    "build",
+    "target",
+    "coverage",
+    "out",
+    "dist",
+    "build"
+  ],
+  "theme": "default",
+  "name": "Node Starter Kit",
+  "gitRevision": "master",
+  "githubPages": true
+}
