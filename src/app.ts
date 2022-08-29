@@ -33,7 +33,7 @@ app.use(
 )
 app.use(rateLimiter())
 app.use(multipartMiddleware)
-app.use(verifyToken)
+// app.use(verifyToken)
 
 app.use("/v1", routesV1)
 

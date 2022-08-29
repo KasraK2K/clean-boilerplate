@@ -1,7 +1,7 @@
-const path = require("path")
-const nodeExternals = require("webpack-node-externals")
-const WebpackShellPluginNext = require("webpack-shell-plugin-next")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+import path from "path"
+import nodeExternals from "webpack-node-externals"
+import WebpackShellPluginNext from "webpack-shell-plugin-next"
+import UglifyJsPlugin from "uglifyjs-webpack-plugin"
 
 const { NODE_ENV = "production" } = process.env
 

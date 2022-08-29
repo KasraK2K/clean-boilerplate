@@ -9,7 +9,6 @@ import { routes as userRoutes } from "../domains/user"
 const swaggerOptions = {
   explorer: true,
   swaggerOptions: { validatorUrl: null },
-  customCss: fs.readFileSync(path.resolve(process.cwd(), "src/swagger/css/feeling-blue.css"), "utf8"),
 }
 
 const router = express.Router()
