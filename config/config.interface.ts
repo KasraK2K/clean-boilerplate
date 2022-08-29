@@ -78,3 +78,18 @@ export interface IRateLimiter {
   standardHeaders: boolean
   legacyHeaders: boolean
 }
+
+// ─────────────────────────────────────────────── Upload Multipart Form Data ─────
+export interface IUploadConfig {
+  uploadDir: string
+  validUploadFolders: string[]
+  responsePath: string
+  keepExtensions: boolean
+  multiples: boolean
+  minFileSize: number
+  maxFiles: number
+  maxFileSize: number
+  maxTotalFileSize: number
+  maxFields: number
+  maxFieldsSize: number
+}

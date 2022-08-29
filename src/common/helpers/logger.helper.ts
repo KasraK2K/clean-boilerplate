@@ -36,7 +36,7 @@ if (appConfig.logger.logOnFile) {
 
   errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
   errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  errorTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger.ts" }))
+  errorTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger" }))
   errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
@@ -52,7 +52,7 @@ if (appConfig.logger.logOnFile) {
 
   combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
   combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  combinedTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger.ts" }))
+  combinedTransport.on("rotate", (oldFilename) => deleteFile(oldFilename, { dest: "logger" }))
   combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */

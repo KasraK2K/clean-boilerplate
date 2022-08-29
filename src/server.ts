@@ -8,6 +8,6 @@ const port: number = Number(process.env.PORT) || appConfig.port
 
 app
   .listen(port, () => {
-    logger.info(`Server running on port ${port}`, { dest: "server.ts" })
+    logger.info(`Server running on port ${port}`, { dest: "server" })
   })
   .on("error", (error) => logger.error(error))

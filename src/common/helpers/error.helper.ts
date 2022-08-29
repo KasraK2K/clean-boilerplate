@@ -21,6 +21,24 @@ export const error = (code: string | number): IError => {
     case 1003:
       return { code, message: "Too Many Requests", status: 429 }
 
+    case 1004:
+      return { code, message: "Error on extending multipart header", status: 400 }
+
+    case 1005:
+      return { code, message: "Error on uploading file", status: 400 }
+
+    case 1006:
+      return { code, message: "MimeType is not valid", status: 400 }
+
+    case 1007:
+      return { code, message: "Upload Type not found", status: 400 }
+
+    case 1008:
+      return { code, message: "Upload ID not found", status: 400 }
+
+    case 1009:
+      return { code, message: "Uploaded more than max files", status: 400 }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Strings                                  */
     /* -------------------------------------------------------------------------- */
