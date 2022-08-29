@@ -33,9 +33,11 @@ export const multipartMiddleware = (req: Request, res: Response, next: NextFunct
         checkUpload.errors.push(error(1004).message)
       }
 
+      console.log({ files, fields })
+
       if (typeof files === "object" && !Array.isArray(files)) {
         const filesKeys = _.keys(files)
-        const validMimetypes = ["image/jpg", "image/jpeg"]
+        const validMimetypes = ["image/jpg", "image/jpeg", "image/png"]
 
         if (!("type" in fields) || !uploadConfig.validUploadFolders.includes(String(fields.type))) {
           checkUpload.valid = false

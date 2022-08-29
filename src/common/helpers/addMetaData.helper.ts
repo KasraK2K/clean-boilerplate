@@ -3,20 +3,7 @@ import { Request, Response } from "express"
 import _ from "lodash"
 import config from "config"
 import error from "./error.helper"
-
-interface IResponseData {
-  api_version: string
-  portal_vertion: string
-  front_version: string
-  endpoint: string
-  env: string
-  mode: string
-  count: number
-  result: Record<string, any>[]
-  error: boolean
-  error_code: number
-  error_messages: string[]
-}
+import { IResponseData } from "../interfaces/response.interface"
 
 const applicationConfig: IApplicationConfig = config.get("application")
 const mode: string = config.get("mode")

@@ -2,7 +2,7 @@ mode: development
 
 application:
   port: 3000
-  print_info: false
+  print_info: true
   logger:
     logOnConsole: true
     logOnFile: false

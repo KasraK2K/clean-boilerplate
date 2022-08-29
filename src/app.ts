@@ -4,14 +4,14 @@ import helmet from "helmet"
 import compression from "compression"
 import cors from "cors"
 import config from "config"
-import formData from "express-form-data"
+// import formData from "express-form-data"
 import os from "os"
 import { resolve } from "path"
 import { locals, globals } from "./common/variables"
 import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
 import { rateLimiter } from "./common/middlewares/limiter.middleware"
-// import { multipartMiddleware } from "./common/middlewares/multipart.middleware"
+import { multipartMiddleware } from "./common/middlewares/multipart.middleware"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
@@ -20,7 +20,7 @@ _.assign(global, globals)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(formData.parse({ uploadDir: os.tmpdir(), autoClean: true }))
+// app.use(formData.parse({ uploadDir: os.tmpdir(), autoClean: true }))
 app.use(helmet())
 app.use(compression())
 app.disable("x-powered-by")
@@ -33,7 +33,7 @@ app.use(
   })
 )
 app.use(rateLimiter())
-// app.use(multipartMiddleware)
+app.use(multipartMiddleware)
 
 app.use("/v1", routesV1)
 
