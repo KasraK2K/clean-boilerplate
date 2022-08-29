@@ -7,6 +7,7 @@ import cors from "cors"
 import config from "config"
 import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
+import { rateLimiter } from "./common/middlewares/request.middleware"
 const app = express()
 
 const corsConfig: ICorsConfig = config.get("cors")
@@ -26,6 +27,7 @@ app.use(
     origin: corsConfig.allow_origin,
   })
 )
+app.use(rateLimiter())
 
 app.use("/v1", routesV1)
 

@@ -2,7 +2,7 @@ import { IApplicationConfig } from "config/config.interface"
 import { Request, Response } from "express"
 import _ from "lodash"
 import config from "config"
-import error from "./error"
+import error from "./error.helper"
 
 interface IResponseData {
   api_version: string
@@ -32,7 +32,7 @@ const addErrCode = (
     res.status(errObj.status)
     data.error = true
     data.error_code = errObj.code
-    setMessage && (data.error_messages = [errObj.message])
+    !setMessage && (data.error_messages = [errObj.message])
   }
 }
 

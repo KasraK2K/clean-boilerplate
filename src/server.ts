@@ -1,5 +1,5 @@
 import app from "./app"
-import logger from "./common/helpers/logger"
+import logger from "./common/helpers/logger.helper"
 import { IApplicationConfig } from "./../config/config.interface"
 import config from "config"
 

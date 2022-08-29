@@ -5,6 +5,9 @@ interface IError {
 }
 
 export const error = (code: string | number): IError => {
+  /* -------------------------------------------------------------------------- */
+  /*                                   numbers                                  */
+  /* -------------------------------------------------------------------------- */
   switch (code) {
     case 1000:
       return { code, message: "Error Code is not a valid", status: 500 }
@@ -15,6 +18,12 @@ export const error = (code: string | number): IError => {
     case 1002:
       return { code, message: "Custome Error happening", status: 500 }
 
+    case 1003:
+      return { code, message: "Too Many Requests", status: 429 }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   Strings                                  */
+    /* -------------------------------------------------------------------------- */
     case "23505":
       return { code, message: "unique key is already exist", status: 500 }
 

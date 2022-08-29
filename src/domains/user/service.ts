@@ -1,4 +1,4 @@
-import { IDefaultArgs } from "../../common/interfaces/repository"
+import { IDefaultArgs } from "../../common/interfaces/repository.interface"
 import { repository } from "."
 
 export const getUserList = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {

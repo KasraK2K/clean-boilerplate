@@ -1,5 +1,5 @@
 import fs from "fs"
-import logger from "../helpers/logger"
+import logger from "../helpers/logger.helper"
 
 interface IDeleteFile {
   service?: string

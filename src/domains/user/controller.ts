@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { addMetaData } from "../../common/helpers/addMetaData"
+import { addMetaData } from "../../common/helpers/addMetaData.helper"
 import { service } from "."
 
 export const getUserList = async (req: Request, res: Response): Promise<Record<string, any>> => {

@@ -4,7 +4,7 @@ import path from "path"
 import config from "config"
 import { IApplicationConfig } from "../../../config/config.interface"
 import DailyRotateFile from "winston-daily-rotate-file"
-import deleteFile from "../utils/deleteFile"
+import deleteFile from "../utils/deleteFile.util"
 
 /* -------------------------------- Constants ------------------------------- */
 const appConfig: IApplicationConfig = config.get("application")

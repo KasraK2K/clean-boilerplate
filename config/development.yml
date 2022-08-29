@@ -31,7 +31,7 @@ cors:
   allow_method: ["POST"]
 
 rate_limiter:
-  windowMs: 60000
-  max: 100
+  windowMs: 60_000
+  max: 1
   standardHeaders: true
   legacyHeaders: false

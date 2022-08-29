@@ -1,4 +1,4 @@
-import { IDefaultArgs } from "../../common/interfaces/repository"
+import { IDefaultArgs } from "../../common/interfaces/repository.interface"
 import external_domains from "../external_domains"
 
 export const shakeHand = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {
