@@ -1,8 +1,8 @@
 import { IDefaultArgs } from "../../common/interfaces/repository"
-import { IPromiseResponseObject } from "../../common/interfaces/response"
+
 import { repository } from "."
 
-export const shakeHand = (args: IDefaultArgs = {}): IPromiseResponseObject => {
+export const shakeHand = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {
   return new Promise(async (resolve, reject) => {
     await repository
       .shakeHand()

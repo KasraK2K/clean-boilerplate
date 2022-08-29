@@ -1,8 +1,7 @@
 import { IDefaultArgs } from "../../common/interfaces/repository"
-import { IPromiseResponseObject } from "../../common/interfaces/response"
 import { repository } from "."
 
-export const getUserList = (args: IDefaultArgs = {}): IPromiseResponseObject => {
+export const getUserList = (args: IDefaultArgs = {}): Promise<Record<string, any>[]> => {
   return new Promise((resolve, reject) =>
     repository
       .getUserList()

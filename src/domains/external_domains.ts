@@ -1,6 +1,5 @@
 // import Request from "builtin-request"
 // const request = new Request()
-import { IPromiseResponseObject } from "../common/interfaces/response"
 import axios from "axios"
 
 /* -------------------------------------------------------------------------- */
@@ -8,11 +7,13 @@ import axios from "axios"
 /* -------------------------------------------------------------------------- */
 // import userDomain from "./user"
 const userDomain = {
-  getUserList: async (): IPromiseResponseObject => {
-    return await axios
-      .get("http://localhost:3000/v1/user")
-      .then((response) => response.data)
-      .catch((error) => error)
+  getUserList: async (): Promise<Record<string, any>> => {
+    return new Promise(async (resolve, reject) => {
+      await axios
+        .get("http://localhost:3000/v1/user")
+        .then((response) => resolve(response.data))
+        .catch((error) => reject(error))
+    })
   },
 }
 

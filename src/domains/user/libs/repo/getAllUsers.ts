@@ -1,7 +1,6 @@
 import { IDefaultArgs } from "src/common/interfaces/repository"
-import { IPromiseResponseObject } from "src/common/interfaces/response"
 
-export const getAllUsers = (args: IDefaultArgs = {}): IPromiseResponseObject => {
+export const getAllUsers = (args: IDefaultArgs = {}): Promise<Record<string, any>[]> => {
   return new Promise((resolve) => {
     return resolve([
       { id: 1, name: "Kasra" },

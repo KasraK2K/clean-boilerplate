@@ -1,8 +1,7 @@
 import { IDefaultArgs } from "src/common/interfaces/repository"
-import { IPromiseResponseObject } from "src/common/interfaces/response"
 import { getAllUsers } from "./libs"
 
-export const getUserList = (args: IDefaultArgs = {}): IPromiseResponseObject => {
+export const getUserList = (args: IDefaultArgs = {}): Promise<Record<string, any>[]> => {
   return new Promise(async (resolve, reject) => {
     return await getAllUsers(args)
       .then((response) => resolve(response))
