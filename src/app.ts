@@ -6,6 +6,7 @@ import cors from "cors"
 import config from "config"
 import formData from "express-form-data"
 import os from "os"
+import { resolve } from "path"
 import { locals, globals } from "./common/variables"
 import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
@@ -23,6 +24,7 @@ app.use(formData.parse({ uploadDir: os.tmpdir(), autoClean: true }))
 app.use(helmet())
 app.use(compression())
 app.disable("x-powered-by")
+app.use(express.static(resolve(process.cwd(), "public")))
 app.use(
   cors({
     optionsSuccessStatus: 200,
