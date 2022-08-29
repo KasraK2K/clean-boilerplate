@@ -21,13 +21,6 @@ interface IResponseData {
 const applicationConfig: IApplicationConfig = config.get("application")
 const mode: string = config.get("mode")
 
-/**
- * 
- * @param res {Response} This is express response used to set res.status
- * @param errCode {number | undefined} It used to set res.status
- * @param data {Record<string, any} This data is used to set res.error* and send as response
- * @param setMessage {boolean} This is used to set error_messages or not
- */
 const addErrCode = (res: Response, errCode: number | undefined, data: Record<string, any>, setMessage: boolean): void => {
   if (errCode) {
     const errObj = error(errCode ?? 1000)
@@ -38,13 +31,6 @@ const addErrCode = (res: Response, errCode: number | undefined, data: Record<str
   }
 }
 
-/**
- * 
- * @param res {Response} This is express response used to set res.status
- * @param statusCode {number | undefined} It used to set res.status
- * @param data {Record<string, any} This data is used to set res.error* and res.status send as response
- * @param setMessage {boolean} This is used to set error_messages or not 
- */
 const addStatus = (res: Response, statusCode: number | undefined, data: Record<string, any>, setMessage: boolean): void => {
   if (typeof statusCode === "string" || (statusCode && (statusCode > 599 || statusCode < 100))) {
     const errObj = error(1001)
@@ -59,12 +45,6 @@ const addStatus = (res: Response, statusCode: number | undefined, data: Record<s
   }
 }
 
-/**
- * 
- * @param res {Response} This is express response used to set res.status 
- * @param errors {string[] | undefined} Is's useful to set res.error* and send multiple res.error_messages
- * @param data {Record<string, any} This data is used to set res.error* and res.status send as response 
- */
 const addCustomErrors = (res: Response, errors: string[] | undefined, data: Record<string, any>): void => {
   if (errors && errors.length) {
     const errObj = error(1002)
@@ -77,24 +57,18 @@ const addCustomErrors = (res: Response, errors: string[] | undefined, data: Reco
   }
 }
 
-/**
- * 
- * @param res {Response} This is express response used to set res.status 
- * @param data  {Record<string, any} This data is used to set res.error* and res.status send as response 
- * @param options {{statusCode?: number | undefined; errCode?: number | undefined; errors?: string[] | undefined;}} This option used to set res.error*
- * @returns
- */
 export const addMetaData = (
   req: Request,
   res: Response,
-  data: Record<string, any> | Record<string, any>[],
-  options: {
+  args: {
+    data?: Record<string, any> | Record<string, any>[]
     statusCode?: number
     errCode?: number
     errors?: string[]
   } = {}
 ): Response<IResponseData> => {
-  const { statusCode, errCode, errors } = options
+  const { data = [], statusCode, errCode, errors } = args
+  const isDataArray = Array.isArray(data)
 
   const resData: IResponseData = {
     api_version: applicationConfig.api_version,
@@ -103,11 +77,11 @@ export const addMetaData = (
     endpoint: req.originalUrl,
     env: String(process.env.NODE_ENV),
     mode,
-    count: data.length,
+    count: isDataArray ? data.length : 0,
     error: false,
     error_code: 0,
     error_messages: [],
-    result: Array.isArray(data) ? data : [data],
+    result: isDataArray ? data : [data],
   }
 
   const setMessage = !!(errors && errors.length)

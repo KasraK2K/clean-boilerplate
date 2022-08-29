@@ -5,8 +5,8 @@ import { service } from "."
 export const getUserList = async (req: Request, res: Response): Promise<Record<string, any>> => {
   return await service
     .getUserList()
-    .then(data => addMetaData(req, res, data))
-    .catch(err => addMetaData(req, res, {}, { errCode: err.code }))
+    .then(result => addMetaData(req, res, { ...result }))
+    .catch(err => addMetaData(req, res, { errCode: err.code }))
 }
 
 export default {
