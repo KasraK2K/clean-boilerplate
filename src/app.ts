@@ -1,3 +1,4 @@
+import "./bootstrap"
 import express from "express"
 import _ from "lodash"
 import helmet from "helmet"

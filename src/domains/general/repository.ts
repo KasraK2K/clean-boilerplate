@@ -5,10 +5,7 @@ export const getUserList = (args: IDefaultArgs = {}): Promise<Record<string, any
   return new Promise(async (resolve, reject) => {
     const userList: Record<string, any>[] = await external_domains.userDomain
       .getUserList()
-      .then((response) => {
-        console.log(response)
-        return response.result
-      })
+      .then((response) => response.result)
       .catch((err) => [])
 
     return resolve(userList)
