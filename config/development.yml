@@ -38,7 +38,7 @@ rate_limiter:
 
 upload:
   # the directory for placing file uploads in. You can move them later by using fs.rename()
-  uploadDir: "/var/assets"
+  uploadDir: "tmp" # use "tmp" to use os tmp directory
   validUploadFolders: ["items", "menus", "categories", "offers", "requests", "schemes", "venues", "portal_users"]
   responsePath: "https://assets-dev.embargoapp.com"
   # to include the extensions of the original files or not

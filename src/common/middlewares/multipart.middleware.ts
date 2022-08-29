@@ -17,6 +17,9 @@ export const multipartMiddleware = (req: Request, res: Response, next: NextFunct
       ...uploadConfig,
       uploadDir: uploadConfig.uploadDir === "tmp" ? os.tmpdir() : uploadConfig.uploadDir,
     })
+
+    // console.log({ form })
+
     const checkUpload: Record<string, any> = { valid: true, errors: [] }
 
     /* ------------------------------ START: EVENTS ----------------------------- */
@@ -32,8 +35,6 @@ export const multipartMiddleware = (req: Request, res: Response, next: NextFunct
         checkUpload.valid = false
         checkUpload.errors.push(error(1004).message)
       }
-
-      console.log({ files, fields })
 
       if (typeof files === "object" && !Array.isArray(files)) {
         const filesKeys = _.keys(files)
