@@ -4,10 +4,7 @@ target/
 coverage/
 docs/
 out/
-.vscode/
-.dist/
 
 package-lock.json
 yarn-error.log
 yarn.lock
-pnpm-lock.yaml

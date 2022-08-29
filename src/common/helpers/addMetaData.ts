@@ -9,21 +9,26 @@ interface IResponseData {
   portal_vertion: string
   front_version: string
   endpoint: string
-  env: string,
-  mode: string,
+  env: string
+  mode: string
   count: number
   result: Record<string, any>[]
   error: boolean
-  error_code: number;
+  error_code: number
   error_messages: string[]
 }
 
 const applicationConfig: IApplicationConfig = config.get("application")
 const mode: string = config.get("mode")
 
-const addErrCode = (res: Response, errCode: number | undefined, data: Record<string, any>, setMessage: boolean): void => {
+const addErrCode = (
+  res: Response,
+  errCode: number | undefined,
+  data: Record<string, any>,
+  setMessage: boolean
+): void => {
   if (errCode) {
-    const errObj = error(errCode ?? 1000)
+    const errObj = error(errCode)
     res.status(errObj.status)
     data.error = true
     data.error_code = errObj.code
@@ -31,15 +36,19 @@ const addErrCode = (res: Response, errCode: number | undefined, data: Record<str
   }
 }
 
-const addStatus = (res: Response, statusCode: number | undefined, data: Record<string, any>, setMessage: boolean): void => {
+const addStatus = (
+  res: Response,
+  statusCode: number | undefined,
+  data: Record<string, any>,
+  setMessage: boolean
+): void => {
   if (typeof statusCode === "string" || (statusCode && (statusCode > 599 || statusCode < 100))) {
     const errObj = error(1001)
     res.status(errObj.status)
     data.error = true
     data.error_code = errObj.code
     setMessage && (data.error_messages = [errObj.message])
-  }
-  else if (statusCode) {
+  } else if (statusCode) {
     statusCode > 399 && (data.error = true)
     res.status(statusCode)
   }
