@@ -2,7 +2,7 @@ mode: development
 
 application:
   port: 3000
-  print_info: true
+  print_info: false
   logger:
     logOnConsole: true
     logOnFile: false
@@ -38,8 +38,8 @@ rate_limiter:
 
 upload:
   # the directory for placing file uploads in. You can move them later by using fs.rename()
-  uploadDir: "tmp" # use "tmp" to use os tmp directory
-  validUploadFolders: ["items", "menus", "categories", "offers", "requests", "schemes", "venues", "portal_users"]
+  uploadDir: "public/tmp" # use "tmp" to use os tmp directory
+  validUploadFolders: ["upload"]
   responsePath: "https://assets-dev.embargoapp.com"
   # to include the extensions of the original files or not
   keepExtensions: true

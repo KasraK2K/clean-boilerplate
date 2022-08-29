@@ -3,6 +3,7 @@ import _ from "lodash"
 import config from "config"
 import os from "os"
 import fs from "fs"
+import { resolve } from "path"
 import formidable from "formidable"
 import { IUploadConfig } from "../../../config/config.interface"
 import logger from "../helpers/logger.helper"
@@ -13,20 +14,25 @@ const uploadConfig: IUploadConfig = config.get("upload")
 
 export const multipartMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if ((req.headers["content-type"] ?? "").startsWith("multipart/form-data")) {
+    const fileBeginDestination = resolve(process.cwd(), uploadConfig.uploadDir)
+
     const form = formidable({
       ...uploadConfig,
-      uploadDir: uploadConfig.uploadDir === "tmp" ? os.tmpdir() : uploadConfig.uploadDir,
+      uploadDir: uploadConfig.uploadDir === "tmp" ? os.tmpdir() : fileBeginDestination,
     })
-
-    // console.log({ form })
 
     const checkUpload: Record<string, any> = { valid: true, errors: [] }
 
     /* ------------------------------ START: EVENTS ----------------------------- */
-    form.on("error", () => {
+    form.on("fileBegin", (data) => {
+      if (!fs.existsSync(fileBeginDestination)) fs.mkdirSync(fileBeginDestination, { recursive: true })
+    }) // Create folder if it doesn't exist'
+
+    form.on("error", (err) => {
       checkUpload.valid = false
       checkUpload.errors.push(error(1005).message)
-    })
+      logger.error(err.message, { dest: "multipart.middleware" })
+    }) // Fill errors on get error and log with logger
     /* ------------------------------- END: EVENTS ------------------------------ */
 
     form.parse(req, (err: any, fields: formidable.Fields, files: formidable.Files) => {

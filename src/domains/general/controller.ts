@@ -11,9 +11,7 @@ export const shakeHand = async (req: Request, res: Response): IControllerRespons
 }
 
 export const upload = async (req: Request, res: Response): IControllerResponse => {
-  console.log(req.body)
-
-  return res.json({ upload: "ok" })
+  return addMetaData(req, res, { data: { body: req.body } })
 }
 
 export default {
