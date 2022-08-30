@@ -64,7 +64,7 @@ const jsonLogFileFormat =
 const logger = createLogger({
   level: logLevel,
   format: jsonLogFileFormat,
-  defaultMeta: { service: "default-service" },
+  defaultMeta: { service: "default" },
   transports: loggerConfig.logOnFile ? [errorTransport, combinedTransport] : [],
   // exceptionHandlers: any
   // rejectionHandlers: any

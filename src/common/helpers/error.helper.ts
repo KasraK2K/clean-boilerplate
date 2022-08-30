@@ -1,3 +1,5 @@
+import logger from "./logger.helper"
+
 interface IError {
   code: number | string
   message: string
@@ -46,6 +48,12 @@ export const error = (code: string | number): IError => {
       return { code, message: "Token missing", status: 400 }
 
     /* -------------------------------------------------------------------------- */
+    /*                                   Prisma                                   */
+    /* -------------------------------------------------------------------------- */
+    case "P2002":
+      return { code, message: "Unique constraint failed", status: 400 }
+
+    /* -------------------------------------------------------------------------- */
     /*                                   Strings                                  */
     /* -------------------------------------------------------------------------- */
     case "23505":
@@ -61,6 +69,7 @@ export const error = (code: string | number): IError => {
       return { code, message: "Database Connection Refused", status: 500 }
 
     default:
+      logger.warn(`Error code ${code} is not valid`, { dest: "error.helper" })
       return { code, message: "Error Code is not a valid", status: 500 }
   }
 }

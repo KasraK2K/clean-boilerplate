@@ -14,7 +14,15 @@ export const getUserList = async (req: Request, res: Response): IControllerRespo
     .catch((err) => addMetaData(req, res, { errCode: err.code }))
 }
 
+export const addUser = async (req: Request, res: Response): IControllerResponse => {
+  return await service
+    .addUser()
+    .then((result) => addMetaData(req, res, { ...result }))
+    .catch((err) => addMetaData(req, res, { errCode: err.code }))
+}
+
 export default {
   shakeHand,
   getUserList,
+  addUser,
 }

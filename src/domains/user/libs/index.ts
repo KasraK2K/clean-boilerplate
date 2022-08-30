@@ -13,4 +13,5 @@
 /*                  Never Use Libs Directly in Other Domains                  */
 /* -------------------------------------------------------------------------- */
 export * from "./repo/getAllUsers"
+export * from "./repo/createUser"
 /* -------------------------------------------------------------------------- */
