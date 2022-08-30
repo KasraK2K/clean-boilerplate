@@ -27,8 +27,9 @@ model Profile {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
   name      String?
+  email     String   @unique
+  password  String   @db.VarChar(50)
   user_name String   @unique @db.VarChar(20)
   posts     Post[]
   profile   Profile?
