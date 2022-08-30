@@ -12,6 +12,6 @@
 /*                           NOTE:  Very Important                            */
 /*                  Never Use Libs Directly in Other Domains                  */
 /* -------------------------------------------------------------------------- */
-export * from "./repo/getAllUsers"
-export * from "./repo/createUser"
+export * from "./repo/findMany"
+export * from "./repo/create"
 /* -------------------------------------------------------------------------- */

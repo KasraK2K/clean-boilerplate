@@ -4,21 +4,10 @@ import logger from "../../../../common/helpers/logger.helper"
 
 const prisma = new PrismaClient()
 
-export const createUser = (args: IDefaultArgs = {}): Promise<Record<string, any>> => {
+export const findMany = (args: IDefaultArgs = {}): Promise<Record<string, any>[]> => {
   return new Promise(async (resolve, reject) => {
     return await prisma.user
-      .create({
-        data: {
-          email: "kasra@email.com",
-          name: "kasra",
-          posts: {
-            create: { title: "Hello World" },
-          },
-          profile: {
-            create: { bio: "I like turtles" },
-          },
-        },
-      })
+      .findMany()
       .then(async (response) => {
         await prisma.$disconnect()
         return resolve(response)
@@ -31,4 +20,4 @@ export const createUser = (args: IDefaultArgs = {}): Promise<Record<string, any>
   })
 }
 
-export default createUser
+export default findMany
