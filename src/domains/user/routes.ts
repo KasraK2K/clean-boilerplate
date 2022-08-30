@@ -1,7 +1,6 @@
 import express from "express"
-import { controller } from "."
-
 const router = express.Router()
+import { controller } from "."
 
 router.all("/shake-hand", controller.shakeHand)
 router.post("/list", controller.getUserList)

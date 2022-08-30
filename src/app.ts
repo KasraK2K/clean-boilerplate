@@ -13,10 +13,32 @@ import { rateLimiter } from "./common/middlewares/limiter.middleware"
 import { multipartMiddleware } from "./common/middlewares/multipart.middleware"
 import verifyToken from "./common/middlewares/token.middleware"
 
+/* -------------------------------------------------------------------------- */
+/*                                   GraphQL                                  */
+/* -------------------------------------------------------------------------- */
+import { graphqlHTTP } from "express-graphql"
+import { context } from "./graphql/context"
+import { mergeSchemas } from "@graphql-tools/schema"
+import { schema as UserSchema } from "./domains/user/graphql/schema"
+/* -------------------------------------------------------------------------- */
+
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
 app.locals = locals
 _.assign(global, globals)
+
+const mergedSchema = mergeSchemas({
+  schemas: [UserSchema],
+})
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: mergedSchema,
+    graphiql: true,
+    context,
+  })
+)
+/* -------------------------------------------------------------------------- */
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
