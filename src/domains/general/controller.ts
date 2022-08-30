@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { IControllerResponse } from "src/common/interfaces/response.interface"
+import { IControllerResponse } from "../../common/interfaces/response.interface"
 import { service } from "."
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 

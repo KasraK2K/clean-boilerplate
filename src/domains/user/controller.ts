@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 import { service } from "."
-import { IControllerResponse } from "src/common/interfaces/response.interface"
+import { IControllerResponse } from "../../common/interfaces/response.interface"
 import validator from "../../common/helpers/validator.helper"
 import schema from "./libs/schema/schema"
 import logger from "../../common/helpers/logger.helper"
