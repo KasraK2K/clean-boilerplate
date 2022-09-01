@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { DateTimeResolver } from "graphql-scalars"
 import { Context } from "../../../graphql/context"
-import * as userLib from "../libs"
+import * as library from "../libs"
 
 const typeDefs = /* GraphQL */ `
   type User {
@@ -23,7 +23,7 @@ const resolvers = {
     },
 
     list: async () => {
-      return await userLib.findMany()
+      return await library.repo.findMany()
     },
   },
 }

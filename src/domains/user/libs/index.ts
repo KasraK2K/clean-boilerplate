@@ -12,6 +12,6 @@
 /*                           NOTE:  Very Important                            */
 /*                  Never Use Libs Directly in Other Domains                  */
 /* -------------------------------------------------------------------------- */
-export * from "./repo/findMany"
-export * from "./repo/create"
+export * as repo from "./repo"
+// export * as logic from "./logic"
 /* -------------------------------------------------------------------------- */

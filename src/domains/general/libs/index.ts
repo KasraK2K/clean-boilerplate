@@ -12,7 +12,6 @@
 /*                           NOTE:  Very Important                            */
 /*                  Never Use Libs Directly in Other Domains                  */
 /* -------------------------------------------------------------------------- */
-// export * from "./repo/.."
-// export * from "./logic/.."
-// export * from "./repo/getAllData"
+// export * as repo from "./repo"
+// export * as logic from "./logic"
 /* -------------------------------------------------------------------------- */
