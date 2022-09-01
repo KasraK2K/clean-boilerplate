@@ -13,3 +13,14 @@ app
     getUserInformation(port)
   })
   .on("error", (error) => logger.error(error))
+
+// ─── UNHANDLED REJECTION ────────────────────────────────────────────────────────
+process.on("unhandledRejection", (reason, p) => {
+  logger.error(`Unhandled Rejection at: Promise ${p} Reson: ${reason}`, { dest: "server" })
+})
+
+// ─── UNCAUGHT EXCEPTION ─────────────────────────────────────────────────────────
+process.on("uncaughtException", (err) => {
+  logger.error("Uncaught Exception error", { dest: "server" })
+  process.exit(1)
+})
