@@ -1,14 +1,9 @@
-import RabbitMQ from "./RabbitMQ"
+import { RabbitMQ } from ".."
 
 class Ack {
   constructor(private superThis: RabbitMQ) {}
 
-  /**
-   * @param {Promise} callback
-   * @param {string} queue_name
-   * @return {void}
-   */
-  consumer(callback: (content: any) => Promise<any>, queue_name = "rabbitmq_starter_queue"): void {
+  consumer(callback: (content: any) => Promise<any>, queue_name: string): void {
     this.superThis.amqp.connect(this.superThis.uri, (error0, connection) => {
       if (error0) throw error0
 
@@ -45,12 +40,7 @@ class Ack {
     })
   }
 
-  /**
-   * @param {Record<string, any>} message
-   * @param {string} queue_name
-   * @return {void}
-   */
-  producer(message = {}, queue_name = "rabbitmq_starter_queue") {
+  producer(message: Record<string, any> = {}, queue_name: string): void {
     this.superThis.amqp.connect(this.superThis.uri, (error0, connection) => {
       if (error0) throw error0
 

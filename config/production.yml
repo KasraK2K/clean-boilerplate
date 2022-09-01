@@ -5,6 +5,9 @@ application:
   port: 3000
   information: false
 
+job:
+  cronJobs: false
+
 logger:
   logOnConsole: false
   logOnFile: false

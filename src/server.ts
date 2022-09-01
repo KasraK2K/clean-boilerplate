@@ -4,6 +4,17 @@ import { IApplicationConfig } from "./../config/config.interface"
 import config from "config"
 import { getUserInformation } from "./common/helpers/information.helper"
 
+/* -------------------------------------------------------------------------- */
+/*                                  RabbitMQ                                  */
+/* -------------------------------------------------------------------------- */
+// import rabbitMQ from "./integrations/rabbitmq"
+// const callback = async (message: string) => {
+//   console.log(`this is callback message: ${message}`)
+// }
+// const queue_name = "rabbitmq_starter_queue"
+// rabbitMQ.ack.consumer(callback, queue_name)
+/* -------------------------------------------------------------------------- */
+
 const appConfig: IApplicationConfig = config.get("application")
 const port: number = Number(process.env.PORT) || appConfig.port
 
@@ -21,6 +32,6 @@ process.on("unhandledRejection", (reason, p) => {
 
 // ─── UNCAUGHT EXCEPTION ─────────────────────────────────────────────────────────
 process.on("uncaughtException", (err) => {
-  logger.error("Uncaught Exception error", { dest: "server" })
+  logger.error(`Uncaught Exception error: ${err.message}`, { dest: "server" })
   process.exit(1)
 })

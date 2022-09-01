@@ -2,8 +2,11 @@
 export interface IConfig {
   mode: string
   application: IApplicationConfig
+  job: IJobsConfig
+  logger: ILoggerConfig
   database: IDatabaseConfig
   cors: ICorsConfig
+  upload: IUploadConfig
 }
 
 // ────────────────────────────────────────────────────────────── APPLICATION ─────
@@ -15,6 +18,10 @@ export interface IApplicationConfig {
   front_version: string
   portal_version: string
   monitoring: IMonitoringConfig
+}
+
+export interface IJobsConfig {
+  cronJobs: boolean
 }
 
 export interface ILoggerConfig {

@@ -1,5 +1,5 @@
 import amqp from "amqplib/callback_api"
-import Ack from "./Ack"
+import { Ack } from ".."
 // import PubSub from './PubSub'
 // import Rpc from './Rpc'
 
