@@ -45,7 +45,9 @@ class Ack {
       if (error0) throw error0
 
       connection.createChannel((error1, channel) => {
+        console.log(111)
         if (error1) throw error1
+        console.log(222)
 
         /**
          * @argument {durable} This makes sure the queue is declared before attempting to consume from it
@@ -59,10 +61,7 @@ class Ack {
         channel.sendToQueue(queue_name, Buffer.from(JSON.stringify(message)), { persistent: true })
       })
 
-      setTimeout(() => {
-        connection.close()
-        process.exit(0)
-      }, 500)
+      setTimeout(() => connection.close(), 500)
     })
   }
 }

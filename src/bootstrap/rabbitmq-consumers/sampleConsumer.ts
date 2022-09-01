@@ -1,3 +1,9 @@
+/* -------------------------------------------------------------------------- */
+/*                             NOTE: Requirements                             */
+/* -------------------------------------------------------------------------- */
+/*                  This Consumer message should have a `id`                  */
+/* -------------------------------------------------------------------------- */
+
 import amqp from "amqplib/callback_api"
 import config from "config"
 import path from "path"
@@ -8,7 +14,7 @@ const jobConfig: IJobsConfig = config.get("job")
 
 const filename = path.parse(__filename).name
 const uri = process.env.RBBITMQ_URI
-const queue_name = "rabbitmq_starter_queue"
+const queue_name = "sample-consumer-queue"
 
 if (uri && uri.length && jobConfig.activeConsumers.includes(filename))
   amqp.connect(uri, (error0, connection) => {
@@ -36,6 +42,8 @@ if (uri && uri.length && jobConfig.activeConsumers.includes(filename))
         (message) => {
           if (message) {
             const content: Record<string, any> = JSON.parse(message.content.toString())
+
+            // NOTE: You can do something here...
 
             logger.log(`Message id: ${content.id} Done`, { dest: "sample-consumer" })
             channel.ack(message)
