@@ -6,13 +6,9 @@ import { IControllerResponse } from "../../common/interfaces/response.interface"
 import validator from "../../common/helpers/validator.helper"
 import schema from "./libs/schema/schema"
 import logger from "../../common/helpers/logger.helper"
-// import rabbitMQ from "../../integrations/rabbitmq"
 
 class UserController extends Controller {
   public async shakeHand(req: Request, res: Response): IControllerResponse {
-    // const queue_name = "rabbitmq_starter_queue"
-    // rabbitMQ.ack.producer({ name: "Kasra" }, queue_name)
-
     return addMetaData(req, res, {})
   }
 
