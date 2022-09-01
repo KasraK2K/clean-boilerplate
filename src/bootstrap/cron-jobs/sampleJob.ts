@@ -1,8 +1,10 @@
 import { CronJob } from "cron"
-import { IJobsConfig } from "./../../../config/config.interface"
 import config from "config"
+import path from "path"
+import { IJobsConfig } from "./../../../config/config.interface"
 
 const jobConfig: IJobsConfig = config.get("job")
+const filename = path.parse(__filename).name
 
 let cycle = 1
 const maxCycles = 3
@@ -18,7 +20,7 @@ const sampleJob = new CronJob(
   "Europe/London"
 )
 
-if (jobConfig.cronJobs) sampleJob.start()
+if (jobConfig.activeCronJobs.includes(filename)) sampleJob.start()
 else sampleJob.stop()
 
 export default sampleJob

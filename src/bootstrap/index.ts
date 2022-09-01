@@ -18,6 +18,7 @@ import mongoClient from "./mongodb"
 import postgresPool from "./postgresql"
 import { createRedisClient } from "./redis"
 import "./cron-jobs/index"
+import "./rabbitmq"
 
 // starterConfig.boot.forEach(async (moduleName) => {
 //   await import(`./${moduleName}`).catch((err) => console.log(err.message))

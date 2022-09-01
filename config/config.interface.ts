@@ -21,7 +21,8 @@ export interface IApplicationConfig {
 }
 
 export interface IJobsConfig {
-  cronJobs: boolean
+  activeCronJobs: string[]
+  activeConsumers: string[]
 }
 
 export interface ILoggerConfig {

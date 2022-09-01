@@ -6,7 +6,8 @@ application:
   information: false
 
 job:
-  cronJobs: false
+  activeCronJobs: [] # ["sampleJob"]
+  activeConsumers: ["sampleConsumer"]
 
 logger:
   logOnConsole: true
