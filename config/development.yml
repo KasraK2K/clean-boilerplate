@@ -7,7 +7,7 @@ application:
 
 job:
   activeCronJobs: [] # ["sampleJob"]
-  activeConsumers: ["sampleConsumer"]
+  activeConsumers: [] # ["sampleConsumer"]
 
 logger:
   logOnConsole: true
