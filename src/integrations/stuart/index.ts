@@ -7,7 +7,7 @@ export { Stuart }
 export { StuartJob }
 export { StuartAddress }
 export { StuartHealth }
-export * from "./constants/interface"
-export * from "./constants/enums"
+export * from "./libs/interface"
+export * from "./libs/enums"
 
 export default new Stuart()

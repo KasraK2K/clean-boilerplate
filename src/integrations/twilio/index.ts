@@ -4,6 +4,6 @@ import Sms from "./classes/Sms"
 export { Twilio }
 export { Sms }
 
-export * from "./constants/interface"
+export * from "./libs/interface"
 
 export default new Twilio()

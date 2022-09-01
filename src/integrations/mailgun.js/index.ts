@@ -6,6 +6,6 @@ export { MailGunJS }
 export { Message }
 export { MessagesSendResult }
 
-export * from "./constants/interface"
+export * from "./libs/interface"
 
 export default new MailGunJS()
