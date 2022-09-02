@@ -1,4 +1,4 @@
-import Repository from "../../base/Repository"
+import Repository from "../../base/repository/Repository"
 import { IDefaultArgs } from "../../common/interfaces/repository.interface"
 import * as library from "./libs"
 
