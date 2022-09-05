@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
 import logger from "../../../../common/helpers/logger.helper"
+import { ServiceName } from "../../../../common/enums/general.enum"
 
 const prisma = new PrismaClient()
 
@@ -13,7 +14,7 @@ export const findMany = (args: IDefaultArgs = {}): Promise<Record<string, any>[]
         return resolve(response)
       })
       .catch(async (err) => {
-        logger.error(err.message, { service: "user", dest: "createUser" })
+        logger.error(err.message, { service: ServiceName.USER, dest: "createUser" })
         await prisma.$disconnect()
         return reject(err)
       })

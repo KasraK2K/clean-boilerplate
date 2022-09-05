@@ -6,6 +6,7 @@ import { IControllerResponse } from "../../common/interfaces/response.interface"
 import validator from "../../common/helpers/validator.helper"
 import schema from "./validation/schema"
 import logger from "../../common/helpers/logger.helper"
+import { ServiceName } from "../../common/enums/general.enum"
 
 class UserController extends Controller {
   public async shakeHand(req: Request, res: Response): IControllerResponse {
@@ -25,7 +26,7 @@ class UserController extends Controller {
     const { valid, errors } = validator(args, schema.addUser)
 
     if (!valid) {
-      logger.warn(`Validation has error on addUser: ${errors}`, { service: "user", dest: "controller" })
+      logger.warn(`Validation has error on addUser: ${errors}`, { service: ServiceName.USER, dest: "controller" })
       return addMetaData(req, res, { errors })
     } else {
       return await service
