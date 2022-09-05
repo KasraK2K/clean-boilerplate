@@ -25,4 +25,11 @@ mongoClient
     process.exit(1)
   })
 
-export default mongoClient
+const mongo = {
+  mongoClient,
+  database: (databaseName?: string) => mongoClient.db(databaseName ?? mongodbConfig.name),
+  collection: (collectionName?: string) =>
+    mongoClient.db(mongodbConfig.name).collection(collectionName ?? mongodbConfig.default_collection),
+}
+
+export default mongo
