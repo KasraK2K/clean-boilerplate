@@ -3,8 +3,8 @@ import { Request, Response } from "express"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 import { service } from "."
 import { IControllerResponse } from "../../common/interfaces/response.interface"
-import validator from "../../common/helpers/validator.helper"
-import schema from "./validation/schema"
+import validator from "../../common/validations/validator"
+import userSchema from "../../common/validations/userSchema"
 import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
@@ -23,7 +23,7 @@ class UserController extends Controller {
   public async addUser(req: Request, res: Response): IControllerResponse {
     const args = req.body
 
-    const { valid, errors } = validator(args, schema.addUser)
+    const { valid, errors } = validator(args, userSchema.addUser)
 
     if (!valid) {
       logger.warn(`Validation has error on addUser: ${errors}`, { service: ServiceName.USER, dest: "controller" })
