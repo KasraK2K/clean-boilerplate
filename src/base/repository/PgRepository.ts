@@ -1,6 +1,6 @@
 import { IFilter, IPagination } from "../../common/interfaces/general.interface"
 import _ from "lodash"
-import { IQueryGenerator } from "../../common/interfaces/repository.interface"
+import { IQueryGenerator } from "../../common/interfaces/general.interface"
 import PgBuilderRepository from "./PgBuilderRepository"
 import logger from "../../common/helpers/logger.helper"
 

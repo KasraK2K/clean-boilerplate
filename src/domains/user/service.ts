@@ -1,4 +1,4 @@
-import { IDefaultArgs } from "../../common/interfaces/repository.interface"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import { repository } from "."
 import Service from "../../base/Service"
 

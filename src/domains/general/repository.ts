@@ -1,5 +1,5 @@
 import Repository from "../../base/repository/Repository"
-import { IDefaultArgs } from "../../common/interfaces/repository.interface"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import external_domains from "../external_domains"
 
 export class GeneralRepository extends Repository {

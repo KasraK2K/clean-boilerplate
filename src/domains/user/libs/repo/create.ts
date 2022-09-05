@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { IDefaultArgs } from "src/common/interfaces/repository.interface"
+import { IDefaultArgs } from "src/common/interfaces/general.interface"
 import logger from "../../../../common/helpers/logger.helper"
 
 const prisma = new PrismaClient()

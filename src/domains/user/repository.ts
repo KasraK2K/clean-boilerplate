@@ -1,5 +1,5 @@
 import Repository from "../../base/repository/Repository"
-import { IDefaultArgs } from "../../common/interfaces/repository.interface"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import * as library from "./libs"
 
 class UserRepository extends Repository {

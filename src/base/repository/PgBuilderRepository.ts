@@ -1,4 +1,4 @@
-import { IExecuteOptions, IExecuteQueryOptions } from "../../common/interfaces/repository.interface"
+import { IExecuteOptions, IExecuteQueryOptions } from "../../common/interfaces/general.interface"
 import _ from "lodash"
 import Repository from "./Repository"
 import logger from "../../common/helpers/logger.helper"

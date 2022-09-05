@@ -1,5 +1,5 @@
 import axios from "axios"
-import { IDefaultArgs } from "../common/interfaces/repository.interface"
+import { IDefaultArgs } from "../common/interfaces/general.interface"
 
 /* -------------------------------------------------------------------------- */
 /*                                 User Domain                                */

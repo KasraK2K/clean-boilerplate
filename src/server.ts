@@ -1,46 +1,26 @@
+import config from "config"
 import app from "./app"
 import logger from "./common/helpers/logger.helper"
-import { IApplicationConfig } from "./../config/config.interface"
-import config from "config"
+import { IApplicationConfig, IRedisIoConfig } from "./../config/config.interface"
 import { getUserInformation } from "./common/helpers/information.helper"
+
+const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
 
 /* -------------------------------------------------------------------------- */
 /*                                   BullMQ                                   */
 /* -------------------------------------------------------------------------- */
 import { Job, Queue, Worker } from "bullmq"
-import IORedis, { RedisOptions } from "ioredis"
+import IORedis from "ioredis"
 
-const REDIS_OPTIONS: RedisOptions = {
-  host: "localhost",
-  port: 6379,
-  showFriendlyErrorStack: true,
-  enableReadyCheck: true,
-  maxRetriesPerRequest: null,
-}
+const connection = new IORedis(ioRedisConfig)
 
-const connection = new IORedis(REDIS_OPTIONS)
-
-// Reuse the ioredis instance
 const queue = new Queue("queueName", { connection })
-queue.add("jobName", { name: "Kasra", age: Math.round(Math.random() * 100) })
+queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: true })
 
-const worker = new Worker(
-  "queueName",
-  async (job: Job) => {
-    console.log(job.data)
-  },
-  {
-    connection,
-  }
-)
+const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
 
-worker.on("completed", (job) => {
-  console.log(`${job.id} has completed!`)
-})
-
-worker.on("failed", (job, err) => {
-  console.log(`${job.id} has failed with ${err.message}`)
-})
+worker.on("completed", (job) => console.log(`${job.id} has completed!`))
+worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
 /* -------------------------------------------------------------------------- */
 
 const appConfig: IApplicationConfig = config.get("application")

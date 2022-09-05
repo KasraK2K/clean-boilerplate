@@ -55,6 +55,7 @@ export interface IDatabaseConfig {
   mongodb: IMongodbConfig
   postgres: IPostgresConfig
   redis: IRedisConfig
+  ioRedis: IRedisIoConfig
 }
 
 // ─── MONGODB ────────────────────────────────────────────────────────────────────
@@ -81,6 +82,15 @@ export interface IPostgresConfig {
 // ─── REDIS ──────────────────────────────────────────────────────────────────────
 export interface IRedisConfig {
   uri: string
+}
+
+// ─── IO REDIS ───────────────────────────────────────────────────────────────────
+export interface IRedisIoConfig {
+  host: string
+  port: number
+  showFriendlyErrorStack: boolean
+  enableReadyCheck: boolean
+  maxRetriesPerRequest: number | null | undefined
 }
 
 // ───────────────────────────────────────────────────────────────────── CORS ─────

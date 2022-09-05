@@ -38,6 +38,12 @@ database:
       rejectUnauthorized: false
   redis:
     uri: "redis://localhost:6379"
+  ioRedis:
+    host: "localhost"
+    port: 6379
+    showFriendlyErrorStack: true
+    enableReadyCheck: true
+    maxRetriesPerRequest: null
 
 cors:
   allow_origin: "*"
