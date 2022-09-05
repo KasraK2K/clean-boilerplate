@@ -12,7 +12,7 @@ import routesV1 from "./routes/v1"
 import rateLimiterMiddleware from "./common/middlewares/RateLimiterMiddleware"
 import multipartMiddleware from "./common/middlewares/MultipartMiddleware"
 import requestMiddleware from "./common/middlewares/RequestMiddleware"
-// import tokenMiddleware from "./common/middlewares/TokenMiddleware"
+import authMiddleware from "./common/middlewares/AuthMiddleware"
 
 /* -------------------------------------------------------------------------- */
 /*                                   GraphQL                                  */
@@ -54,11 +54,11 @@ app.use(
     origin: corsConfig.allow_origin,
   })
 )
-app.use(rateLimiterMiddleware.handle)
+app.use(rateLimiterMiddleware.check())
 app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
 app.use(requestMiddleware.IsMethodAllowed)
-// app.use(tokenMiddleware.verify)
+app.use(authMiddleware.auth)
 
 app.use("/v1", routesV1)
 

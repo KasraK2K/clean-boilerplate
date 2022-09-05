@@ -48,6 +48,12 @@ export const error = (code: string | number): IError => {
       return { code, message: "Token missing", status: 400 }
 
     case 1012:
+      return { code, message: "Api Key missing", status: 400 }
+
+    case 1013:
+      return { code, message: "Api Key invalid", status: 401 }
+
+    case 1014:
       return { code, message: "Method not allowed", status: 405 }
 
     /* -------------------------------------------------------------------------- */

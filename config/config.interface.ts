@@ -11,13 +11,17 @@ export interface IConfig {
 
 // ────────────────────────────────────────────────────────────── APPLICATION ─────
 export interface IApplicationConfig {
+  apiVersion: string
   bearer: string
+  bearerHeader: string
+  apiKeyHeader: string
   port: number
   information: boolean
   api_version: string
   front_version: string
   portal_version: string
   monitoring: IMonitoringConfig
+  request: IRecuestConfig
 }
 
 export interface IJobsConfig {
@@ -43,6 +47,13 @@ export interface IMonitoringConfig {
   monitoring: {
     treblle: ITreblleConfig
   }
+}
+
+export interface IRecuestConfig {
+  allow_methods: string[]
+  ignore_check_methods: string[]
+  ignore_api_key: string[]
+  ignore_token: string[]
 }
 
 export interface ITreblleConfig {

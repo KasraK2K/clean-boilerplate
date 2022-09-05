@@ -8,7 +8,7 @@ import Middleware from "./Middleware"
 const reateLimiterConfig: IRateLimiter = config.get("rate_limiter")
 
 class RateLimiterMiddleware extends Middleware {
-  handle() {
+  public check() {
     return rateLimit({
       windowMs: reateLimiterConfig.windowMs, // 1 minutes
       max: reateLimiterConfig.max, // limit each IP to 100 requests per 1 minutes

@@ -9,18 +9,18 @@ const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
 /* -------------------------------------------------------------------------- */
 /*                                   BullMQ                                   */
 /* -------------------------------------------------------------------------- */
-import { Job, Queue, Worker } from "bullmq"
-import IORedis from "ioredis"
+// import { Job, Queue, Worker } from "bullmq"
+// import IORedis from "ioredis"
 
-const connection = new IORedis(ioRedisConfig)
+// const connection = new IORedis(ioRedisConfig)
 
-const queue = new Queue("queueName", { connection })
-queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: true })
+// const queue = new Queue("queueName", { connection })
+// queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: true })
 
-const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
+// const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
 
-worker.on("completed", (job) => console.log(`${job.id} has completed!`))
-worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
+// worker.on("completed", (job) => console.log(`${job.id} has completed!`))
+// worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
 /* -------------------------------------------------------------------------- */
 
 const appConfig: IApplicationConfig = config.get("application")

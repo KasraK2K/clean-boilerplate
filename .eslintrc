@@ -13,6 +13,7 @@
     "no-undef": "off",
     "no-async-promise-executor": "off",
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["off"]
+    "@typescript-eslint/no-unused-vars": ["off"],
+    "@typescript-eslint/no-namespace": "off"
   }
 }
