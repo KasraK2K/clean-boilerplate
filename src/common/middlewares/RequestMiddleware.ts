@@ -20,8 +20,8 @@ class RequestMiddleware extends Middleware {
   public IsMethodAllowed(req: Request, res: Response, next: NextFunction) {
     const endpoint = req.originalUrl
     const apiVersion = applicationConfig.apiVersion
-    const allowMethods = applicationConfig.request.allow_methods
-    const ignoreCheckMethod: string[] = applicationConfig.request.ignore_check_methods
+    const allowMethods = applicationConfig.request.allowMethods
+    const ignoreCheckMethod: string[] = applicationConfig.request.ignoreCheckMethods
     const checkMethod = !ignoreCheckMethod.some((ignoreEndpoint) =>
       endpoint.includes(`/${apiVersion}/${ignoreEndpoint}`)
     )

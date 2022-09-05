@@ -50,10 +50,10 @@ export interface IMonitoringConfig {
 }
 
 export interface IRecuestConfig {
-  allow_methods: string[]
-  ignore_check_methods: string[]
-  ignore_api_key: string[]
-  ignore_token: string[]
+  allowMethods: string[]
+  ignoreCheckMethods: string[]
+  ignoreApiKey: string[]
+  ignoreToken: string[]
 }
 
 export interface ITreblleConfig {

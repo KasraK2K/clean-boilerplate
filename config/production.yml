@@ -8,10 +8,10 @@ application:
   port: 3000
   information: false
   request:
-    allow_methods: ["POST"]
-    ignore_check_methods: ["swagger", "user/shake-hand"]
-    ignore_api_key: ["swagger"]
-    ignore_token: ["login", "logout", "shake-hand", "swagger"]
+    allowMethods: ["POST"]
+    ignoreCheckMethods: ["swagger", "user/shake-hand"]
+    ignoreApiKey: ["swagger"]
+    ignoreToken: ["login", "logout", "shake-hand", "swagger"]
 
 job:
   activeCronJobs: ["sampleJob"]

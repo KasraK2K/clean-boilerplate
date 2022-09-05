@@ -1,10 +1,9 @@
 import { IApplicationConfig } from "config/config.interface"
 import { Request, Response, NextFunction } from "express"
-import { verify, sign, IConfigs } from "k2token"
+import { verify, IConfigs } from "k2token"
 import config from "config"
 import { addMetaData } from "../helpers/addMetaData.helper"
 import Middleware from "./Middleware"
-import { nextTick } from "process"
 
 const configs: IConfigs = {
   secret: process.env.K2TOKEN_SECRET ?? "",
@@ -12,17 +11,14 @@ const configs: IConfigs = {
   phrase_two: process.env.K2TOKEN_PHRASE_TWO ?? "",
 }
 
-const a = sign({ user_id: 123, age: 36, name: "Kasra", role: "admin" }, configs)
-console.log({ a })
-
 const applicationConfig: IApplicationConfig = config.get("application")
 
 class AuthMiddleware extends Middleware {
   public auth(req: Request, res: Response, next: NextFunction) {
     const endpoint = req.originalUrl
     const apiVersion = applicationConfig.apiVersion
-    const ignoreToken: string[] = applicationConfig.request.ignore_token
-    const ignoreApikeys: string[] = applicationConfig.request.ignore_api_key
+    const ignoreToken: string[] = applicationConfig.request.ignoreToken
+    const ignoreApikeys: string[] = applicationConfig.request.ignoreApiKey
 
     const checkToken = ignoreToken.includes("*")
       ? false
