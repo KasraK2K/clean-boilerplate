@@ -9,9 +9,10 @@ import { resolve } from "path"
 import { locals, globals } from "./common/variables"
 import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
-import { rateLimiter } from "./common/middlewares/limiter.middleware"
-import { multipartMiddleware } from "./common/middlewares/multipart.middleware"
-import verifyToken from "./common/middlewares/token.middleware"
+import rateLimiterMiddleware from "./common/middlewares/RateLimiterMiddleware"
+import multipartMiddleware from "./common/middlewares/MultipartMiddleware"
+import requestMiddleware from "./common/middlewares/RequestMiddleware"
+// import tokenMiddleware from "./common/middlewares/TokenMiddleware"
 
 /* -------------------------------------------------------------------------- */
 /*                                   GraphQL                                  */
@@ -53,9 +54,11 @@ app.use(
     origin: corsConfig.allow_origin,
   })
 )
-app.use(rateLimiter())
-app.use(multipartMiddleware)
-// app.use(verifyToken)
+app.use(rateLimiterMiddleware.handle)
+app.use(multipartMiddleware.handle)
+app.use(requestMiddleware.processIdAdder)
+app.use(requestMiddleware.IsMethodAllowed)
+// app.use(tokenMiddleware.verify)
 
 app.use("/v1", routesV1)
 

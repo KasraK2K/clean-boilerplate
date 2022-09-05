@@ -96,7 +96,7 @@ export interface IRedisIoConfig {
 // ───────────────────────────────────────────────────────────────────── CORS ─────
 export interface ICorsConfig {
   allow_origin: string
-  allow_method: string
+  allow_method: string[]
 }
 
 // ───────────────────────────────────────────────────────────── RATE LIMITER ─────

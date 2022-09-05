@@ -47,6 +47,9 @@ export const error = (code: string | number): IError => {
     case 1011:
       return { code, message: "Token missing", status: 400 }
 
+    case 1012:
+      return { code, message: "Method not allowed", status: 405 }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Prisma                                   */
     /* -------------------------------------------------------------------------- */
