@@ -4,7 +4,7 @@ import { addMetaData } from "../../common/helpers/addMetaData.helper"
 import { service } from "."
 import { IControllerResponse } from "../../common/interfaces/response.interface"
 import validator from "../../common/helpers/validator.helper"
-import schema from "./libs/schema/schema"
+import schema from "./validation/schema"
 import logger from "../../common/helpers/logger.helper"
 
 class UserController extends Controller {
