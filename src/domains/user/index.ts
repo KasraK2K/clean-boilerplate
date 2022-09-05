@@ -1,9 +1,9 @@
 /* -------------------------------------------------------------------------- */
 /*                                 User Domain                                */
 /* -------------------------------------------------------------------------- */
-import controller from "./controller"
-import service from "./service"
-import repository from "./repository"
+import controller from "./UserController"
+import service from "./UserService"
+import repository from "./UserRepository"
 import routes from "./routes"
 /* -------------------------------------------------------------------------- */
 
