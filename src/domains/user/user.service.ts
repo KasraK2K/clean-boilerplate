@@ -1,5 +1,5 @@
 import { IDefaultArgs } from "../../common/interfaces/general.interface"
-import { repository } from "."
+import { repository } from "./user.module"
 import Service from "../../base/Service"
 
 class UserService extends Service {

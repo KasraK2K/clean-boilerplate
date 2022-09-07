@@ -1,7 +1,7 @@
 import Controller from "../../base/Controller"
 import { Request, Response } from "express"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
-import { service } from "."
+import { service } from "./user.module"
 import { IControllerResponse } from "../../common/interfaces/response.interface"
 import validator from "../../common/helpers/validator.helper"
 import userSchema from "./validation/userSchema"

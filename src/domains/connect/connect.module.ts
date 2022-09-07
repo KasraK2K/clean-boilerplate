@@ -8,7 +8,7 @@
 //
 //==============================================================================================================================
 
-import connectUser from "./ConnectUser"
+import connectUser from "./connect.user"
 
 export default {
   connectUser,

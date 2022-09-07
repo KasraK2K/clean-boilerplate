@@ -1,12 +1,10 @@
 /* -------------------------------------------------------------------------- */
-/*                                 User Domain                                */
+/*                               General Domain                               */
 /* -------------------------------------------------------------------------- */
-import controller from "./UserController"
-import service from "./UserService"
-import repository from "./UserRepository"
+import controller from "./general.controller"
+import service from "./general.service"
+import repository from "./general.repository"
 import routes from "./routes"
 /* -------------------------------------------------------------------------- */
 
 export { controller, service, repository, routes }
-
-export default service

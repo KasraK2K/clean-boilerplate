@@ -1,7 +1,7 @@
 import Controller from "../../base/Controller"
 import { Request, Response } from "express"
 import { IControllerResponse } from "../../common/interfaces/response.interface"
-import { service } from "."
+import { service } from "./general.module"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 
 class GeneralController extends Controller {

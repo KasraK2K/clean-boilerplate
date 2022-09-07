@@ -3,8 +3,8 @@ import swaggerUi from "swagger-ui-express"
 import fs from "fs"
 import path from "path"
 import swaggerDocument from "../swagger"
-import { routes as generalRoutes } from "../domains/general"
-import { routes as userRoutes } from "../domains/user"
+import { routes as generalRoutes } from "../domains/general/general.module"
+import { routes as userRoutes } from "../domains/user/user.module"
 
 const swaggerOptions = {
   explorer: true,
