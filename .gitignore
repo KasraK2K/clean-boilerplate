@@ -5,6 +5,7 @@ coverage/
 docs/
 out/
 .vscode/
+.idea/
 .dist/
 public/
 logs/

@@ -28,6 +28,9 @@ const corsConfig: ICorsConfig = config.get("cors")
 app.locals = locals
 _.assign(global, globals)
 
+/* -------------------------------------------------------------------------- */
+/*                                   GraphQL                                  */
+/* -------------------------------------------------------------------------- */
 const mergedSchema = mergeSchemas({
   schemas: [UserSchema],
 })
