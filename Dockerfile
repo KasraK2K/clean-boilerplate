@@ -31,7 +31,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json .
 COPY yarn.lock .
-RUN yarn install --frozen-lockfile --only=production
+RUN yarn --production
+# RUN npm ci --only=production
 
 COPY --from=development /usr/src/app/build ./build
 

@@ -2,15 +2,15 @@ version: "3.4"
 
 services:
   api:
-    container_name: dev-api
+    container_name: prod-api
     build:
       context: .
-      # dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile
       target: development
-    # image: clean-boilerplate
+    image: clean-boilerplate
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 3000:3000
-    command: yarn start:dev
+    command: yarn start

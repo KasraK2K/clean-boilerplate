@@ -9,9 +9,9 @@ application:
   information: false
   request:
     allowMethods: ["POST"]
-    ignoreCheckMethods: ["swagger", "general/shake-hand"]
-    ignoreApiKey: ["swagger", "general/shake-hand"]
-    ignoreToken: ["login", "logout", "swagger", "general/shake-hand"]
+    ignoreCheckMethods: ["swagger", "health"]
+    ignoreApiKey: ["swagger", "health"]
+    ignoreToken: ["login", "logout", "swagger", "health"]
 
 job:
   activeCronJobs: [] # ["sampleJob"]

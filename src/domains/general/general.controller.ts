@@ -5,10 +5,6 @@ import { service } from "./general.module"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 
 class GeneralController extends Controller {
-  public async shakeHand(req: Request, res: Response): IControllerResponse {
-    return addMetaData(req, res, {})
-  }
-
   public async getUserList(req: Request, res: Response): IControllerResponse {
     return await service
       .getUserList()

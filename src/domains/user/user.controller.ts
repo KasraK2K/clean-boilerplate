@@ -9,10 +9,6 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
 class UserController extends Controller {
-  public async shakeHand(req: Request, res: Response): IControllerResponse {
-    return addMetaData(req, res, {})
-  }
-
   public async getUserList(req: Request, res: Response): IControllerResponse {
     return await service
       .getUserList()
