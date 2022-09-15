@@ -3,7 +3,7 @@ import { controller } from "./general.module"
 
 const router = express.Router()
 
-router.post("/shake-hand", controller.shakeHand)
+router.all("/shake-hand", controller.shakeHand)
 router.post("/user-list", controller.getUserList)
 router.post("/upload", controller.upload)
 

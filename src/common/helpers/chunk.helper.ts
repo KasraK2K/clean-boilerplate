@@ -1,5 +1,5 @@
 export function toChunk<T>(arr: T[], chunkSize: number): T[][] {
-  const res = []
+  const res: T[][] = []
   for (let i = 0; i < arr.length; i += chunkSize) {
     const chunk = arr.slice(i, i + chunkSize)
     res.push(chunk)

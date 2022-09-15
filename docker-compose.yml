@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  server:
+    build: .
+    command: sh -c "yarn build up && yarn start"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    depends_on:
+      - postgresql
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/grilla?schema=public
+      
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgresql
+      - POSTGRES_PASSWORD=postgresql
+      - POSTGRES_DB=grilla
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./db/data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

@@ -1,1 +1,1 @@
-import "./sampleConsumer.ts"
+import "./sampleConsumer"

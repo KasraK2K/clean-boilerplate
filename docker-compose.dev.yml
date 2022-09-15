@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  api:
+    container_name: clean-boilerplate-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+    image: clean-boilerplate
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: yarn start:dev

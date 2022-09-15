@@ -1,0 +1,1 @@
+docker logs -f --until=2s clean-boilerplate-api
