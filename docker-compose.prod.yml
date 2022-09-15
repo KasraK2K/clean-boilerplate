@@ -5,9 +5,9 @@ services:
     container_name: prod-api
     build:
       context: .
-      dockerfile: ./Dockerfile
+      # dockerfile: ./Dockerfile
       target: development
-    image: clean-boilerplate
+    # image: clean-boilerplate
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
