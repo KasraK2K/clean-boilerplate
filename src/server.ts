@@ -4,8 +4,6 @@ import logger from "./common/helpers/logger.helper"
 import { IApplicationConfig, IRedisIoConfig } from "./../config/config.interface"
 import { getUserInformation } from "./common/helpers/information.helper"
 
-const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
-
 /* -------------------------------------------------------------------------- */
 /*                                   BullMQ                                   */
 /* -------------------------------------------------------------------------- */
@@ -13,9 +11,10 @@ const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
 // import IORedis from "ioredis"
 
 // const connection = new IORedis(ioRedisConfig)
+// const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
 
 // const queue = new Queue("queueName", { connection })
-// queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: true })
+// queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: false })
 
 // const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
 

@@ -35,8 +35,11 @@ CREATE TABLE IF NOT EXISTS users (
   deleted_at TIMESTAMP,
 );
 
--- To fild user/admin faster
-CREATE INDEX "users_admin_key" ON "users"("is_admin");
+-- Create Indexes
+CREATE INDEX "users_is_admin" ON "users"("is_admin");
+CREATE UNIQUE INDEX "users_id" ON "users"("id");
+CREATE UNIQUE INDEX "users_email" ON "users"("email");
+CREATE UNIQUE INDEX "users_no" ON "users"("no");
 
 -- Password is 12345678 and hashed by bcryptjs salt 7
 INSERT INTO users 
