@@ -16,17 +16,17 @@ const applicationConfig: IApplicationConfig = config.get("application")
 class AuthMiddleware extends Middleware {
   public auth(req: Request, res: Response, next: NextFunction) {
     const endpoint = req.originalUrl
-    const apiVersion = applicationConfig.apiVersion
+    const routerVersion = applicationConfig.routerVersion
     const ignoreToken: string[] = applicationConfig.request.ignoreToken
     const ignoreApikeys: string[] = applicationConfig.request.ignoreApiKey
 
     const checkToken = ignoreToken.includes("*")
       ? false
-      : !ignoreToken.some((ignoreToken) => endpoint.includes(`/${apiVersion}/${ignoreToken}`))
+      : !ignoreToken.some((ignoreToken) => endpoint.includes(`/${routerVersion}/${ignoreToken}`))
 
     const checkApiKey = ignoreApikeys.includes("*")
       ? false
-      : !ignoreApikeys.some((ignoreApiKey) => endpoint.includes(`/${apiVersion}/${ignoreApiKey}`))
+      : !ignoreApikeys.some((ignoreApiKey) => endpoint.includes(`/${routerVersion}/${ignoreApiKey}`))
 
     /* ------------------------------- Check Token ------------------------------ */
     if (checkToken) {

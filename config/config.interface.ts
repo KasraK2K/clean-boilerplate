@@ -11,7 +11,7 @@ export interface IConfig {
 
 // ────────────────────────────────────────────────────────────── APPLICATION ─────
 export interface IApplicationConfig {
-  apiVersion: string
+  routerVersion: string
   bearer: string
   bearerHeader: string
   apiKeyHeader: string

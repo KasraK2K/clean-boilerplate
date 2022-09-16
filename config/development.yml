@@ -1,7 +1,7 @@
 mode: development
 
 application:
-  apiVersion: "v1"
+  routerVersion: "v1"
   bearer: "Bearer"
   bearerHeader: "authorization"
   apiKeyHeader: "api-key"
