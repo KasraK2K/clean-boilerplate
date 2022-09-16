@@ -6,7 +6,7 @@ application:
   bearerHeader: "authorization"
   apiKeyHeader: "api-key"
   port: 3000
-  information: false
+  information: true
   request:
     allowMethods: ["POST"]
     ignoreCheckMethods: ["swagger", "health"]
