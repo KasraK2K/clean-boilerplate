@@ -11,7 +11,8 @@
 declare namespace Express {
   export interface Request {
     ApiKeyData: Record<string, string>
-    tokenData: Record<string, string>
+    tokenData: Record<string, any>
+    user: Record<string, any>
   }
 }
 

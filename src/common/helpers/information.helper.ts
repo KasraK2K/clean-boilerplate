@@ -62,8 +62,8 @@ export const getUserInformation = (port: number) => {
   console.log("\n- Cypher Token ----------------------------------------------------------")
   console.info(cypherToken)
 
-  console.log("\n- Cypher Api Key ----------------------------------------------------------")
-  console.info(cypherApiKey)
+  console.log("\n- Cypher Api Key --------------------------------------------------------")
+  console.info(cypherApiKey, "\n")
 
   logger.info(`Server running on http://localhost:${port}`, {
     service: ServiceName.DEFAULT,

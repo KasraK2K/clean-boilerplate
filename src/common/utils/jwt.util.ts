@@ -5,7 +5,7 @@ import _ from "lodash"
 
 export interface IJwtVerify {
   valid: boolean
-  data?: Record<string, any> | undefined
+  data: Record<string, any>
 }
 
 class Jwt {
@@ -18,7 +18,7 @@ class Jwt {
   }
 
   public verifyJwt(token: string): IJwtVerify {
-    const returnValue: IJwtVerify = { valid: false }
+    const returnValue: IJwtVerify = { valid: false, data: {} }
 
     verify(token, String(process.env.JWT_SECRET), (err, decoded) => {
       if (err) {

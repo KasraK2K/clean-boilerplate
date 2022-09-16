@@ -1,15 +1,9 @@
 import { IApplicationConfig } from "config/config.interface"
 import { Request, Response, NextFunction } from "express"
-import { verify, IConfigs } from "k2token"
 import config from "config"
 import { addMetaData } from "../helpers/addMetaData.helper"
 import Middleware from "./Middleware"
-
-const configs: IConfigs = {
-  secret: process.env.K2TOKEN_SECRET ?? "",
-  phrase_one: process.env.K2TOKEN_PHRASE_ONE ?? "",
-  phrase_two: process.env.K2TOKEN_PHRASE_TWO ?? "",
-}
+import tokenHelper from "../helpers/token.helper"
 
 const applicationConfig: IApplicationConfig = config.get("application")
 
@@ -30,10 +24,10 @@ class AuthMiddleware extends Middleware {
 
     /* ------------------------------- Check Token ------------------------------ */
     if (checkToken) {
-      let token = req.headers[applicationConfig.bearerHeader] as string
-      if (token && token.startsWith(`${applicationConfig.bearer} `)) {
-        token = token.slice(applicationConfig.bearer.length + 1)
-        const { valid, data } = verify(token, configs)
+      let cypherToken = req.headers[applicationConfig.bearerHeader] as string
+      if (cypherToken && cypherToken.startsWith(`${applicationConfig.bearer} `)) {
+        cypherToken = cypherToken.slice(applicationConfig.bearer.length + 1)
+        const { valid, data } = tokenHelper.verify(cypherToken)
         if (!valid) return addMetaData(req, res, { errCode: 1010 })
         else req.tokenData = data
       } else return addMetaData(req, res, { errCode: 1011 })
