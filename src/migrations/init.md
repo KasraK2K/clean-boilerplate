@@ -25,13 +25,13 @@ psql -U <user> -h <host> -p <port> -c "CREATE DATABASE <dbname>;"
 ### Create Database
 
 ```postgres
-CREATE DATABASE <database_name>;
+CREATE DATABASE <db_name>;
 ```
 
 ### Grant Privileges
 
 ```postgres
-GRANT ALL PRIVILEGES ON DATABASE node_starter TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <db_username>;
 ```
 
 ### Create UUID Extention

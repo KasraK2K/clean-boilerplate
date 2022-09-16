@@ -9,8 +9,8 @@
 --======================================================================================================
 
 
-CREATE DATABASE node_starter;
+CREATE DATABASE <db_name>;
 
-GRANT ALL PRIVILEGES ON DATABASE node_starter TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <db_username>;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
