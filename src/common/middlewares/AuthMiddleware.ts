@@ -29,7 +29,7 @@ class AuthMiddleware extends Middleware {
         cypherToken = cypherToken.slice(applicationConfig.bearer.length + 1)
         const { valid, data } = tokenHelper.verify(cypherToken)
         if (!valid) return addMetaData(req, res, { errCode: 1010 })
-        else req.tokenData = data
+        else res.locals.tokenData = data
       } else return addMetaData(req, res, { errCode: 1011 })
     }
     /* -------------------------------------------------------------------------- */
