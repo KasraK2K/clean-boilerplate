@@ -23,7 +23,7 @@ const resolvers = {
     },
 
     list: async () => {
-      return await library.repo.findMany()
+      return await library.repo.userPgLibrary.findMany()
     },
   },
 }

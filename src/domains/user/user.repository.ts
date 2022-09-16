@@ -5,7 +5,7 @@ import * as library from "./libs"
 class UserRepository extends Repository {
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
-      return await library.repo
+      return await library.repo.userPgLibrary
         .findMany(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
@@ -14,7 +14,7 @@ class UserRepository extends Repository {
 
   public async addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      return await library.repo
+      return await library.repo.userPgLibrary
         .create(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))

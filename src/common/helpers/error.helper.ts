@@ -74,6 +74,9 @@ export const error = (code: string | number): IError => {
     case "42703":
       return { code, message: "Database Column Not Found", status: 500 }
 
+    case "42804":
+      return { code, message: "Argument of WHERE must be type boolean, not type character varying", status: 500 }
+
     case "ECONNREFUSED":
       return { code, message: "Database Connection Refused", status: 500 }
 

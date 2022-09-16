@@ -130,7 +130,7 @@ class PgBuilderRepository extends Repository {
   /* -------------------------------------------------------------------------- */
 
   // ─── INSERT ─────────────────────────────────────────────────────────────────────
-  protected insert(tableName: string, insertArg: Record<string, any>): this {
+  protected insert(tableName: string, insertArg: Record<string, any>, returning = "*"): this {
     const keys = _.keys(insertArg)
     const values = _.values(insertArg)
 
@@ -139,13 +139,13 @@ class PgBuilderRepository extends Repository {
       VALUES (${values
         .map((value) => `${typeof value === "string" ? `'${this.replaceChar}'` : this.replaceChar}`)
         .join(", ")})
-      RETURNING *`
+      RETURNING ${returning}`
     this.insertParams = [tableName, ...keys, ...values]
     return this
   }
 
   // ─── UPDATE ─────────────────────────────────────────────────────────────────────
-  protected update(tableName: string, id: string, updateArg: Record<string, any>): this {
+  protected update(tableName: string, id: string, updateArg: Record<string, any>, returning = "*"): this {
     const keys = _.keys(updateArg)
     const values = _.values(updateArg)
 
@@ -161,18 +161,18 @@ class PgBuilderRepository extends Repository {
     }
     this.updateQuery += `
       WHERE id = (SELECT id FROM ${this.replaceChar} WHERE id = '${this.replaceChar}' LIMIT 1)
-      RETURNING *`
+      RETURNING ${returning}`
     this.updateParams.push(tableName)
     this.updateParams.push(id)
     return this
   }
 
   // ─── DELETE ─────────────────────────────────────────────────────────────────────
-  protected delete(tableName: string, id: string): this {
+  protected delete(tableName: string, id: string, returning = "*"): this {
     this.deleteQuery = `
       DELETE FROM ${this.replaceChar}
       WHERE id = (SELECT id FROM ${this.replaceChar} WHERE id = '${this.replaceChar}' LIMIT 1)
-      RETURNING *`
+      RETURNING ${returning}`
     this.deleteParams = [tableName, tableName, id]
     return this
   }
@@ -189,12 +189,12 @@ class PgBuilderRepository extends Repository {
   }
 
   // ─── RESTORE ────────────────────────────────────────────────────────────────────
-  protected restore(tableName: string, id: string): this {
+  protected restore(tableName: string, id: string, returning = "*"): this {
     this.restoreQuery = `
       UPDATE ${this.replaceChar}
       SET deleted_at = NULL
       WHERE id = (SELECT id FROM ${this.replaceChar} WHERE id = '${this.replaceChar}' LIMIT 1)
-      RETURNING *`
+      RETURNING ${returning}`
     this.restoreParams = [tableName, tableName, id]
     return this
   }
@@ -239,7 +239,6 @@ class PgBuilderRepository extends Repository {
       case "string":
         this.whereQuery = `WHERE ${whereArgs}`
         if (params && params.length) this.whereParams = [...params]
-
         break
 
       case "object":
@@ -455,7 +454,7 @@ class PgBuilderRepository extends Repository {
   }
 
   // ─── EXECUTE METHOD ─────────────────────────────────────────────────────────────
-  protected exec(options: IExecuteOptions = { omits: [] }): Promise<Record<string, any>> {
+  protected exec(options: IExecuteOptions = { omits: [] }): Promise<any> {
     const { omits } = options
 
     return new Promise(async (resolve, reject) => {

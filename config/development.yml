@@ -6,7 +6,7 @@ application:
   bearerHeader: "authorization"
   apiKeyHeader: "api-key"
   port: 3000
-  information: true
+  information: false
   request:
     allowMethods: ["POST"]
     ignoreCheckMethods: ["swagger", "health"]
@@ -37,7 +37,7 @@ database:
   postgres:
     user: "postgres"
     host: "0.0.0.0"
-    database: "node_starter"
+    database: "grilla"
     password: "postgres"
     port: 5432
     idleTimeoutMillis: 10000
