@@ -17,13 +17,20 @@ const typeDefs = /* GraphQL */ `
 
 const resolvers = {
   Query: {
-    getUserList: (_parent: Record<string, any>, _args: Record<string, any>, context: Context) => {
-      return new Promise((resolve, reject) =>
-        service
+    getUserList: async (_parent: Record<string, any>, _args: Record<string, any>, context: Context) => {
+      return new Promise((resolve, reject) => {
+        context.connect.user
           .getUserList()
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
-      )
+      })
+
+      // return new Promise((resolve, reject) =>
+      //   service
+      //     .getUserList()
+      //     .then((result) => resolve(result.data))
+      //     .catch((err) => reject(err))
+      // )
     },
   },
 }

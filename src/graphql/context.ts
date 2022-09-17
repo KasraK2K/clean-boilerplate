@@ -5,8 +5,6 @@ import { Pool } from "pg"
 
 const prisma = new PrismaClient()
 
-const p = postgresPool.pool
-
 export interface Context {
   prisma: PrismaClient
   pg_pool: Pool

@@ -11,5 +11,5 @@
 import connectUser from "./connect.user"
 
 export default {
-  connectUser,
+  user: connectUser,
 }
