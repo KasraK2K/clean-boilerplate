@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { DateTimeResolver } from "graphql-scalars"
 import { Context } from "../../../graphql/context"
-import * as library from "../libs"
+import { service } from "../user.module"
 
 const typeDefs = /* GraphQL */ `
   type User {
@@ -11,19 +11,19 @@ const typeDefs = /* GraphQL */ `
   }
 
   type Query {
-    allUsers: [User]
-    list: [User]
+    getUserList: [User]
   }
 `
 
 const resolvers = {
   Query: {
-    allUsers: (_parent: Record<string, any>, _args: Record<string, any>, context: Context) => {
-      return context.prisma.user.findMany()
-    },
-
-    list: async () => {
-      return await library.repo.userPgLibrary.findMany()
+    getUserList: (_parent: Record<string, any>, _args: Record<string, any>, context: Context) => {
+      return new Promise((resolve, reject) =>
+        service
+          .getUserList()
+          .then((result) => resolve(result.data))
+          .catch((err) => reject(err))
+      )
     },
   },
 }

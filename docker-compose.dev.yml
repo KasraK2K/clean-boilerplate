@@ -5,7 +5,7 @@ services:
     container_name: dev-api
     build:
       context: .
-      # dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile
       target: development
     # image: clean-boilerplate
     volumes:

@@ -9,9 +9,9 @@ application:
   information: false
   request:
     allowMethods: ["POST"]
-    ignoreCheckMethods: ["swagger", "health"]
-    ignoreApiKey: ["swagger", "health"]
-    ignoreToken: ["login", "logout", "swagger", "health"]
+    ignoreCheckMethods: ["swagger", "health", "graphql"]
+    ignoreApiKey: ["swagger", "health", "graphql"]
+    ignoreToken: ["login", "logout", "swagger", "health", "graphql"]
 
 job:
   activeCronJobs: ["sampleJob"]
