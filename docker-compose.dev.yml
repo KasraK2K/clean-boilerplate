@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   api:
-    container_name: dev-api
+    container_name: clean-boilerplate_dev-api-service
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -14,3 +14,7 @@ services:
     ports:
       - 3000:3000
     command: yarn start:dev
+
+networks:
+  default:
+    name: clean-boilerplate_api-default
