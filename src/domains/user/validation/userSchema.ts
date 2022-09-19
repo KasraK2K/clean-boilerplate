@@ -11,6 +11,10 @@
 import { GenderEnum } from "./../../../common/enums/general.enum"
 
 export const userSchema = {
+  /**
+   * Schema for create users. each user also have another fields like is_admin, ... but we should modify
+   * that is other endpoints
+   */
   addUser: {
     type: "object",
     additionalProperties: false,
@@ -25,6 +29,10 @@ export const userSchema = {
     },
   },
 
+  /**
+   * This schema is used to check is data has one of properties or not
+   * It's not important witch one you use but it's important you send one of `id` or `email`
+   */
   getUser: {
     type: "object",
     additionalProperties: false,

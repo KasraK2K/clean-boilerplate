@@ -7,10 +7,13 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
 class UserService extends Service {
+  /**
+   * This method get args to filter users but in this time args is empty
+   */
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) =>
       repository
-        .getUserList()
+        .getUserList(args)
         .then((result) => resolve({ data: result }))
         .catch((err) => reject(err))
     )

@@ -5,6 +5,9 @@ import { service } from "./user.module"
 import { IControllerResponse } from "../../common/interfaces/response.interface"
 
 class UserController extends Controller {
+  /**
+   * Get all users
+   */
   public async getUserList(req: Request, res: Response): IControllerResponse {
     return await service
       .getUserList()
@@ -12,6 +15,9 @@ class UserController extends Controller {
       .catch((err) => addMetaData(req, res, { ...err }))
   }
 
+  /**
+   * Get current user by token.id in res.locals.tokenData.id
+   */
   public async getUserProfile(req: Request, res: Response): IControllerResponse {
     return await service
       .getUserProfile({ id: res.locals.tokenData.id })
@@ -19,6 +25,9 @@ class UserController extends Controller {
       .catch((err) => addMetaData(req, res, { ...err }))
   }
 
+  /**
+   * Inset User into users table
+   */
   public async addUser(req: Request, res: Response): IControllerResponse {
     return await service
       .addUser(req.body)

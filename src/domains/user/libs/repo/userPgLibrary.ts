@@ -4,6 +4,10 @@ import logger from "../../../../common/helpers/logger.helper"
 import { ServiceName } from "../../../../common/enums/general.enum"
 import PgRepository from "../../../../base/repository/PgRepository"
 
+/**
+ * This method using the `PgRepository` builder pattern
+ * You can also use this.query to write your own row queries
+ */
 class UserPgLibrary extends PgRepository {
   public getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
