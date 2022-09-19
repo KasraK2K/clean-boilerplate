@@ -2,10 +2,10 @@ import Middleware from "./Middleware"
 import { Request, Response, NextFunction } from "express"
 import config from "config"
 import _ from "lodash"
-import { IApplicationConfig } from "../../../config/config.interface"
-import logger from "../helpers/logger.helper"
-import { ServiceName } from "../enums/general.enum"
-import { addMetaData } from "../helpers/addMetaData.helper"
+import { IApplicationConfig } from "../../config/config.interface"
+import logger from "../common/helpers/logger.helper"
+import { ServiceName } from "../common/enums/general.enum"
+import { addMetaData } from "../common/helpers/addMetaData.helper"
 
 const applicationConfig: IApplicationConfig = config.get("application")
 

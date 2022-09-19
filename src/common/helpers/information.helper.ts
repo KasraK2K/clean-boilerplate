@@ -56,13 +56,12 @@ export const getUserInformation = (port: number) => {
 
     const payload = { id: "9f57e79a-4534-4618-9e2a-f4d8711c1dcf" }
     const cypherToken = tokenHelper.sign({ id: "9f57e79a-4534-4618-9e2a-f4d8711c1dcf" })
-    const cypherApiKey = tokenHelper.sign({ api_key: String(process.env.API_KEY) })
 
     console.log("\n- Cypher Token ----------------------------------------------------------")
     console.info(cypherToken)
 
-    console.log("\n- Cypher Api Key --------------------------------------------------------")
-    console.info(cypherApiKey, "\n")
+    console.log("\n- Api Key ---------------------------------------------------------------")
+    console.info(process.env.API_KEY, "\n")
 
     logger.info(`Server running on http://localhost:${port}`, {
       service: ServiceName.DEFAULT,

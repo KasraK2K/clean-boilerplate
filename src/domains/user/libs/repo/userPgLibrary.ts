@@ -5,11 +5,10 @@ import { ServiceName } from "../../../../common/enums/general.enum"
 import PgRepository from "../../../../base/repository/PgRepository"
 
 class UserPgLibrary extends PgRepository {
-  public findMany(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
+  public getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
-      return await this.select(["id", "email"])
+      return await this.select()
         .from("users")
-        .where(["email = '??'"], ["kasra.karami.kk@gmail.com"])
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
@@ -19,10 +18,22 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public create(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public getUserProfile(args: { id: string }): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
-      // const { name, email, posts_title, profile_bio } = args
+      return await this.select()
+        .from("users")
+        .where([`id = '${args.id}'`])
+        .exec()
+        .then(async (response) => resolve(response))
+        .catch(async (err) => {
+          logger.error(err.message, { service: ServiceName.USER, dest: "FindUser.findMany" })
+          return reject(err)
+        })
+    })
+  }
 
+  public addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
       return await this.insert("users", args)
         .exec()
         .then(async (response) => resolve(response))

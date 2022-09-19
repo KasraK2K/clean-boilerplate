@@ -62,13 +62,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 ### Create Index
 
-Create Indexes
+- For create unique indexe you can use `CREATE UNIQUE INDEX` ...
 
 ```postgres
 CREATE INDEX "users_is_admin" ON "users"("is_admin");
-CREATE UNIQUE INDEX "users_id" ON "users"("id");
-CREATE UNIQUE INDEX "users_email" ON "users"("email");
-CREATE UNIQUE INDEX "users_no" ON "users"("no");
 ```
 
 ### Insert First User

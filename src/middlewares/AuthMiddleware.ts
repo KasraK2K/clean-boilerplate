@@ -1,9 +1,9 @@
 import { IApplicationConfig } from "config/config.interface"
 import { Request, Response, NextFunction } from "express"
 import config from "config"
-import { addMetaData } from "../helpers/addMetaData.helper"
+import { addMetaData } from "../common/helpers/addMetaData.helper"
 import Middleware from "./Middleware"
-import tokenHelper from "../helpers/token.helper"
+import tokenHelper from "../common/helpers/token.helper"
 
 const applicationConfig: IApplicationConfig = config.get("application")
 

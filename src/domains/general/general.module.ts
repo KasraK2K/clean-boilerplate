@@ -8,3 +8,5 @@ import routes from "./routes"
 /* -------------------------------------------------------------------------- */
 
 export { controller, service, repository, routes }
+
+export default service

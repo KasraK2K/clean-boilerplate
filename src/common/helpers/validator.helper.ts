@@ -17,7 +17,7 @@ export const validator = (
       const parameter =
         error.instancePath && error.instancePath.length
           ? error.instancePath.replace("/", "")
-          : error.params.missingProperty
+          : error.params.missingProperty ?? error.keyword
       errors.push(`${parameter}: ${error.message}`)
     }
   return { valid, errors }

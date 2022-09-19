@@ -2,7 +2,7 @@ import rateLimit from "express-rate-limit"
 import { Request, Response } from "express"
 import config from "config"
 import { IRateLimiter } from "config/config.interface"
-import { addMetaData } from "../helpers/addMetaData.helper"
+import { addMetaData } from "../common/helpers/addMetaData.helper"
 import Middleware from "./Middleware"
 
 const reateLimiterConfig: IRateLimiter = config.get("rate_limiter")

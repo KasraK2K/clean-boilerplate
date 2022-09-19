@@ -15,10 +15,10 @@ export const error = (code: string | number): IError => {
       return { code, message: "Error Code is not a valid", status: 500 }
 
     case 1001:
-      return { code, message: "Status Code Code is not a valid", status: 500 }
+      return { code, message: "Status Code is not a valid", status: 500 }
 
     case 1002:
-      return { code, message: "Custome Error happening", status: 500 }
+      return { code, message: "Custome Error happening", status: 400 }
 
     case 1003:
       return { code, message: "Too Many Requests", status: 429 }
@@ -76,6 +76,9 @@ export const error = (code: string | number): IError => {
 
     case "42804":
       return { code, message: "Argument of WHERE must be type boolean, not type character varying", status: 500 }
+
+    case "22P02":
+      return { code, message: "Invalid input value for enum", status: 500 }
 
     case "ECONNREFUSED":
       return { code, message: "Database Connection Refused", status: 500 }

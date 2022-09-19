@@ -6,7 +6,16 @@ class UserRepository extends Repository {
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.userPgLibrary
-        .findMany(args)
+        .getUserList(args)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
+
+  public async getUserProfile(args: { id: string }): Promise<Record<string, any>[]> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.userPgLibrary
+        .getUserProfile(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })
@@ -15,7 +24,7 @@ class UserRepository extends Repository {
   public async addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.userPgLibrary
-        .create(args)
+        .addUser(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })

@@ -9,10 +9,10 @@ import { resolve } from "path"
 import { locals, globals } from "./common/variables"
 import { ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
-import rateLimiterMiddleware from "./common/middlewares/RateLimiterMiddleware"
-import multipartMiddleware from "./common/middlewares/MultipartMiddleware"
-import requestMiddleware from "./common/middlewares/RequestMiddleware"
-import authMiddleware from "./common/middlewares/AuthMiddleware"
+import rateLimiterMiddleware from "./middlewares/RateLimiterMiddleware"
+import multipartMiddleware from "./middlewares/MultipartMiddleware"
+import requestMiddleware from "./middlewares/RequestMiddleware"
+import authMiddleware from "./middlewares/AuthMiddleware"
 
 /* -------------------------------------------------------------------------- */
 /*                                   GraphQL                                  */
@@ -61,7 +61,7 @@ app.use(rateLimiterMiddleware.check())
 app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
 app.use(requestMiddleware.IsMethodAllowed)
-// app.use(authMiddleware.auth)
+app.use(authMiddleware.auth)
 
 app.use("/v1", routesV1)
 
