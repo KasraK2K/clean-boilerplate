@@ -7,28 +7,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+model users {
+  id             String    @id @unique(map: "users_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  no             Int       @unique(map: "users_no") @default(autoincrement()) @db.SmallInt
+  email          String    @unique(map: "users_email") @db.VarChar(50)
+  password       String    @db.VarChar(200)
+  phone          String?   @db.VarChar(50)
+  first_name     String?   @db.VarChar(50)
+  last_name      String?   @db.VarChar(50)
+  gender         gender?   @default(OTHER)
+  created_at     DateTime? @default(now()) @db.Timestamp(6)
+  updated_at     DateTime? @default(now()) @db.Timestamp(6)
+  deleted_at     DateTime? @db.Timestamp(6)
+  is_active      Boolean?  @default(true)
+  is_verified    Boolean?  @default(false)
+  is_admin       Boolean?  @default(false)
+  is_super_admin Boolean?  @default(false)
+  is_blocked     Boolean?  @default(false)
+
+  @@index([is_admin], map: "users_is_admin")
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
-
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
+enum gender {
+  MALE
+  FEMALE
+  TRANSSEXUAL
+  OTHER
 }

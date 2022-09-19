@@ -15,6 +15,7 @@ RUN yarn
 COPY . .
 COPY prisma ./prisma
 
+RUN npx prisma db pull
 RUN npx prisma generate
 
 RUN yarn build
