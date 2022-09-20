@@ -5,7 +5,7 @@ application:
   bearer: "Bearer"
   bearerHeader: "authorization"
   apiKeyHeader: "api-key"
-  port: 3000
+  port: 4101
   information: false
   request:
     allowMethods: ["POST"]
