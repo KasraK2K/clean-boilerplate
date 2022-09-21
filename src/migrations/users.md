@@ -1,38 +1,8 @@
-# SOME USEFUL COMMAND
+# Users Table
 
-## DOCKER
+## Information
 
-```bash
-docker exec -it <container_id> /bin/bash
-docker exec -it <container_id> /bin/bash -c "psql -U postgres"
-docker exec -it <container_id> /bin/bash -c "psql -U postgres -c '\l'"
-```
-
----
-
-## POSTGRES
-
-```bash
-psql -U <user>
-psql -U <user> -h <host> -p <port> -c "CREATE DATABASE <dbname>;"
-\l
-\c <dbname>
-\dt
-```
-
----
-
-### Create ENUM
-
-```postgres
-CREATE TYPE gender AS ENUM ('MALE', 'FEMALE', 'OTHER');
-```
-
-### Create Sequence
-
-```postgres
-CREATE SEQUENCE user_id_seq;
-```
+This table is useful to hold users and admins
 
 ### Create Table
 

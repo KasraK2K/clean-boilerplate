@@ -38,7 +38,7 @@ database:
     user: "postgres"
     host: "0.0.0.0"
     database: "grilla"
-    password: "postgres"
+    password: "postgres01@Gr!ll@"
     port: 5432
     idleTimeoutMillis: 10000
     connectionTimeoutMillis: 10000

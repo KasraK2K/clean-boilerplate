@@ -3,6 +3,8 @@
 ## DOCKER
 
 ```bash
+docker run -p 5432:5432 --name postgres -d postgres:latest
+
 docker exec -it <container_id> /bin/bash
 docker exec -it <container_id> /bin/bash -c "psql -U postgres"
 docker exec -it <container_id> /bin/bash -c "psql -U postgres -c '\l'"
@@ -38,6 +40,12 @@ GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <db_username>;
 
 ```postgres
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
+
+### Create ENUM
+
+```postgres
+CREATE TYPE gender AS ENUM ('MALE', 'FEMALE', 'OTHER');
 ```
 
 ### Create Update Timestamp Trigger Function
