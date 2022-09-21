@@ -47,6 +47,67 @@ class UserPgLibrary extends PgRepository {
         })
     })
   }
+
+  public archiveUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      // return await this.updateOne("users", { id, is_archive: true, archived_at: "NOW()" })
+      //   .then(async (response) => resolve(response))
+      //   .catch(async (err) => {
+      //     logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.archiveUser" })
+      //     return reject(err)
+      //   })
+      return await this.executeQuery({
+        query: "UPDATE users SET is_archive = $1, archived_at = $2 WHERE id = $3 RETURNING *",
+        parameters: [true, "NOW()", id],
+        omits: ["password"],
+      })
+        .then(async (response) => resolve(response.rows))
+        .catch(async (err) => {
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.archiveUser" })
+          return reject(err)
+        })
+    })
+  }
+
+  public restoreUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      // return await this.updateOne("users", { id, is_archive: false, archived_at: null })
+      //   .then(async (response) => resolve(response))
+      //   .catch(async (err) => {
+      //     logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.restoreUser" })
+      //     return reject(err)
+      //   })
+      return await this.executeQuery({
+        query: "UPDATE users SET is_archive = $1, archived_at = $2 WHERE id = $3 RETURNING *",
+        parameters: [false, null, id],
+        omits: ["password"],
+      })
+        .then(async (response) => resolve(response.rows))
+        .catch(async (err) => {
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.restoreUser" })
+          return reject(err)
+        })
+    })
+  }
+
+  public deleteUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await this.executeQuery({
+        query: `
+          DELETE FROM users
+          WHERE id = (SELECT id FROM users WHERE id = $1 LIMIT 1)
+          RETURNING *
+        `,
+        parameters: [id],
+        omits: ["password"],
+      })
+        .then(async (response) => resolve(response.rows))
+        .catch(async (err) => {
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.restoreUser" })
+          return reject(err)
+        })
+    })
+  }
 }
 
 export default new UserPgLibrary()

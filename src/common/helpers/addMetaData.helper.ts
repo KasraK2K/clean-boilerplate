@@ -82,9 +82,10 @@ export const addMetaData = (
     result: isDataArray ? data : [data],
   }
 
-  if (args.code && !errCode) errCode = args.code
-
   const setMessage = !!(errors && errors.length)
+
+  if (args.code && !errCode && !setMessage) errCode = args.code
+
   addErrCode(res, setMessage ? 1002 : errCode, resData, setMessage)
   addStatus(res, statusCode, resData, setMessage)
   addCustomErrors(res, errors, resData)

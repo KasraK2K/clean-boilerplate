@@ -24,7 +24,7 @@ class UserService extends Service {
       const { valid, errors } = validator({ id }, userSchema.getOne)
 
       if (!valid) {
-        logger.warn(`Validation has error on getUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on getUserProfile: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
       } else {
         repository
@@ -52,11 +52,59 @@ class UserService extends Service {
       }
 
       if (!valid) {
-        logger.warn(`Validation has error on addUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on upsertUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
       } else {
         repository
           .upsertUser(args)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+      }
+    })
+  }
+
+  public async archiveUser(id: number): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator({ id }, userSchema.id)
+
+      if (!valid) {
+        logger.warn(`Validation has error on archiveUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        return reject({ errors })
+      } else {
+        repository
+          .archiveUser(id)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+      }
+    })
+  }
+
+  public async restoreUser(id: number): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator({ id }, userSchema.id)
+
+      if (!valid) {
+        logger.warn(`Validation has error on restoreUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        return reject({ errors })
+      } else {
+        repository
+          .restoreUser(id)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+      }
+    })
+  }
+
+  public async deleteUser(id: number): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator({ id }, userSchema.id)
+
+      if (!valid) {
+        logger.warn(`Validation has error on deleteUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        return reject({ errors })
+      } else {
+        repository
+          .deleteUser(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
       }

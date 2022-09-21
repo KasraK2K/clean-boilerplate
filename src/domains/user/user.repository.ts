@@ -29,6 +29,33 @@ class UserRepository extends Repository {
         .catch((err) => reject(err))
     })
   }
+
+  public async archiveUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.userPgLibrary
+        .archiveUser(id)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
+
+  public async restoreUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.userPgLibrary
+        .restoreUser(id)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
+
+  public async deleteUser(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.userPgLibrary
+        .deleteUser(id)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
 }
 
 export default new UserRepository()

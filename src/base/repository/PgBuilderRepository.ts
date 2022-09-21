@@ -254,7 +254,7 @@ class PgBuilderRepository extends Repository {
         break
 
       case "object":
-        if (isArray) {
+        if (isArray && whereArgs.length) {
           this.whereQuery = `WHERE ${whereArgs.join(" AND ")}`
           if (params && params.length) this.whereParams = [...params]
         } else {

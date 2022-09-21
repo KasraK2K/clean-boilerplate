@@ -10,7 +10,7 @@ class UserController extends Controller {
    */
   public async getUserList(req: Request, res: Response): IControllerResponse {
     return await service
-      .getUserList()
+      .getUserList(req.body)
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }
@@ -26,11 +26,44 @@ class UserController extends Controller {
   }
 
   /**
-   * Inset User into users table
+   * Create new user if req.body.id not found or Update existing user if found req.body.id
    */
   public async upsertUser(req: Request, res: Response): IControllerResponse {
     return await service
       .upsertUser(req.body)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  /**
+   * Archive user and set is_archive = true and archived_at = NOW()
+   */
+  public async archiveUser(req: Request, res: Response): IControllerResponse {
+    const { id } = req.body
+    return await service
+      .archiveUser(id)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  /**
+   * Restore user and set is_archive = false and archived_at = null
+   */
+  public async restoreUser(req: Request, res: Response): IControllerResponse {
+    const { id } = req.body
+    return await service
+      .restoreUser(id)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  /**
+   * Permanently delete user
+   */
+  public async deleteUser(req: Request, res: Response): IControllerResponse {
+    const { id } = req.body
+    return await service
+      .deleteUser(id)
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }

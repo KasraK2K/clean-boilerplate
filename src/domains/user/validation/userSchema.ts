@@ -37,7 +37,6 @@ export const userSchema = {
     additionalProperties: false,
     required: ["email", "password"],
     properties: {
-      id: { type: "string" },
       email: { type: "string", format: "email" },
       password: { type: "string", minLength: 6, maxLength: 60 },
       contact_number: { type: "string", minLength: 11, maxLength: 13 },
@@ -58,7 +57,7 @@ export const userSchema = {
     additionalProperties: false,
     required: ["id", "email", "password"],
     properties: {
-      id: { type: "string" },
+      id: { type: "integer" },
       email: { type: "string", format: "email" },
       password: { type: "string", minLength: 6, maxLength: 60 },
       contact_number: { type: "string", minLength: 11, maxLength: 13 },
@@ -70,6 +69,16 @@ export const userSchema = {
       business_size: { type: "string", enum: Object.values(BusinessSize) },
       permission: { type: "integer", default: 0 },
       reseller_id: { type: "integer", default: 0 },
+    },
+  },
+
+  // ─── Id ─────────────────────────────────────────────────────────────────────────
+  id: {
+    type: "object",
+    additionalProperties: false,
+    required: ["id"],
+    properties: {
+      id: { type: "integer" },
     },
   },
 }
