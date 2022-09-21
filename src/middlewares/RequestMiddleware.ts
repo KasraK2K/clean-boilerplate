@@ -17,7 +17,7 @@ class RequestMiddleware extends Middleware {
     next()
   }
 
-  public IsMethodAllowed(req: Request, res: Response, next: NextFunction) {
+  public isMethodAllowed(req: Request, res: Response, next: NextFunction) {
     const endpoint = req.originalUrl
     const routerVersion = applicationConfig.routerVersion
     const allowMethods = applicationConfig.request.allowMethods

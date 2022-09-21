@@ -4,6 +4,6 @@ import { controller } from "./user.module"
 
 router.post("/list", controller.getUserList)
 router.post("/profile", controller.getUserProfile)
-router.post("/create", controller.addUser)
+router.post("/upsert", controller.upsertUser)
 
 export default router

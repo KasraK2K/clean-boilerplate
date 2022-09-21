@@ -3,7 +3,7 @@
 ## DOCKER
 
 ```bash
-docker run -p 5432:5432 --name postgres -d postgres:latest
+docker run -p 5432:5432 --name postgresql -d postgres:latest
 
 docker exec -it <container_id> /bin/bash
 docker exec -it <container_id> /bin/bash -c "psql -U postgres"

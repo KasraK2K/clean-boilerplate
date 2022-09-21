@@ -19,32 +19,44 @@ class UserService extends Service {
     )
   }
 
-  public async getUserProfile(args: { id: string }): Promise<Record<string, any>> {
+  public async getUserProfile(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator(args, userSchema.getUser)
+      const { valid, errors } = validator({ id }, userSchema.getOne)
 
       if (!valid) {
         logger.warn(`Validation has error on getUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
       } else {
         repository
-          .getUserProfile(args)
+          .getUserProfile(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
       }
     })
   }
 
-  public async addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsertUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator(args, userSchema.addUser)
+      const { id } = args
+      let valid: boolean
+      let errors: string[]
+
+      if (id) {
+        const upsertValidation = validator(args, userSchema.upsert)
+        valid = upsertValidation.valid
+        errors = upsertValidation.errors
+      } else {
+        const createValidation = validator(args, userSchema.create)
+        valid = createValidation.valid
+        errors = createValidation.errors
+      }
 
       if (!valid) {
         logger.warn(`Validation has error on addUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
       } else {
         repository
-          .addUser(args)
+          .upsertUser(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
       }

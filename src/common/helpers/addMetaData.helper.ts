@@ -61,9 +61,11 @@ export const addMetaData = (
     statusCode?: number
     errCode?: number
     errors?: string[]
+    [key: string]: any
   } = {}
 ): Response<IResponseData> => {
-  const { data = [], statusCode, errCode, errors } = args
+  const { data = [], statusCode, errors } = args
+  let { errCode } = args
   const isDataArray = Array.isArray(data)
 
   const resData: IResponseData = {
@@ -79,6 +81,8 @@ export const addMetaData = (
     error_messages: [],
     result: isDataArray ? data : [data],
   }
+
+  if (args.code && !errCode) errCode = args.code
 
   const setMessage = !!(errors && errors.length)
   addErrCode(res, setMessage ? 1002 : errCode, resData, setMessage)

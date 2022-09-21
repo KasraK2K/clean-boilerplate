@@ -12,19 +12,19 @@ class UserRepository extends Repository {
     })
   }
 
-  public async getUserProfile(args: { id: string }): Promise<Record<string, any>[]> {
+  public async getUserProfile(id: number): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.userPgLibrary
-        .getUserProfile(args)
+        .getUserProfile(id)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })
   }
 
-  public async addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsertUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.userPgLibrary
-        .addUser(args)
+        .upsertUser(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })

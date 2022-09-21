@@ -20,7 +20,7 @@ class UserController extends Controller {
    */
   public async getUserProfile(req: Request, res: Response): IControllerResponse {
     return await service
-      .getUserProfile({ id: res.locals.tokenData.id })
+      .getUserProfile(res.locals.tokenData.id)
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }
@@ -28,9 +28,9 @@ class UserController extends Controller {
   /**
    * Inset User into users table
    */
-  public async addUser(req: Request, res: Response): IControllerResponse {
+  public async upsertUser(req: Request, res: Response): IControllerResponse {
     return await service
-      .addUser(req.body)
+      .upsertUser(req.body)
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }

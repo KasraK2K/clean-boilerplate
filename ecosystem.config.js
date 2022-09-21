@@ -30,15 +30,16 @@ module.exports = {
       // development environment
       env_development: {
         NODE_ENV: "development",
-        JWT_SECRET: "Embargo_mnG_V2.1_Emb@rgoL!m!ted@!AllManagementSaltsDevel0pment",
+        JWT_SECRET: "QiOjObFkrNmV4FhObFk0SmxkQ0N3UDMTmlNalZ1V",
+        ENCRYPTION_SECRET: "jVuTFhObFk0SmxkQzFyWlhrNmlNalZ1VEZoT2JGazBTbXhrUXpGeVdsaHJObVa3JObVY0c0luUlNqRmpNbF",
         PORT: "4100",
       },
 
       // production environment
       env_production: {
         NODE_ENV: "production",
-        JWT_SECRET: "Embargo_mnG_V2.1_Emb@rgoL!m!ted@!AllManagementSaltsPr0d0cti0n",
-        ENCRYPTION_SECRET: "Embargo_ScrT_All_Emb@rgoL!m!ted@!AllSyST£mSaltsPr0d0cti0n",
+        JWT_SECRET: "QiOjObFkrNmV4FhObFk0SmxkQ0N3UDMTmlNalZ1V",
+        ENCRYPTION_SECRET: "jVuTFhObFk0SmxkQzFyWlhrNmlNalZ1VEZoT2JGazBTbXhrUXpGeVdsaHJObVa3JObVY0c0luUlNqRmpNbF",
         PORT: "4101",
       },
     },

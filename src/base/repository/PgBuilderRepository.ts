@@ -24,6 +24,9 @@ class PgBuilderRepository extends Repository {
     private updateQuery = "",
     private updateParams: any[] = [],
 
+    private upsertQuery = "",
+    private upsertParams: any[] = [],
+
     private deleteQuery = "",
     private deleteParams: any[] = [],
 
@@ -165,6 +168,15 @@ class PgBuilderRepository extends Repository {
     this.updateParams.push(tableName)
     this.updateParams.push(id)
     return this
+  }
+
+  // ─── UPSERT ─────────────────────────────────────────────────────────────────────
+  protected upsert(tableName: string, args: Record<string, any>, returning = "*"): this {
+    const { id } = args
+    const sanitizedArgs = _.cloneDeep(_.omit(args, ["id"]))
+
+    if (id) return this.update(tableName, id, sanitizedArgs, returning)
+    else return this.insert(tableName, sanitizedArgs, returning)
   }
 
   // ─── DELETE ─────────────────────────────────────────────────────────────────────

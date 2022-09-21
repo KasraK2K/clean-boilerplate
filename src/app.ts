@@ -60,7 +60,7 @@ app.use(
 app.use(rateLimiterMiddleware.check())
 app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
-app.use(requestMiddleware.IsMethodAllowed)
+app.use(requestMiddleware.isMethodAllowed)
 app.use(authMiddleware.auth)
 
 app.use("/v1", routesV1)

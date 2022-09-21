@@ -54,8 +54,8 @@ export const getUserInformation = (port: number) => {
     ])
     console.groupEnd()
 
-    const payload = { id: "9f57e79a-4534-4618-9e2a-f4d8711c1dcf" }
-    const cypherToken = tokenHelper.sign({ id: "9f57e79a-4534-4618-9e2a-f4d8711c1dcf" })
+    const payload = { id: 1 }
+    const cypherToken = tokenHelper.sign(payload)
 
     console.log("\n- Cypher Token ----------------------------------------------------------")
     console.info(cypherToken)

@@ -16,33 +16,33 @@ class UserPgLibrary extends PgRepository {
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "FindUser.findMany" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.getUserList" })
           return reject(err)
         })
     })
   }
 
-  public getUserProfile(args: { id: string }): Promise<Record<string, any>[]> {
+  public getUserProfile(id: number): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       return await this.select()
         .from("users")
-        .where([`id = '${args.id}'`])
+        .where([`id = '${id}'`])
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "FindUser.findMany" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.getUserProfile" })
           return reject(err)
         })
     })
   }
 
-  public addUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public upsertUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      return await this.insert("users", args)
+      return await this.upsert("users", args)
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "createUser" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "userPgLibrary.upsertUser" })
           return reject(err)
         })
     })
