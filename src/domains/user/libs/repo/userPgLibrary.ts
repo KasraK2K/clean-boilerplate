@@ -93,11 +93,7 @@ class UserPgLibrary extends PgRepository {
   public deleteUser(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await this.executeQuery({
-        query: `
-          DELETE FROM users
-          WHERE id = (SELECT id FROM users WHERE id = $1 LIMIT 1)
-          RETURNING *
-        `,
+        query: "DELETE FROM users WHERE id = $1 RETURNING *",
         parameters: [id],
         omits: ["password"],
       })
