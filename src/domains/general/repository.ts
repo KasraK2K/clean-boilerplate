@@ -6,7 +6,7 @@ export class GeneralRepository extends Repository {
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const userList: Record<string, any>[] = await connect.user
-        .getUserList()
+        .list()
         .then((response) => response.result)
         .catch((err) => [])
 

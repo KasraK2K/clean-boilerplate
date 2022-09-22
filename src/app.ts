@@ -13,36 +13,16 @@ import rateLimiterMiddleware from "./middlewares/RateLimiterMiddleware"
 import multipartMiddleware from "./middlewares/MultipartMiddleware"
 import requestMiddleware from "./middlewares/RequestMiddleware"
 import authMiddleware from "./middlewares/AuthMiddleware"
-
-/* -------------------------------------------------------------------------- */
-/*                                   GraphQL                                  */
-/* -------------------------------------------------------------------------- */
 import { graphqlHTTP } from "express-graphql"
 import { context } from "./graphql/context"
-import { mergeSchemas } from "@graphql-tools/schema"
-import { schema as UserSchema } from "./domains/user/graphql/schema"
-/* -------------------------------------------------------------------------- */
+import mergedSchema from "./graphql/merge-schema"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
 app.locals = locals
 _.assign(global, globals)
 
-/* -------------------------------------------------------------------------- */
-/*                                   GraphQL                                  */
-/* -------------------------------------------------------------------------- */
-const mergedSchema = mergeSchemas({
-  schemas: [UserSchema],
-})
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: mergedSchema,
-    graphiql: true,
-    context,
-  })
-)
-/* -------------------------------------------------------------------------- */
+app.use("/graphql", graphqlHTTP({ schema: mergedSchema, graphiql: true, context }))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

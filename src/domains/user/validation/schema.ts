@@ -8,9 +8,9 @@
 //
 //=============================================================================================
 
-import { BusinessSize, Gender } from "./../../../common/enums/general.enum"
+import { BusinessSize, Gender } from "../../../common/enums/general.enum"
 
-export const userSchema = {
+export const schema = {
   // ─── List ───────────────────────────────────────────────────────────────────────
   list: {
     type: "object",
@@ -62,10 +62,10 @@ export const userSchema = {
   },
 
   // ─── Upsert ─────────────────────────────────────────────────────────────────────
-  upsert: {
+  update: {
     type: "object",
     additionalProperties: false,
-    required: ["id", "email", "password"],
+    required: ["id"],
     properties: {
       id: { type: "integer" },
       email: { type: "string", format: "email" },
@@ -79,6 +79,10 @@ export const userSchema = {
       business_size: { type: "string", enum: Object.values(BusinessSize) },
       permission: { type: "integer", default: 0 },
       reseller_id: { type: "integer", default: 0 },
+      is_active: { type: "boolean" },
+      is_verified: { type: "boolean" },
+      is_blocked: { type: "boolean" },
+      is_archive: { type: "boolean" },
     },
   },
 
@@ -93,4 +97,4 @@ export const userSchema = {
   },
 }
 
-export default userSchema
+export default schema

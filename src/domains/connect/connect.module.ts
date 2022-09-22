@@ -9,7 +9,9 @@
 //==============================================================================================================================
 
 import connectUser from "./connect.user"
+import connectPortalUser from "./connect.portal-user"
 
 export default {
   user: connectUser,
+  portalUser: connectPortalUser,
 }

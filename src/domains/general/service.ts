@@ -1,6 +1,6 @@
 import Service from "../../base/Service"
 import { IDefaultArgs } from "../../common/interfaces/general.interface"
-import { repository } from "./general.module"
+import { repository } from "./module"
 
 class GeneralService extends Service {
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {

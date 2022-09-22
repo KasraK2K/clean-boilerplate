@@ -1,5 +1,5 @@
 import express from "express"
-import { controller } from "./general.module"
+import { controller } from "./module"
 
 const router = express.Router()
 

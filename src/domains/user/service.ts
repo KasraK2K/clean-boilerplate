@@ -1,109 +1,127 @@
 import { IDefaultArgs } from "../../common/interfaces/general.interface"
-import { repository } from "./user.module"
+import { repository } from "./module"
 import Service from "../../base/Service"
-import userSchema from "./validation/userSchema"
+import schema from "./validation/schema"
 import validator from "../../common/helpers/validator.helper"
 import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
 class UserService extends Service {
-  public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async list(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator(args, userSchema.list)
+      const { valid, errors } = validator(args, schema.list)
 
       if (!valid) {
-        logger.warn(`Validation has error on getUserList: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.list: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .getUserList(args)
+          .list(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async getUserProfile(id: number): Promise<Record<string, any>> {
+  public async profile(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator({ id }, userSchema.profile)
+      const { valid, errors } = validator({ id }, schema.profile)
 
       if (!valid) {
-        logger.warn(`Validation has error on getUserProfile: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.profile: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .getUserProfile(id)
+          .profile(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async upsertUser(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsertEntity(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { id } = args
       let valid: boolean
       let errors: string[]
 
       if (id) {
-        const upsertValidation = validator(args, userSchema.upsert)
+        const upsertValidation = validator(args, schema.update)
         valid = upsertValidation.valid
         errors = upsertValidation.errors
       } else {
-        const createValidation = validator(args, userSchema.create)
+        const createValidation = validator(args, schema.create)
         valid = createValidation.valid
         errors = createValidation.errors
       }
 
       if (!valid) {
-        logger.warn(`Validation has error on upsertUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.upsertEntity: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .upsertUser(args)
+          .upsertEntity(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async archiveUser(id: number): Promise<Record<string, any>> {
+  public async archiveEntity(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator({ id }, userSchema.id)
+      const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on archiveUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.archiveEntity: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .archiveUser(id)
+          .archiveEntity(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async restoreUser(id: number): Promise<Record<string, any>> {
+  public async restoreEntity(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator({ id }, userSchema.id)
+      const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on restoreUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.restoreEntity: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .restoreUser(id)
+          .restoreEntity(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async deleteUser(id: number): Promise<Record<string, any>> {
+  public async deleteEntity(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator({ id }, userSchema.id)
+      const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on deleteUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        logger.warn(`Validation has error on UserService.deleteEntity: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
         return reject({ errors })
       } else
         repository
-          .deleteUser(id)
+          .deleteEntity(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })

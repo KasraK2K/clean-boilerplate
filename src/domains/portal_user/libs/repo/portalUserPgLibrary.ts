@@ -8,16 +8,16 @@ import PgRepository from "../../../../base/repository/PgRepository"
  * This method using the `PgRepository` builder pattern
  * You can also use this.query to write your own row queries
  */
-class UserPgLibrary extends PgRepository {
+class PortalUserPgLibrary extends PgRepository {
   public list(args: IDefaultArgs = {}): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       return await this.select()
-        .from("users")
+        .from("portal_users")
         .where(args)
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.list" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.list" })
           return reject(err)
         })
     })
@@ -26,12 +26,12 @@ class UserPgLibrary extends PgRepository {
   public profile(id: number): Promise<Record<string, any>[]> {
     return new Promise(async (resolve, reject) => {
       return await this.select()
-        .from("users")
+        .from("portal_users")
         .where([`id = '${id}'`])
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.profile" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.profile" })
           return reject(err)
         })
     })
@@ -39,11 +39,11 @@ class UserPgLibrary extends PgRepository {
 
   public upsertEntity(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      return await this.upsert("users", args)
+      return await this.upsert("portal_users", args)
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.upsertEntity" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.upsertEntity" })
           return reject(err)
         })
     })
@@ -51,15 +51,15 @@ class UserPgLibrary extends PgRepository {
 
   public archiveEntity(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("users", { id, is_archive: true, archived_at: "NOW()" })
+      // return await this.updateOne("portal_users", { id, is_archive: true, archived_at: "NOW()" })
       //   .then(async (response) => resolve(response))
       //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.archiveUser" })
+      //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archiveUser" })
       //     return reject(err)
       //   })
       return await this.executeQuery({
         query: `
-          UPDATE users
+          UPDATE portal_users
           SET is_archive = $1, archived_at = $2
           WHERE id = $3 AND is_archive = $4
           RETURNING *
@@ -69,7 +69,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then(async (response) => resolve(response.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.archiveEntity" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archiveEntity" })
           return reject(err)
         })
     })
@@ -77,15 +77,15 @@ class UserPgLibrary extends PgRepository {
 
   public restoreEntity(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("users", { id, is_archive: false, archived_at: null })
+      // return await this.updateOne("portal_users", { id, is_archive: false, archived_at: null })
       //   .then(async (response) => resolve(response))
       //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.restoreUser" })
+      //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restoreUser" })
       //     return reject(err)
       //   })
       return await this.executeQuery({
         query: `
-          UPDATE users
+          UPDATE portal_users
           SET is_archive = $1, archived_at = $2
           WHERE id = $3 AND is_archive = $4
           RETURNING *
@@ -95,7 +95,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then(async (response) => resolve(response.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.restoreEntity" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restoreEntity" })
           return reject(err)
         })
     })
@@ -104,17 +104,17 @@ class UserPgLibrary extends PgRepository {
   public deleteEntity(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await this.executeQuery({
-        query: "DELETE FROM users WHERE id = $1 RETURNING *",
+        query: "DELETE FROM portal_users WHERE id = $1 RETURNING *",
         parameters: [id],
         omits: ["password"],
       })
         .then(async (response) => resolve(response.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.deleteEntity" })
+          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.deleteEntity" })
           return reject(err)
         })
     })
   }
 }
 
-export default new UserPgLibrary()
+export default new PortalUserPgLibrary()
