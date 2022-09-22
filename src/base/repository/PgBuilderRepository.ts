@@ -243,7 +243,7 @@ class PgBuilderRepository extends Repository {
   }
 
   // ─── WHERE ──────────────────────────────────────────────────────────────────────
-  protected where(whereArgs: string | string[], params?: any[]): this {
+  protected where(whereArgs: string | string[] | Record<string, any>, params?: any[]): this {
     const whereArgsType = typeof whereArgs
     const isArray = Array.isArray(whereArgs)
 
@@ -257,11 +257,14 @@ class PgBuilderRepository extends Repository {
         if (isArray && whereArgs.length) {
           this.whereQuery = `WHERE ${whereArgs.join(" AND ")}`
           if (params && params.length) this.whereParams = [...params]
+        } else if (!isArray && Object.keys(whereArgs).length) {
+          this.whereQuery = `WHERE ${Object.entries(whereArgs)
+            .map((entry) =>
+              typeof entry[1] === "string" ? `"${entry[0]}" = '${entry[1]}'` : `"${entry[0]}" = ${entry[1]}`
+            )
+            .join(" AND ")}`
         } else {
           this.whereQuery = ``
-          logger.warn(`${this.name}: where argument is not a string or string[] and we are not handling it`, {
-            dest: "PgBuilderRepository",
-          })
         }
         break
 

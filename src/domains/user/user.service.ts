@@ -7,31 +7,33 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
 class UserService extends Service {
-  /**
-   * This method get args to filter users but in this time args is empty
-   */
   public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
-    return new Promise((resolve, reject) =>
-      repository
-        .getUserList(args)
-        .then((result) => resolve({ data: result }))
-        .catch((err) => reject(err))
-    )
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator(args, userSchema.list)
+
+      if (!valid) {
+        logger.warn(`Validation has error on getUserList: ${errors}`, { service: ServiceName.USER, dest: "service" })
+        return reject({ errors })
+      } else
+        repository
+          .getUserList(args)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+    })
   }
 
   public async getUserProfile(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-      const { valid, errors } = validator({ id }, userSchema.getOne)
+      const { valid, errors } = validator({ id }, userSchema.profile)
 
       if (!valid) {
         logger.warn(`Validation has error on getUserProfile: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
-      } else {
+      } else
         repository
           .getUserProfile(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
-      }
     })
   }
 
@@ -54,12 +56,11 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on upsertUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
-      } else {
+      } else
         repository
           .upsertUser(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
-      }
     })
   }
 
@@ -70,12 +71,11 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on archiveUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
-      } else {
+      } else
         repository
           .archiveUser(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
-      }
     })
   }
 
@@ -86,12 +86,11 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on restoreUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
-      } else {
+      } else
         repository
           .restoreUser(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
-      }
     })
   }
 
@@ -102,12 +101,11 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on deleteUser: ${errors}`, { service: ServiceName.USER, dest: "service" })
         return reject({ errors })
-      } else {
+      } else
         repository
           .deleteUser(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
-      }
     })
   }
 }

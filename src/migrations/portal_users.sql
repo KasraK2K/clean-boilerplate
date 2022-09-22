@@ -55,4 +55,4 @@ VALUES
     'bahram', 'badri', 'MALE', TRUE 
   );
 
-SELECT * FROM users;
+SELECT * FROM portal_users;

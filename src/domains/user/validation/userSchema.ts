@@ -11,8 +11,18 @@
 import { BusinessSize, Gender } from "./../../../common/enums/general.enum"
 
 export const userSchema = {
+  // ─── List ───────────────────────────────────────────────────────────────────────
+  list: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      id: { type: "integer" },
+      email: { type: "string", format: "email" },
+    },
+  },
+
   // ─── Get One ────────────────────────────────────────────────────────────────────
-  getOne: {
+  profile: {
     type: "object",
     additionalProperties: false,
     oneOf: [

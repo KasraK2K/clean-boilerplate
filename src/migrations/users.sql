@@ -21,8 +21,6 @@ CREATE TABLE IF NOT EXISTS users (
 
   is_active BOOLEAN DEFAULT TRUE,
   is_verified BOOLEAN DEFAULT FALSE,
-  is_admin BOOLEAN DEFAULT FALSE,
-  is_super_admin BOOLEAN DEFAULT FALSE,
   is_blocked BOOLEAN DEFAULT FALSE,
   is_archive BOOLEAN DEFAULT FALSE,
 
@@ -50,12 +48,12 @@ CREATE INDEX "users_reseller_id" ON "users"("reseller_id");
 INSERT INTO users 
   (
     email, password, contact_number,
-    first_name, surname, gender, is_verified, is_admin, is_super_admin
+    first_name, surname, gender, is_verified
   )
 VALUES
   (
     'a@a.com', '$2a$07$r66gkFrxBP5L5/XSd4No4eY.Z/UGu.56F/neHhsLjAwydlPvUnocO', '09123456789',
-    'ahmad', 'akbari', 'MALE', TRUE, TRUE, TRUE
+    'ahmad', 'akbari', 'MALE', TRUE
   );
 
 SELECT * FROM users;

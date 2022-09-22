@@ -13,6 +13,7 @@ class UserPgLibrary extends PgRepository {
     return new Promise(async (resolve, reject) => {
       return await this.select()
         .from("users")
+        .where(args)
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
@@ -57,8 +58,13 @@ class UserPgLibrary extends PgRepository {
       //     return reject(err)
       //   })
       return await this.executeQuery({
-        query: "UPDATE users SET is_archive = $1, archived_at = $2 WHERE id = $3 RETURNING *",
-        parameters: [true, "NOW()", id],
+        query: `
+          UPDATE users
+          SET is_archive = $1, archived_at = $2
+          WHERE id = $3 AND is_archive = $4
+          RETURNING *
+        `,
+        parameters: [true, "NOW()", id, false],
         omits: ["password"],
       })
         .then(async (response) => resolve(response.rows))
@@ -78,8 +84,13 @@ class UserPgLibrary extends PgRepository {
       //     return reject(err)
       //   })
       return await this.executeQuery({
-        query: "UPDATE users SET is_archive = $1, archived_at = $2 WHERE id = $3 RETURNING *",
-        parameters: [false, null, id],
+        query: `
+          UPDATE users
+          SET is_archive = $1, archived_at = $2
+          WHERE id = $3 AND is_archive = $4
+          RETURNING *
+        `,
+        parameters: [false, null, id, true],
         omits: ["password"],
       })
         .then(async (response) => resolve(response.rows))
