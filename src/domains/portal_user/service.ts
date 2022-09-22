@@ -7,7 +7,7 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
 
 class PortalUserService extends Service {
-  public async list(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator(args, schema.list)
 

@@ -12,7 +12,7 @@
 /*                           NOTE:  Very Important                            */
 /*                  Never Use Libs Directly in Other Domains                  */
 /* -------------------------------------------------------------------------- */
-import userPgLibrary from "./userPgLibrary"
+import pgLibrary from "./pgLibrary"
 
-export { userPgLibrary }
+export { pgLibrary }
 /* -------------------------------------------------------------------------- */

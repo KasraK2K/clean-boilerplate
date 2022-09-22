@@ -37,17 +37,17 @@ const typeDefs = /* GraphQL */ `
   }
 
   type Query {
-    list: [User]!
+    list(id: Int, email: String): [User]!
     # profile: User
   }
 `
 
 const resolvers = {
   Query: {
-    list: async (_parent: Record<string, any>, _args: Record<string, any>, context: Context) => {
+    list: async (_parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
         context.connect.user
-          .list()
+          .list(args)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
       })
