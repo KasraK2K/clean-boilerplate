@@ -22,8 +22,6 @@ const corsConfig: ICorsConfig = config.get("cors")
 app.locals = locals
 _.assign(global, globals)
 
-app.use("/graphql", graphqlHTTP({ schema: mergedSchema, graphiql: true, context }))
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(helmet())
@@ -42,6 +40,18 @@ app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
 app.use(requestMiddleware.isMethodAllowed)
 app.use(authMiddleware.auth)
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: mergedSchema,
+    graphiql: { headerEditorEnabled: true },
+    context,
+    extensions: () => ({ version: "01" }),
+    pretty: true,
+    rootValue: "root-value",
+  })
+)
 
 app.use("/v1", routesV1)
 
