@@ -21,37 +21,37 @@ class UserRepository extends Repository {
     })
   }
 
-  public async upsertEntity(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .upsertEntity(args)
+        .upsert(args)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })
   }
 
-  public async archiveEntity(id: number): Promise<Record<string, any>> {
+  public async archive(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .archiveEntity(id)
+        .archive(id)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })
   }
 
-  public async restoreEntity(id: number): Promise<Record<string, any>> {
+  public async restore(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .restoreEntity(id)
+        .restore(id)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })
   }
 
-  public async deleteEntity(id: number): Promise<Record<string, any>> {
+  public async delete(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .deleteEntity(id)
+        .delete(id)
         .then((response) => resolve(response))
         .catch((err) => reject(err))
     })

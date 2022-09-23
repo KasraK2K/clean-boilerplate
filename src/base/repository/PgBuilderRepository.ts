@@ -170,8 +170,8 @@ class PgBuilderRepository extends Repository {
     return this
   }
 
-  // ─── UPSERT ─────────────────────────────────────────────────────────────────────
-  protected upsert(tableName: string, args: Record<string, any>, returning = "*"): this {
+  // ─── UPSERT QUERY ───────────────────────────────────────────────────────────────
+  protected upsert_query(tableName: string, args: Record<string, any>, returning = "*"): this {
     const { id } = args
     const sanitizedArgs = _.cloneDeep(_.omit(args, ["id"]))
 
@@ -180,7 +180,7 @@ class PgBuilderRepository extends Repository {
   }
 
   // ─── DELETE ─────────────────────────────────────────────────────────────────────
-  protected delete(tableName: string, id: string, returning = "*"): this {
+  protected delete_query(tableName: string, id: string, returning = "*"): this {
     this.deleteQuery = `
       DELETE FROM ${this.replaceChar}
       WHERE id = (SELECT id FROM ${this.replaceChar} WHERE id = '${this.replaceChar}' LIMIT 1)
@@ -201,7 +201,7 @@ class PgBuilderRepository extends Repository {
   }
 
   // ─── RESTORE ────────────────────────────────────────────────────────────────────
-  protected restore(tableName: string, id: string, returning = "*"): this {
+  protected restore_query(tableName: string, id: string, returning = "*"): this {
     this.restoreQuery = `
       UPDATE ${this.replaceChar}
       SET deleted_at = NULL

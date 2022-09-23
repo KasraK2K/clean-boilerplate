@@ -70,10 +70,10 @@ const typeDefs = [
     }
 
     type Mutation {
-      upsertEntity(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
-      archiveEntity(id: ID!): [PortalUser]!
-      restoreEntity(id: ID!): [PortalUser]!
-      deleteEntity(id: ID!): [PortalUser]!
+      upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
+      archive(id: ID!): [PortalUser]!
+      restore(id: ID!): [PortalUser]!
+      delete(id: ID!): [PortalUser]!
     }
   `,
 ]
@@ -100,37 +100,37 @@ const resolvers = {
   },
 
   Mutation: {
-    upsertEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    upsert: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
         context.connect.portalUser
-          .upsertEntity(args.update ?? args.create)
+          .upsert(args.update ?? args.create)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
       })
     },
 
-    archiveEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    archive: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
         context.connect.portalUser
-          .archiveEntity(args.id)
+          .archive(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
       })
     },
 
-    restoreEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    restore: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
         context.connect.portalUser
-          .restoreEntity(args.id)
+          .restore(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
       })
     },
 
-    deleteEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    delete: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
         context.connect.portalUser
-          .deleteEntity(args.id)
+          .delete(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
       })

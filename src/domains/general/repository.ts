@@ -3,7 +3,7 @@ import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import connect from "../connect/connect.module"
 
 export class GeneralRepository extends Repository {
-  public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async userList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const userList: Record<string, any>[] = await connect.user
         .list()

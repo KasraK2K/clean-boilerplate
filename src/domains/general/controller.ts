@@ -5,9 +5,9 @@ import { service } from "./module"
 import { addMetaData } from "../../common/helpers/addMetaData.helper"
 
 class GeneralController extends Controller {
-  public async getUserList(req: Request, res: Response): IControllerResponse {
+  public async userList(req: Request, res: Response): IControllerResponse {
     return await service
-      .getUserList()
+      .userList()
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { errCode: err.code }))
   }

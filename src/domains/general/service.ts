@@ -3,10 +3,10 @@ import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import { repository } from "./module"
 
 class GeneralService extends Service {
-  public async getUserList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async userList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       await repository
-        .getUserList()
+        .userList()
         .then((result) => resolve({ data: result }))
         .catch((err) => reject({ errCode: err.code }))
     })

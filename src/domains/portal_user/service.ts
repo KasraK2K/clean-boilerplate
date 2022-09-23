@@ -43,7 +43,7 @@ class PortalUserService extends Service {
     })
   }
 
-  public async upsertEntity(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { id } = args
       let valid: boolean
@@ -60,68 +60,68 @@ class PortalUserService extends Service {
       }
 
       if (!valid) {
-        logger.warn(`Validation has error on PortalUserService.upsertEntity: ${errors}`, {
+        logger.warn(`Validation has error on PortalUserService.upsert: ${errors}`, {
           service: ServiceName.USER,
           dest: "service",
         })
         return reject({ errors })
       } else
         repository
-          .upsertEntity(args)
+          .upsert(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async archiveEntity(id: number): Promise<Record<string, any>> {
+  public async archive(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on PortalUserService.archiveEntity: ${errors}`, {
+        logger.warn(`Validation has error on PortalUserService.archive: ${errors}`, {
           service: ServiceName.USER,
           dest: "service",
         })
         return reject({ errors })
       } else
         repository
-          .archiveEntity(id)
+          .archive(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async restoreEntity(id: number): Promise<Record<string, any>> {
+  public async restore(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on PortalUserService.restoreEntity: ${errors}`, {
+        logger.warn(`Validation has error on PortalUserService.restore: ${errors}`, {
           service: ServiceName.USER,
           dest: "service",
         })
         return reject({ errors })
       } else
         repository
-          .restoreEntity(id)
+          .restore(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })
   }
 
-  public async deleteEntity(id: number): Promise<Record<string, any>> {
+  public async delete(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ id }, schema.id)
 
       if (!valid) {
-        logger.warn(`Validation has error on PortalUserService.deleteEntity: ${errors}`, {
+        logger.warn(`Validation has error on PortalUserService.delete: ${errors}`, {
           service: ServiceName.USER,
           dest: "service",
         })
         return reject({ errors })
       } else
         repository
-          .deleteEntity(id)
+          .delete(id)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
     })

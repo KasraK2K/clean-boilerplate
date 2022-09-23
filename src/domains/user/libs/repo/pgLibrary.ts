@@ -37,9 +37,9 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public upsertEntity(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      return await this.upsert("users", args)
+      return await this.upsert_query("users", args)
         .exec()
         .then(async (response) => resolve(response))
         .catch(async (err) => {
@@ -49,7 +49,7 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public archiveEntity(id: number): Promise<Record<string, any>> {
+  public archive(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       // return await this.updateOne("users", { id, is_archive: true, archived_at: "NOW()" })
       //   .then(async (response) => resolve(response))
@@ -75,7 +75,7 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public restoreEntity(id: number): Promise<Record<string, any>> {
+  public restore(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       // return await this.updateOne("users", { id, is_archive: false, archived_at: null })
       //   .then(async (response) => resolve(response))
@@ -101,7 +101,7 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public deleteEntity(id: number): Promise<Record<string, any>> {
+  public delete(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await this.executeQuery({
         query: "DELETE FROM users WHERE id = $1 RETURNING *",
