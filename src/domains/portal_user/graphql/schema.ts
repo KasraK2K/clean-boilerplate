@@ -4,13 +4,11 @@ import globalTypes from "../../../graphql/globalTypes"
 import { Context } from "../../../graphql/context"
 import { service } from "../module"
 
-console.log()
-
 const typeDefs = [
   globalTypes,
 
   /* GraphQL */ `
-    type User {
+    type PortalUser {
       id: ID!
       email: String!
       password: String!
@@ -20,8 +18,7 @@ const typeDefs = [
       gender: Gender!
 
       is_active: Boolean!
-      is_verified: Boolean!
-      is_blocked: Boolean!
+      is_admin: Boolean!
       is_archive: Boolean!
 
       business_name: String!
@@ -35,7 +32,7 @@ const typeDefs = [
       archived_at: DateTime
     }
 
-    input CreateUserInput {
+    input CreatePortalUserInput {
       email: String!
       password: String!
       contact_number: String
@@ -49,7 +46,7 @@ const typeDefs = [
       reseller_id: Int
     }
 
-    input UpdateUserInput {
+    input UpdatePortalUserInput {
       id: ID!
       email: String
       password: String
@@ -63,21 +60,20 @@ const typeDefs = [
       permission: Int
       reseller_id: Int
       is_active: Boolean
-      is_verified: Boolean
-      is_blocked: Boolean
+      is_admin: Boolean
       is_archive: Boolean
     }
 
     type Query {
-      list(id: ID, email: String): [User]!
-      profile: [User!]!
+      list(id: ID, email: String): [PortalUser]!
+      profile: [PortalUser!]!
     }
 
     type Mutation {
-      upsertEntity(create: CreateUserInput, update: UpdateUserInput): [User]!
-      archiveEntity(id: ID!): [User]!
-      restoreEntity(id: ID!): [User]!
-      deleteEntity(id: ID!): [User]!
+      upsertEntity(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
+      archiveEntity(id: ID!): [PortalUser]!
+      restoreEntity(id: ID!): [PortalUser]!
+      deleteEntity(id: ID!): [PortalUser]!
     }
   `,
 ]
@@ -86,7 +82,7 @@ const resolvers = {
   Query: {
     list: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .list(args)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
@@ -95,7 +91,7 @@ const resolvers = {
 
     profile: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .profile(context.tokenData.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
@@ -106,7 +102,7 @@ const resolvers = {
   Mutation: {
     upsertEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .upsertEntity(args.update ?? args.create)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
@@ -115,7 +111,7 @@ const resolvers = {
 
     archiveEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .archiveEntity(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
@@ -124,7 +120,7 @@ const resolvers = {
 
     restoreEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .restoreEntity(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))
@@ -133,7 +129,7 @@ const resolvers = {
 
     deleteEntity: async (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
       return new Promise((resolve, reject) => {
-        context.connect.user
+        context.connect.portalUser
           .deleteEntity(args.id)
           .then((result) => resolve(result.data))
           .catch((err) => reject(err))

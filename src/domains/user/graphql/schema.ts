@@ -4,8 +4,6 @@ import globalTypes from "../../../graphql/globalTypes"
 import { Context } from "../../../graphql/context"
 import { service } from "../module"
 
-console.log()
-
 const typeDefs = [
   globalTypes,
 
