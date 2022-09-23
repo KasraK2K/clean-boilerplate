@@ -1,19 +1,15 @@
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { DateTimeResolver } from "graphql-scalars"
-import { typeDefs as scalarTypeDefs } from "graphql-scalars"
+import globalTypes from "../../../graphql/globalTypes"
 import { Context } from "../../../graphql/context"
 import { service } from "../module"
 
+console.log()
+
 const typeDefs = [
-  ...scalarTypeDefs,
+  globalTypes,
 
   /* GraphQL */ `
-    enum Gender {
-      MALE
-      FEMALE
-      OTHER
-    }
-
     type User {
       id: ID!
       email: String!
