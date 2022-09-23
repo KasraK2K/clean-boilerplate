@@ -6,19 +6,21 @@ import compression from "compression"
 import cors from "cors"
 import config from "config"
 import { resolve } from "path"
+import { graphqlHTTP } from "express-graphql"
 import { locals, globals } from "./common/variables"
-import { ICorsConfig } from "../config/config.interface"
+import { IApplicationConfig, ICorsConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
 import rateLimiterMiddleware from "./middlewares/RateLimiterMiddleware"
 import multipartMiddleware from "./middlewares/MultipartMiddleware"
 import requestMiddleware from "./middlewares/RequestMiddleware"
 import authMiddleware from "./middlewares/AuthMiddleware"
-import { graphqlHTTP } from "express-graphql"
 import { context } from "./graphql/context"
 import mergedSchema from "./graphql/merge-schema"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
+const applicationConfig: IApplicationConfig = config.get("application")
+const mode: string = config.get("mode")
 app.locals = locals
 _.assign(global, globals)
 
@@ -43,14 +45,20 @@ app.use(authMiddleware.auth)
 
 app.use(
   "/graphql",
-  graphqlHTTP({
+  graphqlHTTP(async (request, response, graphQLParams) => ({
     schema: mergedSchema,
     graphiql: { headerEditorEnabled: true },
     context,
-    extensions: () => ({ version: "01" }),
+    extensions: () => ({
+      api_version: applicationConfig.api_version,
+      front_version: applicationConfig.front_version,
+      portal_vertion: applicationConfig.portal_version,
+      env: String(process.env.NODE_ENV),
+      mode,
+    }),
     pretty: true,
     rootValue: "root-value",
-  })
+  }))
 )
 
 app.use("/v1", routesV1)
