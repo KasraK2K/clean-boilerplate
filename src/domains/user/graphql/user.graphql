@@ -1,0 +1,88 @@
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  contact_number: String!
+  first_name: String!
+  surname: String!
+  gender: Gender!
+
+  is_active: Boolean!
+  is_verified: Boolean!
+  is_blocked: Boolean!
+  is_archive: Boolean!
+
+  business_name: String!
+  business_category: String!
+  business_size: String!
+  permission: Int!
+  reseller_id: Int!
+
+  created_at: String!
+  updated_at: String!
+  archived_at: String
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+}
+
+input UpdateUserInput {
+  id: ID!
+  email: String
+  password: String
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+  is_active: Boolean
+  is_verified: Boolean
+  is_blocked: Boolean
+  is_archive: Boolean
+}
+
+type Query {
+  list(id: ID, email: String): [User]!
+  profile: [User!]!
+}
+
+type Mutation {
+  upsert(create: CreateUserInput, update: UpdateUserInput): [User]!
+  archive(id: ID!): [User]!
+  restore(id: ID!): [User]!
+  delete(id: ID!): [User]!
+}
+
+# type Query {
+#   user: UserQuery
+# }
+
+# type Mutation {
+#   user: UserMutation
+# }
+
+schema {
+  query: Query
+  mutation: Mutation
+}

@@ -1,0 +1,86 @@
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+type PortalUser {
+  id: Int!
+  email: String!
+  password: String!
+  contact_number: String!
+  first_name: String!
+  surname: String!
+  gender: Gender!
+
+  is_active: Boolean!
+  is_admin: Boolean!
+  is_archive: Boolean!
+
+  business_name: String!
+  business_category: String!
+  business_size: String!
+  permission: Int!
+  reseller_id: Int!
+
+  created_at: String!
+  updated_at: String!
+  archived_at: String
+}
+
+input CreatePortalUserInput {
+  email: String!
+  password: String!
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+}
+
+input UpdatePortalUserInput {
+  id: ID!
+  email: String
+  password: String
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+  is_active: Boolean
+  is_admin: Boolean
+  is_archive: Boolean
+}
+
+type PortalUserQuery {
+  list(id: ID, email: String): [PortalUser]!
+  profile: [PortalUser!]!
+}
+
+type PortalUserMutation {
+  upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
+  archive(id: ID!): [PortalUser]!
+  restore(id: ID!): [PortalUser]!
+  delete(id: ID!): [PortalUser]!
+}
+
+type Query {
+  portal_user: PortalUserQuery
+}
+
+type Mutation {
+  portal_user: PortalUserMutation
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

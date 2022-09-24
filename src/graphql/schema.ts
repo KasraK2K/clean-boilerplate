@@ -9,7 +9,7 @@ const typeDefs = [
 
   /* GraphQL */ `
     type User {
-      id: ID!
+      id: Int!
       email: String!
       password: String!
       contact_number: String!

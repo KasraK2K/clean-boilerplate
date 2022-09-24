@@ -15,7 +15,8 @@ import multipartMiddleware from "./middlewares/MultipartMiddleware"
 import requestMiddleware from "./middlewares/RequestMiddleware"
 import authMiddleware from "./middlewares/AuthMiddleware"
 import { context } from "./graphql/context"
-import mergedSchema from "./graphql/merge-schema"
+import executableSchema from "./graphql/register"
+import { typeDefs as scalarTypeDefs } from "graphql-scalars"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
@@ -25,7 +26,7 @@ app.locals = locals
 _.assign(global, globals)
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
 app.use(compression())
 app.disable("x-powered-by")
@@ -46,7 +47,7 @@ app.use(authMiddleware.auth)
 app.use(
   "/graphql",
   graphqlHTTP(async (request, response, graphQLParams) => ({
-    schema: mergedSchema,
+    schema: executableSchema,
     graphiql: { headerEditorEnabled: true },
     context,
     extensions: () => ({
@@ -57,7 +58,7 @@ app.use(
       mode,
     }),
     pretty: true,
-    rootValue: "root-value",
+    rootValue: scalarTypeDefs,
   }))
 )
 
