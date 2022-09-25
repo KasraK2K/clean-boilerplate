@@ -15,8 +15,8 @@ import multipartMiddleware from "./middlewares/MultipartMiddleware"
 import requestMiddleware from "./middlewares/RequestMiddleware"
 import authMiddleware from "./middlewares/AuthMiddleware"
 import { context } from "./graphql/context"
-import executableSchema from "./graphql/register"
 import { typeDefs as scalarTypeDefs } from "graphql-scalars"
+import { gatewaySchema } from "./graphql/gateway"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
@@ -47,7 +47,7 @@ app.use(authMiddleware.auth)
 app.use(
   "/graphql",
   graphqlHTTP(async (request, response, graphQLParams) => ({
-    schema: executableSchema,
+    schema: gatewaySchema,
     graphiql: { headerEditorEnabled: true },
     context,
     extensions: () => ({

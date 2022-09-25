@@ -1,9 +1,3 @@
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
-
 type User {
   id: Int!
   email: String!
@@ -24,9 +18,9 @@ type User {
   permission: Int!
   reseller_id: Int!
 
-  created_at: String!
-  updated_at: String!
-  archived_at: String
+  created_at: DateTime!
+  updated_at: DateTime!
+  archived_at: DateTime
 }
 
 input CreateUserInput {
@@ -62,25 +56,25 @@ input UpdateUserInput {
   is_archive: Boolean
 }
 
-type Query {
+type UserQuery {
   list(id: ID, email: String): [User]!
   profile: [User!]!
 }
 
-type Mutation {
+type UserMutation {
   upsert(create: CreateUserInput, update: UpdateUserInput): [User]!
   archive(id: ID!): [User]!
   restore(id: ID!): [User]!
   delete(id: ID!): [User]!
 }
 
-# type Query {
-#   user: UserQuery
-# }
+type Query {
+  user: UserQuery
+}
 
-# type Mutation {
-#   user: UserMutation
-# }
+type Mutation {
+  user: UserMutation
+}
 
 schema {
   query: Query
