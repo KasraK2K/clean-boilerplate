@@ -144,10 +144,7 @@ class UserPgLibrary extends PgRepository {
       }
       query += " Limit 1"
 
-      const user = await this.executeQuery({
-        query,
-        parameters,
-      })
+      const user = await this.executeQuery({ query, parameters })
         .then((result) => result.rows[0])
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.deleteEntity" })
