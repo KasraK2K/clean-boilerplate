@@ -9,10 +9,10 @@ const subschemas = loadFilesSync(join(process.cwd(), "/**/*.loader.engine.ts"))
 // ─────────────────────────────────────────────────────────────────────────────────────
 //   :::::: NOTE: Microservice External Schema : :  :   :    :     :        :          :
 // ─────────────────────────────────────────────────────────────────────────────────────
-// const microserviceExternalSchema = loadSchemaSync("https://api.spacex.land/graphql/", {
-//   loaders: [new UrlLoader()],
-// })
-// subschemas.push(microserviceExternalSchema)
+const microserviceExternalSchema = loadSchemaSync("https://api.spacex.land/graphql/", {
+  loaders: [new UrlLoader()],
+})
+subschemas.push(microserviceExternalSchema)
 // ─────────────────────────────────────────────────────────────────────────────────────
 
 export const gatewaySchema = stitchSchemas({

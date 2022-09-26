@@ -1,3 +1,8 @@
+"""
+User Domain
+
+You should send [**api_key**](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API) and [**authorization**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) to make it work
+"""
 type User {
   id: Int!
   email: String!
@@ -23,6 +28,9 @@ type User {
   archived_at: DateTime
 }
 
+"""
+Create new **user**
+"""
 input CreateUserInput {
   email: String!
   password: String!
@@ -37,6 +45,11 @@ input CreateUserInput {
   reseller_id: Int
 }
 
+"""
+Update **user** if exist searched by `id`
+
+_NOTE:_ If you forget to send `id`, new user will be create
+"""
 input UpdateUserInput {
   id: ID!
   email: String
@@ -56,11 +69,17 @@ input UpdateUserInput {
   is_archive: Boolean
 }
 
+"""
+User Domain Queries
+"""
 type UserQuery {
   list(id: ID, email: String): [User]!
   profile: [User!]!
 }
 
+"""
+User Domain Mutations
+"""
 type UserMutation {
   upsert(create: CreateUserInput, update: UpdateUserInput): [User]!
   archive(id: ID!): [User]!
@@ -69,10 +88,12 @@ type UserMutation {
 }
 
 type Query {
+  "Query for users in `User` domain"
   user: UserQuery
 }
 
 type Mutation {
+  "Mutate users in `User` domain"
   user: UserMutation
 }
 

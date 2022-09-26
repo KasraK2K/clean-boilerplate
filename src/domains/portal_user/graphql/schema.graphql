@@ -1,80 +1,101 @@
+"""
+Portal User Domain
+
+You should send [**api_key**](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API) and [**authorization**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) to make it work
+"""
 type PortalUser {
-        id: Int!
-        email: String!
-        password: String!
-        contact_number: String!
-        first_name: String!
-        surname: String!
-        gender: Gender!
+  id: Int!
+  email: String!
+  password: String!
+  contact_number: String!
+  first_name: String!
+  surname: String!
+  gender: Gender!
 
-        is_active: Boolean!
-        is_admin: Boolean!
-        is_archive: Boolean!
+  is_active: Boolean!
+  is_admin: Boolean!
+  is_archive: Boolean!
 
-        business_name: String!
-        business_category: String!
-        business_size: String!
-        permission: Int!
-        reseller_id: Int!
+  business_name: String!
+  business_category: String!
+  business_size: String!
+  permission: Int!
+  reseller_id: Int!
 
-        created_at: DateTime!
-        updated_at: DateTime!
-        archived_at: DateTime
-      }
+  created_at: DateTime!
+  updated_at: DateTime!
+  archived_at: DateTime
+}
 
-      input CreatePortalUserInput {
-        email: String!
-        password: String!
-        contact_number: String
-        first_name: String
-        surname: String
-        gender: Gender
-        business_name: String
-        business_category: String
-        business_size: String
-        permission: Int
-        reseller_id: Int
-      }
+"""
+Create new **portal_user**
+"""
+input CreatePortalUserInput {
+  email: String!
+  password: String!
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+}
 
-      input UpdatePortalUserInput {
-        id: ID!
-        email: String
-        password: String
-        contact_number: String
-        first_name: String
-        surname: String
-        gender: Gender
-        business_name: String
-        business_category: String
-        business_size: String
-        permission: Int
-        reseller_id: Int
-        is_active: Boolean
-        is_admin: Boolean
-        is_archive: Boolean
-      }
+"""
+Update **portal_user** if exist searched by `id`
 
-      type PortalUserQuery {
-        list(id: ID, email: String): [PortalUser]!
-        profile: [PortalUser!]!
-      }
+_NOTE:_ If you forget to send `id`, new portal_user will be create
+"""
+input UpdatePortalUserInput {
+  id: ID!
+  email: String
+  password: String
+  contact_number: String
+  first_name: String
+  surname: String
+  gender: Gender
+  business_name: String
+  business_category: String
+  business_size: String
+  permission: Int
+  reseller_id: Int
+  is_active: Boolean
+  is_admin: Boolean
+  is_archive: Boolean
+}
 
-      type PortalUserMutation {
-        upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
-        archive(id: ID!): [PortalUser]!
-        restore(id: ID!): [PortalUser]!
-        delete(id: ID!): [PortalUser]!
-      }
+"""
+PortalUser Domain Queries
+"""
+type PortalUserQuery {
+  list(id: ID, email: String): [PortalUser]!
+  profile: [PortalUser!]!
+}
 
-      type Query {
-        portal_user: PortalUserQuery
-      }
+"""
+PortalUser Domain Mutations
+"""
+type PortalUserMutation {
+  upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
+  archive(id: ID!): [PortalUser]!
+  restore(id: ID!): [PortalUser]!
+  delete(id: ID!): [PortalUser]!
+}
 
-      type Mutation {
-        portal_user: PortalUserMutation
-      }
+type Query {
+  "Query for portal_users in `PortalUser` domain"
+  portal_user: PortalUserQuery
+}
 
-      schema {
-        query: Query
-        mutation: Mutation
-      }
+type Mutation {
+  "Mutate portal_users in `PortalUser` domain"
+  portal_user: PortalUserMutation
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

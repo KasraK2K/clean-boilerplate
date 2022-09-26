@@ -1,5 +1,18 @@
+"""
+Gender Enum
+"""
 enum Gender {
   MALE
   FEMALE
   OTHER
 }
+
+"""
+Clean Boilerplate GraphQL Queries
+"""
+type Query
+
+"""
+Clean Boilerplate GraphQL Mitations
+"""
+type Mutation
