@@ -78,6 +78,22 @@ class UserController extends Controller {
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }
+
+  public async login(req: Request, res: Response): IControllerResponse {
+    const { email, password, reseller_id } = req.body
+    return await service
+      .login({ email, password, reseller_id })
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  public async refreshToken(req: Request, res: Response): IControllerResponse {
+    const { token } = req.body
+    return await service
+      .refreshToken(token)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
 }
 
 export default new UserController()

@@ -95,6 +95,26 @@ export const schema = {
       id: { type: "integer" },
     },
   },
+
+  login: {
+    type: "object",
+    additionalProperties: false,
+    required: ["email", "password"],
+    properties: {
+      email: { type: "string", format: "email" },
+      password: { type: "string", minLength: 6, maxLength: 60 },
+      reseller_id: { type: "integer" },
+    },
+  },
+
+  refreshToken: {
+    type: "object",
+    additionalProperties: false,
+    required: ["token"],
+    properties: {
+      token: { type: "string" },
+    },
+  },
 }
 
 export default schema

@@ -1,4 +1,4 @@
-import { sign, decode, verify, JwtPayload } from "jsonwebtoken"
+import { sign, decode, verify, JwtPayload, SignOptions, DecodeOptions } from "jsonwebtoken"
 import logger from "../helpers/logger.helper"
 import { ServiceName } from "../enums/general.enum"
 import _ from "lodash"
@@ -9,12 +9,12 @@ export interface IJwtVerify {
 }
 
 class Jwt {
-  public payloadToJwt(payload: Record<string, any>): string {
-    return sign(payload, String(process.env.JWT_SECRET))
+  public payloadToJwt(payload: Record<string, any>, options?: SignOptions | undefined): string {
+    return sign(payload, String(process.env.JWT_SECRET), options)
   }
 
-  public jwtToPayload(token: string): string | JwtPayload | null {
-    return decode(token)
+  public jwtToPayload(token: string, options?: DecodeOptions | undefined): string | JwtPayload | null {
+    return decode(token, options)
   }
 
   public verifyJwt(token: string): IJwtVerify {

@@ -15,7 +15,7 @@ class PortalUserPgLibrary extends PgRepository {
         .from("portal_users")
         .where(args)
         .exec()
-        .then(async (response) => resolve(response))
+        .then((result) => resolve(result))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.list" })
           return reject(err)
@@ -29,7 +29,7 @@ class PortalUserPgLibrary extends PgRepository {
         .from("portal_users")
         .where([`id = '${id}'`])
         .exec()
-        .then(async (response) => resolve(response))
+        .then((result) => resolve(result))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.profile" })
           return reject(err)
@@ -41,7 +41,7 @@ class PortalUserPgLibrary extends PgRepository {
     return new Promise(async (resolve, reject) => {
       return await this.upsert_query("portal_users", args)
         .exec()
-        .then(async (response) => resolve(response))
+        .then((result) => resolve(result))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.upsert" })
           return reject(err)
@@ -52,7 +52,7 @@ class PortalUserPgLibrary extends PgRepository {
   public archive(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       // return await this.updateOne("portal_users", { id, is_archive: true, archived_at: "NOW()" })
-      //   .then(async (response) => resolve(response))
+      //   .then(result => resolve(result))
       //   .catch(async (err) => {
       //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archiveUser" })
       //     return reject(err)
@@ -67,7 +67,7 @@ class PortalUserPgLibrary extends PgRepository {
         parameters: [true, "NOW()", id, false],
         omits: ["password"],
       })
-        .then(async (response) => resolve(response.rows))
+        .then((result) => resolve(result.rows))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archive" })
           return reject(err)
@@ -78,7 +78,7 @@ class PortalUserPgLibrary extends PgRepository {
   public restore(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       // return await this.updateOne("portal_users", { id, is_archive: false, archived_at: null })
-      //   .then(async (response) => resolve(response))
+      //   .then(result => resolve(result))
       //   .catch(async (err) => {
       //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restoreUser" })
       //     return reject(err)
@@ -93,7 +93,7 @@ class PortalUserPgLibrary extends PgRepository {
         parameters: [false, null, id, true],
         omits: ["password"],
       })
-        .then(async (response) => resolve(response.rows))
+        .then((result) => resolve(result.rows))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restore" })
           return reject(err)
@@ -108,7 +108,7 @@ class PortalUserPgLibrary extends PgRepository {
         parameters: [id],
         omits: ["password"],
       })
-        .then(async (response) => resolve(response.rows))
+        .then((result) => resolve(result.rows))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.delete" })
           return reject(err)

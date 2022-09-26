@@ -10,4 +10,9 @@ router.post("/restore", controller.restore)
 router.post("/toggle", controller.toggle)
 router.post("/delete", controller.delete)
 
+router.post("/auth/login", controller.login)
+router.post("/auth/refresh-token", controller.refreshToken)
+// router.post("/auth/reset-password", controller.resetPassword)
+// router.post("/auth/forgot-password", controller.forgotPassword)
+
 export default router

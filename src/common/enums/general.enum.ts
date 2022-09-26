@@ -16,3 +16,8 @@ export enum BusinessSize {
   Medium = "medium",
   BIG = "big",
 }
+
+export enum TokenType {
+  TOKEN,
+  REFRESH,
+}

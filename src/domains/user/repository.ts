@@ -65,6 +65,24 @@ class UserRepository extends Repository {
         .catch((err) => reject(err))
     })
   }
+
+  public async login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.pgLibrary
+        .login(args)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
+
+  public async refreshToken(token: string): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.pgLibrary
+        .refreshToken(token)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
 }
 
 export default new UserRepository()

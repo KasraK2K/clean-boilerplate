@@ -144,6 +144,42 @@ class UserService extends Service {
           .catch((err) => reject(err))
     })
   }
+
+  public async login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator(args, schema.login)
+
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.login: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else
+        repository
+          .login(args)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+    })
+  }
+
+  public async refreshToken(token: string): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator({ token }, schema.refreshToken)
+
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.refreshToken: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else
+        repository
+          .refreshToken(token)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+    })
+  }
 }
 
 export default new UserService()
