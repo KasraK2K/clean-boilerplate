@@ -63,6 +63,15 @@ const resolvers = {
           })
         },
 
+        toggle: (args: Record<string, any>) => {
+          return new Promise((resolve, reject) => {
+            user
+              .toggle(args.id)
+              .then((result) => resolve(result.data))
+              .catch((err) => reject(err))
+          })
+        },
+
         delete: (args: Record<string, any>) => {
           return new Promise((resolve, reject) => {
             user

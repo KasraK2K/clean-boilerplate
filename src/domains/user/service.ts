@@ -109,6 +109,24 @@ class UserService extends Service {
     })
   }
 
+  public async toggle(id: number): Promise<Record<string, any>> {
+    return new Promise((resolve, reject) => {
+      const { valid, errors } = validator({ id }, schema.id)
+
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.toggle: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else
+        repository
+          .toggle(id)
+          .then((result) => resolve({ data: result }))
+          .catch((err) => reject(err))
+    })
+  }
+
   public async delete(id: number): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ id }, schema.id)

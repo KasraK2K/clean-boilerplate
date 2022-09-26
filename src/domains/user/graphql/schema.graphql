@@ -84,6 +84,7 @@ type UserMutation {
   upsert(create: CreateUserInput, update: UpdateUserInput): [User]!
   archive(id: ID!): [User]!
   restore(id: ID!): [User]!
+  toggle(id: ID!): [User]!
   delete(id: ID!): [User]!
 }
 

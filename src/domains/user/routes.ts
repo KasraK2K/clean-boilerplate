@@ -7,6 +7,7 @@ router.post("/profile", controller.profile)
 router.post("/upsert", controller.upsert)
 router.post("/archive", controller.archive)
 router.post("/restore", controller.restore)
+router.post("/toggle", controller.toggle)
 router.post("/delete", controller.delete)
 
 export default router

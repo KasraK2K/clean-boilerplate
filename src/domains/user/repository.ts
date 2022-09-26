@@ -48,6 +48,15 @@ class UserRepository extends Repository {
     })
   }
 
+  public async toggle(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.pgLibrary
+        .toggle(id)
+        .then((response) => resolve(response))
+        .catch((err) => reject(err))
+    })
+  }
+
   public async delete(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary

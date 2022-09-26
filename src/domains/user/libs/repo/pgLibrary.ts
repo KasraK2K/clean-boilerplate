@@ -77,12 +77,6 @@ class UserPgLibrary extends PgRepository {
 
   public restore(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("users", { id, is_archive: false, archived_at: null })
-      //   .then(async (response) => resolve(response))
-      //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.restoreUser" })
-      //     return reject(err)
-      //   })
       return await this.executeQuery({
         query: `
           UPDATE users
@@ -96,6 +90,26 @@ class UserPgLibrary extends PgRepository {
         .then(async (response) => resolve(response.rows))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.restoreEntity" })
+          return reject(err)
+        })
+    })
+  }
+
+  public toggle(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await this.executeQuery({
+        query: `
+          UPDATE users
+          SET is_blocked = NOT is_blocked
+          WHERE id = $1
+          RETURNING *
+        `,
+        parameters: [id],
+        omits: ["password"],
+      })
+        .then(async (response) => resolve(response.rows))
+        .catch(async (err) => {
+          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.toggle" })
           return reject(err)
         })
     })

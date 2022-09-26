@@ -58,6 +58,17 @@ class UserController extends Controller {
   }
 
   /**
+   * Toggle user is_blocked
+   */
+  public async toggle(req: Request, res: Response): IControllerResponse {
+    const { id } = req.body
+    return await service
+      .toggle(id)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  /**
    * Permanently delete user
    */
   public async delete(req: Request, res: Response): IControllerResponse {
