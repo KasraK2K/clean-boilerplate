@@ -11,8 +11,8 @@ import http from "http"
 // import { Job, Queue, Worker } from "bullmq"
 // import IORedis from "ioredis"
 
-// const connection = new IORedis(ioRedisConfig)
 // const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
+// const connection = new IORedis(ioRedisConfig)
 
 // const queue = new Queue("queueName", { connection })
 // queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: false })
