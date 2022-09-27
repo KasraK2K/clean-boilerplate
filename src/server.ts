@@ -1,27 +1,39 @@
 import config from "config"
 import app from "./app"
 import logger from "./common/helpers/logger.helper"
-import { IApplicationConfig, IRedisIoConfig } from "./../config/config.interface"
+import { IApplicationConfig } from "./../config/config.interface"
 import { getUserInformation } from "./common/helpers/information.helper"
 import http from "http"
+import BullMQ, { Job, Worker } from "./integrations/bullmq"
 
-/* -------------------------------------------------------------------------- */
-/*                                   BullMQ                                   */
-/* -------------------------------------------------------------------------- */
-// import { Job, Queue, Worker } from "bullmq"
-// import IORedis from "ioredis"
+// ──────────────────────────────────────────────────────────────────────────────────
+//   :::::: B U L L M Q   E X A M P L E : :  :   :    :      :         :            :
+// ──────────────────────────────────────────────────────────────────────────────────
+;(async () => {
+  const bullmq = new BullMQ("queueName")
+  const connection = bullmq.connection
+  const queue = bullmq.queue
 
-// const ioRedisConfig: IRedisIoConfig = config.get("database.ioRedis")
-// const connection = new IORedis(ioRedisConfig)
+  // ─── Create Job ─────────────────────────────────────────────────────────────────
+  // bullmq.job.create(
+  //   "job-order-4",
+  //   { name: "clean-boilerplate", is_old: false },
+  //   { delay: 5000, removeOnComplete: true }
+  // )
 
-// const queue = new Queue("queueName", { connection })
-// queue.add("jobName", { name: "Kasra", age: 36 }, { removeOnComplete: false })
+  // ─── Get Job ────────────────────────────────────────────────────────────────────
+  // const job = await bullmq.job.getJob("job-order-10")
+  // console.log(job)
 
-// const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
+  // ─── Renew Job ──────────────────────────────────────────────────────────────────
+  // await bullmq.job.renewJob("job-order-4", { opts: { delay: 0 } })
 
-// worker.on("completed", (job) => console.log(`${job.id} has completed!`))
-// worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
-/* -------------------------------------------------------------------------- */
+  // ─── Create Worker ──────────────────────────────────────────────────────────────
+  const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
+  worker.on("completed", (job) => console.log(`${job.id} has completed!`))
+  worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
+})()
+// ─────────────────────────────────────────────────────── End Bullmq Example ─────
 
 const appConfig: IApplicationConfig = config.get("application")
 const port: number = Number(process.env.PORT) || appConfig.port
