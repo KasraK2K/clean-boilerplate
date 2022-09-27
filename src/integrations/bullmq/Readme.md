@@ -2,6 +2,8 @@
 
 BullMQ integration example:
 
+Create queue to add a job and work on it
+
 ```typescript
 /* -------------------------------------------------------------------------- */
 /*                                Create Queue                                */
@@ -12,6 +14,10 @@ const bullmq = new BullMQ("queueName")
 const connection = bullmq.connection
 const queue = bullmq.queue
 ```
+
+&nbsp;
+
+For create a job you can use this function
 
 ```typescript
 /* -------------------------------------------------------------------------- */
@@ -32,6 +38,10 @@ async function createJob() {
 }
 ```
 
+&nbsp;
+
+With this function you be able to get your job by name
+
 ```typescript
 /* -------------------------------------------------------------------------- */
 /*                                   Get Job                                  */
@@ -48,6 +58,10 @@ async function getJob() {
 }
 ```
 
+&nbsp;
+
+Renew is useful in cases where you need to delete a job and re create that
+
 ```typescript
 /* -------------------------------------------------------------------------- */
 /*                                  Renew Job                                 */
@@ -62,6 +76,10 @@ async function renewJob() {
   await bullmq.job.renewJob("job-order-4", { opts: { delay: 0 } })
 }
 ```
+
+&nbsp;
+
+Worker is another needed part you can use to what should be done
 
 ```typescript
 /* -------------------------------------------------------------------------- */
