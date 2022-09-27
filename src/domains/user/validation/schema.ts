@@ -113,6 +113,7 @@ export const schema = {
     required: ["token"],
     properties: {
       token: { type: "string" },
+      secret: { type: "string" },
     },
   },
 }

@@ -7,6 +7,7 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName, TokenType } from "../../common/enums/general.enum"
 import tokenHelper from "../../common/helpers/token.helper"
 import bcryptHelper from "../../common/helpers/bcrypt.helper"
+import user from "src/swagger/domains/user"
 
 class UserService extends Service {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
@@ -169,7 +170,7 @@ class UserService extends Service {
     })
   }
 
-  public async refreshToken(token: string): Promise<Record<string, any>> {
+  public async refreshToken(token: string, secret: string): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ token }, schema.refreshToken)
 
@@ -180,11 +181,18 @@ class UserService extends Service {
         })
         return reject({ errors })
       } else {
-        const { valid, data } = tokenHelper.verify(token)
+        const verifiedToken = tokenHelper.verify(token)
+        const verifiedSecret = tokenHelper.verify(token)
 
-        if (!valid) return reject({ errCode: 1010 })
-        else if (data.type !== TokenType.REFRESH) return reject({ errCode: 1010 })
-        else return resolve({ data: this.createToken({ id: data.id }) })
+        if (!verifiedSecret.valid || !verifiedToken.valid) return reject({ errCode: 1010 })
+        else if (verifiedToken.data.type !== TokenType.REFRESH) return reject({ errCode: 1010 })
+        else {
+          // get user
+          // check user.email === verfiedSecret.data.email
+          // if
+          return resolve({ data: this.createToken({ id: verifiedToken.data.id }) })
+          // else return reject({ errCode: 1010 })
+        }
       }
     })
   }
