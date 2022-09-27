@@ -4,7 +4,9 @@ import Service from "../../base/Service"
 import schema from "./validation/schema"
 import validator from "../../common/helpers/validator.helper"
 import logger from "../../common/helpers/logger.helper"
-import { ServiceName } from "../../common/enums/general.enum"
+import { ServiceName, TokenType } from "../../common/enums/general.enum"
+import tokenHelper from "../../common/helpers/token.helper"
+import bcryptHelper from "../../common/helpers/bcrypt.helper"
 
 class UserService extends Service {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
@@ -146,7 +148,7 @@ class UserService extends Service {
   }
 
   public async login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const { valid, errors } = validator(args, schema.login)
 
       if (!valid) {
@@ -156,9 +158,13 @@ class UserService extends Service {
         })
         return reject({ errors })
       } else
-        repository
-          .login(args)
-          .then((result) => resolve({ data: result }))
+        await repository
+          .getNonBlockedExistUser(args)
+          .then((user) => {
+            if (user && bcryptHelper.compareHash(args.password, user.password))
+              return resolve({ data: this.createToken({ id: user.id }) })
+            else return reject({ errCode: 1015 })
+          })
           .catch((err) => reject(err))
     })
   }
@@ -173,12 +179,31 @@ class UserService extends Service {
           dest: "service",
         })
         return reject({ errors })
-      } else
-        repository
-          .refreshToken(token)
-          .then((result) => resolve({ data: result }))
-          .catch((err) => reject(err))
+      } else {
+        const { valid, data } = tokenHelper.verify(token)
+
+        if (!valid) return reject({ errCode: 1010 })
+        else if (data.type !== TokenType.REFRESH) return reject({ errCode: 1010 })
+        else return resolve({ data: this.createToken({ id: data.id }) })
+      }
     })
+  }
+
+  private createToken(payload: { id: number }): {
+    token: string
+    expire_token_in: string
+    refresh_token: string
+    expire_refresh_token_in: string
+  } {
+    const expire_token_in = "2 days"
+    const expire_refresh_token_in = "4 days"
+
+    const token = tokenHelper.sign({ id: payload.id, type: TokenType.TOKEN }, { expiresIn: expire_token_in })
+    const refresh_token = tokenHelper.sign(
+      { id: payload.id, type: TokenType.REFRESH },
+      { expiresIn: expire_refresh_token_in }
+    )
+    return { token, expire_token_in, refresh_token, expire_refresh_token_in }
   }
 }
 

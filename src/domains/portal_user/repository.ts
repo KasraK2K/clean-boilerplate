@@ -7,7 +7,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .list(args)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -16,7 +16,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .profile(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -25,7 +25,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .upsert(args)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -34,7 +34,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .archive(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -43,7 +43,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .restore(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -52,7 +52,7 @@ class PortalUserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .delete(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }

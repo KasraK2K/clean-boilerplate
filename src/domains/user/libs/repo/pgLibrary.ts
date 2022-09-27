@@ -132,9 +132,13 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
+  public getNonBlockedExistUser(args: {
+    email: string
+    password: string
+    reseller_id: number
+  }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      const { email, password, reseller_id } = args
+      const { email, reseller_id } = args
 
       let query = "SELECT * FROM users WHERE email = $1 AND is_archive = false AND is_blocked = false"
       const parameters: (string | number)[] = [email]
@@ -144,39 +148,13 @@ class UserPgLibrary extends PgRepository {
       }
       query += " Limit 1"
 
-      const user = await this.executeQuery({ query, parameters })
-        .then((result) => result.rows[0])
+      return await this.executeQuery({ query, parameters })
+        .then((result) => resolve(result.rows[0]))
         .catch(async (err) => {
           logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.deleteEntity" })
-          return ["asd"]
+          return reject(err)
         })
-
-      if (bcryptHelper.compareHash(password, user.password)) return resolve(this.createToken({ id: user.id }))
-      else reject({ errCode: 1015 })
     })
-  }
-
-  public refreshToken(token: string): Promise<Record<string, any>> {
-    return new Promise(async (resolve, reject) => {
-      const { valid, data } = tokenHelper.verify(token)
-
-      if (!valid) return reject({ errCode: 1010 })
-      else if (data.type !== TokenType.TOKEN) return reject({ errCode: 1010 })
-      else return resolve(this.createToken({ id: data.id }))
-    })
-  }
-
-  /* -------------------------------------------------------------------------- */
-  private createToken(payload: { id: number }): Record<string, any> {
-    const expire_token_in = "2 days"
-    const expire_refresh_token_in = "4 days"
-
-    const token = tokenHelper.sign({ id: payload.id, type: TokenType.TOKEN }, { expiresIn: expire_token_in })
-    const refresh_token = tokenHelper.sign(
-      { id: payload.id, type: TokenType.REFRESH },
-      { expiresIn: expire_refresh_token_in }
-    )
-    return { token, expire_token_in, refresh_token, expire_refresh_token_in }
   }
 }
 

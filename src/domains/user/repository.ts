@@ -7,7 +7,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .list(args)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -16,7 +16,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .profile(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -25,7 +25,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .upsert(args)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -34,7 +34,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .archive(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -43,7 +43,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .restore(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -52,7 +52,7 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .toggle(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
@@ -61,25 +61,20 @@ class UserRepository extends Repository {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .delete(id)
-        .then((response) => resolve(response))
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
 
-  public async login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
+  public async getNonBlockedExistUser(args: {
+    email: string
+    password: string
+    reseller_id: number
+  }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .login(args)
-        .then((response) => resolve(response))
-        .catch((err) => reject(err))
-    })
-  }
-
-  public async refreshToken(token: string): Promise<Record<string, any>> {
-    return new Promise(async (resolve, reject) => {
-      return await library.repo.pgLibrary
-        .refreshToken(token)
-        .then((response) => resolve(response))
+        .getNonBlockedExistUser(args)
+        .then((result) => resolve(result))
         .catch((err) => reject(err))
     })
   }
