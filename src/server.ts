@@ -4,36 +4,6 @@ import logger from "./common/helpers/logger.helper"
 import { IApplicationConfig } from "./../config/config.interface"
 import { getUserInformation } from "./common/helpers/information.helper"
 import http from "http"
-import BullMQ, { Job, Worker } from "./integrations/bullmq"
-
-// ──────────────────────────────────────────────────────────────────────────────────
-//   :::::: B U L L M Q   E X A M P L E : :  :   :    :      :         :            :
-// ──────────────────────────────────────────────────────────────────────────────────
-;(async () => {
-  const bullmq = new BullMQ("queueName")
-  const connection = bullmq.connection
-  const queue = bullmq.queue
-
-  // ─── Create Job ─────────────────────────────────────────────────────────────────
-  // bullmq.job.create(
-  //   "job-order-4",
-  //   { name: "clean-boilerplate", is_old: false },
-  //   { delay: 5000, removeOnComplete: true }
-  // )
-
-  // ─── Get Job ────────────────────────────────────────────────────────────────────
-  // const job = await bullmq.job.getJob("job-order-10")
-  // console.log(job)
-
-  // ─── Renew Job ──────────────────────────────────────────────────────────────────
-  // await bullmq.job.renewJob("job-order-4", { opts: { delay: 0 } })
-
-  // ─── Create Worker ──────────────────────────────────────────────────────────────
-  const worker = new Worker("queueName", async (job: Job) => console.log(job.data), { connection })
-  worker.on("completed", (job) => console.log(`${job.id} has completed!`))
-  worker.on("failed", (job, err) => console.log(`${job.id} has failed with ${err.message}`))
-})()
-// ─────────────────────────────────────────────────────── End Bullmq Example ─────
 
 const appConfig: IApplicationConfig = config.get("application")
 const port: number = Number(process.env.PORT) || appConfig.port
