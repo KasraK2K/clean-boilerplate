@@ -25,7 +25,7 @@ For create a job you can use this function
 /* -------------------------------------------------------------------------- */
 import BullMQ from "./integrations/bullmq"
 
-async function createJob() {
+function createJob() {
   const bullmq = new BullMQ("queueName")
   const connection = bullmq.connection
   const queue = bullmq.queue

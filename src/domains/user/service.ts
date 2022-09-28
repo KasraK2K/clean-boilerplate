@@ -177,6 +177,8 @@ class UserService extends Service {
     })
   }
 
+  // TODO: get token and refresh token and just createe refresh token if token expire
+  // Readmore about refresh token
   public async refreshToken(token: string, secret: string): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const { valid, errors } = validator({ token }, schema.refreshToken)
