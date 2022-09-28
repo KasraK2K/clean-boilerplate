@@ -17,7 +17,7 @@ class UserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.list" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/list" })
           return reject(err)
         })
     })
@@ -31,7 +31,7 @@ class UserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.profile" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/profile" })
           return reject(err)
         })
     })
@@ -43,7 +43,7 @@ class UserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.upsertEntity" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/upsertEntity" })
           return reject(err)
         })
     })
@@ -54,7 +54,7 @@ class UserPgLibrary extends PgRepository {
       // return await this.updateOne("users", { id, is_archive: true, archived_at: "NOW()" })
       //   .then(result => resolve(result))
       //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.archiveUser" })
+      //     logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/archiveUser" })
       //     return reject(err)
       //   })
       return await this.executeQuery({
@@ -69,7 +69,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.archiveEntity" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/archiveEntity" })
           return reject(err)
         })
     })
@@ -89,7 +89,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.restoreEntity" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/restoreEntity" })
           return reject(err)
         })
     })
@@ -109,7 +109,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.toggle" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/toggle" })
           return reject(err)
         })
     })
@@ -124,7 +124,7 @@ class UserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.deleteEntity" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/deleteEntity" })
           return reject(err)
         })
     })
@@ -149,7 +149,7 @@ class UserPgLibrary extends PgRepository {
       return await this.executeQuery({ query, parameters })
         .then((result) => resolve(result.rows[0]))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "UserPgLibrary.deleteEntity" })
+          logger.error(err, { service: ServiceName.USER, dest: "user/pgLibrary.ts/deleteEntity" })
           return reject(err)
         })
     })

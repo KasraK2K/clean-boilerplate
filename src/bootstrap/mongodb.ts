@@ -22,7 +22,7 @@ mongoClient
   .on("connect", () => console.log("MongoDB connected"))
   .on("close", () => console.log("MongoDB connection closed"))
   .on("error", (err) => {
-    logger.error("MongoDB Error", { service: ServiceName.DEFAULT, dest: "mongodb" })
+    logger.error(err.message, { service: ServiceName.DEFAULT, dest: "mongodb.ts" })
     process.exit(1)
   })
 

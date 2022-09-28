@@ -13,7 +13,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -27,7 +27,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -61,7 +61,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -93,7 +93,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -125,7 +125,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -150,7 +150,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -175,7 +175,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query, parameters, omits })
         .then((result) => resolve(result))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -222,7 +222,7 @@ class PgRepository extends PgBuilderRepository {
           }
         })
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })
@@ -284,7 +284,7 @@ class PgRepository extends PgBuilderRepository {
       await this.executeQuery({ query })
         .then((result) => resolve(Number(result.rows[0].count)))
         .catch((err) => {
-          logger.error(err.message, { dest: "PgRepository" })
+          logger.error(err, { dest: "PgRepository.ts" })
           return reject(err)
         })
     })

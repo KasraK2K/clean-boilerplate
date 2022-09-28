@@ -20,9 +20,9 @@ class UserService extends Service {
       const { valid, errors } = validator(args, schema.list)
 
       if (!valid) {
-        logger.warn(`Validation has error on UserService.list: ${errors}`, {
+        logger.warn(`Validation has error on Service.list: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -40,7 +40,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.profile: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -70,7 +70,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.upsert: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -90,7 +90,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.archive: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -108,7 +108,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.restore: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -126,7 +126,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.toggle: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -144,7 +144,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.delete: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -162,7 +162,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.login: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else
@@ -184,7 +184,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.refreshToken: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -194,7 +194,7 @@ class UserService extends Service {
         else {
           const decodedToken = cypherUtil.cypherToText(secret)
           const [id, email] = decodedToken.split("--")
-          const user = await this.findOne({ id: +id, email })
+          const user = await this.getUserObject({ id: +id, email })
 
           if (!user) return reject({ errCode: 1010 })
           else return resolve({ data: super.createToken({ id: verifiedToken.data.id }) })
@@ -210,28 +210,35 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.forgotPassword: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else {
-        const user = await this.findOne({ email })
-        const forgotToken = cypherUtil.textToCypher(`${user.id}--${user.email}`)
+        const user = await this.getUserObject({ email })
 
         if (user) {
-          mailgunJs.message.createMessage({
-            to: ["Kasra.Karami.Word@gmail.com"],
-            subject: "forgot clean-boilerplate password",
-            html: /* HTML */ `
-              <h1>Forgot Password</h1>
-              <br />
-              <p>
-                To reset your password click
-                <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank">here</a>
-              </p>
-            `,
-          })
+          const forgotToken = cypherUtil.textToCypher(`${user.id}--${user.email}`)
 
-          return resolve({})
+          mailgunJs.message
+            .createMessage({
+              to: ["Kasra.Karami.Word@gmail.com"],
+              subject: "forgot clean-boilerplate password",
+              html: /* HTML */ `
+                <h1>Forgot Password</h1>
+                <br />
+                <p>
+                  To reset your password click
+                  <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank"
+                    >here</a
+                  >
+                </p>
+              `,
+            })
+            .then((response) => resolve({ data: response }))
+            .catch((err) => {
+              logger.error(err, { service: ServiceName.USER, dest: "user/service.ts/forgotPassword" })
+              return reject({ errCode: 1017 })
+            })
         } else return reject({ errCode: 1016 })
       }
     })
@@ -244,14 +251,14 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.resetPassword: ${errors}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts",
         })
         return reject({ errors })
       } else {
         const { secret, password } = args
         const decodedToken = cypherUtil.cypherToText(secret)
         const [id, email] = decodedToken.split("--")
-        const user = await this.findOne({ id: +id, email })
+        const user = await this.getUserObject({ id: +id, email })
 
         if (user) {
           const hashedPassword = bcryptHelper.hashGen(password)
@@ -263,31 +270,19 @@ class UserService extends Service {
     })
   }
 
-  // TODO: Move to libs
-  private async findOne(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
-    return new Promise(async (resolve, reject) => {
-      const { valid, errors } = validator(args, schema.list)
-
-      if (!valid) {
-        logger.warn(`Validation has error on UserService.findOne: ${errors}`, {
+  private async getUserObject(args: { id?: number; email?: string } = {}): Promise<Record<string, any> | undefined> {
+    return await this.list(args)
+      .then((result) => {
+        if (result.data.length) return result.data[0]
+        else return undefined
+      })
+      .catch((err) => {
+        logger.error(`Error on getting user in UserService.getUserObject: ${err.message}`, {
           service: ServiceName.USER,
-          dest: "service",
+          dest: "user/service.ts/getUserObject",
         })
-        return reject({ errors })
-      } else
-        await this.list(args)
-          .then((result) => {
-            if (result.data.length) resolve(result.data[0])
-            else reject(undefined)
-          })
-          .catch((err) => {
-            logger.error(`Error on getting user in UserService.resetPassword: ${err.message}`, {
-              service: ServiceName.USER,
-              dest: "service",
-            })
-            return reject(undefined)
-          })
-    })
+        return undefined
+      })
   }
 }
 

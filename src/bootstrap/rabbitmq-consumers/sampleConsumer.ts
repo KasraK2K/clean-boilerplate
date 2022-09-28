@@ -35,7 +35,7 @@ if (uri && uri.length && jobConfig.activeConsumers.includes(filename))
        */
       channel.prefetch(1)
 
-      logger.info(`Waiting for messages in ${queue_name}`, { dest: "sample-consumer" })
+      logger.info(`Waiting for messages in ${queue_name}`, { dest: "sampleConsumer.ts" })
 
       channel.consume(
         queue_name,
@@ -45,7 +45,7 @@ if (uri && uri.length && jobConfig.activeConsumers.includes(filename))
 
             // NOTE: You can do something here...
 
-            logger.log(`Message id: ${content.id} Done`, { dest: "sample-consumer" })
+            logger.log(`Message id: ${content.id} Done`, { dest: "sampleConsumer.ts" })
             channel.ack(message)
           }
         },

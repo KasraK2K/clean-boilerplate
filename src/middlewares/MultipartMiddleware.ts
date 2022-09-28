@@ -33,13 +33,13 @@ class MultipartMiddleware extends Middleware {
       form.on("error", (err) => {
         checkUpload.valid = false
         checkUpload.errors.push(error(1005).message)
-        logger.error(err.message, { dest: "multipart.middleware" })
+        logger.error(err, { dest: "MultipartMiddleware.ts" })
       }) // Fill errors on get error and log with logger
       /* ------------------------------- END: EVENTS ------------------------------ */
 
       form.parse(req, (err: any, fields: formidable.Fields, files: formidable.Files) => {
         if (err) {
-          logger.error("Error on extending multipart header", { dest: "multipart.middleware" })
+          logger.error(err, { dest: "MultipartMiddleware.ts" })
           checkUpload.valid = false
           checkUpload.errors.push(error(1004).message)
         }
@@ -75,7 +75,7 @@ class MultipartMiddleware extends Middleware {
               const file = files[fileKey] as formidable.File
               fs.unlinkSync(file.filepath)
             })
-            logger.error("Error on uploading file", { dest: "multipart.middleware" })
+            logger.error("Error on uploading file", { dest: "MultipartMiddleware.ts" })
             return addMetaData(req, res, { errCode: 1005, statusCode: 400, errors: checkUpload.errors })
           }
         }

@@ -65,7 +65,7 @@ export const getUserInformation = (port: number) => {
 
     logger.info(`Server running on http://localhost:${port}`, {
       service: ServiceName.DEFAULT,
-      dest: "information.helper",
+      dest: "information.helper.ts",
     })
   }
 }

@@ -9,7 +9,7 @@ interface IDeleteFile {
 
 export const deleteFile = (
   filePath: string,
-  options: IDeleteFile = { service: ServiceName.DEFAULT, dest: "deleteFile.util" }
+  options: IDeleteFile = { service: ServiceName.DEFAULT, dest: "deleteFile.util.ts" }
 ) => {
   const { service, dest } = options
 

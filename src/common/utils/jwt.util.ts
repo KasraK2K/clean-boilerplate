@@ -23,7 +23,7 @@ class Jwt {
     verify(token, String(process.env.JWT_SECRET), (err, decoded) => {
       if (err) {
         returnValue.valid = false
-        logger.warn("Error getting verifyJwt", { service: ServiceName.DEFAULT, dest: "jwt.util" })
+        logger.warn(err.message, { service: ServiceName.DEFAULT, dest: "jwt.util.ts" })
       } else {
         returnValue.valid = true
         returnValue.data = {}

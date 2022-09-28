@@ -271,7 +271,7 @@ class PgBuilderRepository extends Repository {
       default:
         this.whereQuery = ``
         logger.warn(`${this.name}: where argument is not a string or string[] and we are not handling it`, {
-          dest: "PgBuilderRepository",
+          dest: "PgBuilderRepository.ts",
         })
         break
     }
@@ -303,7 +303,7 @@ class PgBuilderRepository extends Repository {
         } else {
           this.orderByQuery = ``
           logger.error(`${this.name}: orderArgs and sort arguments are not the same type and length (in array mode)`, {
-            dest: "PgBuilderRepository",
+            dest: "PgBuilderRepository.ts",
           })
         }
         break
@@ -311,7 +311,7 @@ class PgBuilderRepository extends Repository {
       default:
         this.orderByQuery = ``
         logger.warn(`${this.name}: orderBy argument is not a string or string[] and we are not handling it`, {
-          dest: "PgBuilderRepository",
+          dest: "PgBuilderRepository.ts",
         })
         break
     }
@@ -334,7 +334,7 @@ class PgBuilderRepository extends Repository {
       default:
         this.groupByQuery = ``
         logger.warn(`${this.name}: groupBy argument is not a string or string[] and we are not handling it`, {
-          dest: "PgBuilderRepository",
+          dest: "PgBuilderRepository.ts",
         })
         break
     }

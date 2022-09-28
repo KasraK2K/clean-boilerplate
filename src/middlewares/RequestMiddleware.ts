@@ -24,7 +24,7 @@ class RequestMiddleware extends Middleware {
     const checkMethod = !ignoreCheckMethod.some((ignoreEndpoint) => endpoint.includes(`/${ignoreEndpoint}`))
 
     if (allowMethods.length && !allowMethods.includes("*") && checkMethod && !allowMethods.includes(req.method)) {
-      logger.warn(`Method ${req.method} is not allowed`, { service: ServiceName.DEFAULT, dest: "RequestMiddleware" })
+      logger.warn(`Method ${req.method} is not allowed`, { service: ServiceName.DEFAULT, dest: "RequestMiddleware.ts" })
       return addMetaData(req, res, { errCode: 1014 })
     }
     next()

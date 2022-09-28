@@ -17,7 +17,7 @@ class PortalUserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.list" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/list" })
           return reject(err)
         })
     })
@@ -31,7 +31,7 @@ class PortalUserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.profile" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/profile" })
           return reject(err)
         })
     })
@@ -43,7 +43,7 @@ class PortalUserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.upsert" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/upsert" })
           return reject(err)
         })
     })
@@ -54,7 +54,7 @@ class PortalUserPgLibrary extends PgRepository {
       // return await this.updateOne("portal_users", { id, is_archive: true, archived_at: "NOW()" })
       //   .then(result => resolve(result))
       //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archiveUser" })
+      //     logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/archiveUser" })
       //     return reject(err)
       //   })
       return await this.executeQuery({
@@ -69,7 +69,7 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.archive" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/archive" })
           return reject(err)
         })
     })
@@ -80,7 +80,7 @@ class PortalUserPgLibrary extends PgRepository {
       // return await this.updateOne("portal_users", { id, is_archive: false, archived_at: null })
       //   .then(result => resolve(result))
       //   .catch(async (err) => {
-      //     logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restoreUser" })
+      //     logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/restoreUser" })
       //     return reject(err)
       //   })
       return await this.executeQuery({
@@ -95,7 +95,7 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.restore" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/restore" })
           return reject(err)
         })
     })
@@ -110,7 +110,7 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err.message, { service: ServiceName.USER, dest: "PortalUserPgLibrary.delete" })
+          logger.error(err, { service: ServiceName.USER, dest: "portal_user/pgLibrary.ts/delete" })
           return reject(err)
         })
     })

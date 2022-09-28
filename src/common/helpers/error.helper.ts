@@ -62,6 +62,9 @@ export const error = (code: string | number): IError => {
     case 1016:
       return { code, message: "Not Found", status: 404 }
 
+    case 1017:
+      return { code, message: "Third Party Error", status: 500 }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Prisma                                   */
     /* -------------------------------------------------------------------------- */
@@ -90,7 +93,7 @@ export const error = (code: string | number): IError => {
       return { code, message: "Database Connection Refused", status: 500 }
 
     default:
-      logger.warn(`Error code ${code} is not valid`, { dest: "error.helper" })
+      logger.warn(`Error code ${code} is not valid`, { dest: "error.helper.ts" })
       return { code, message: "Error Code is not a valid", status: 500 }
   }
 }
