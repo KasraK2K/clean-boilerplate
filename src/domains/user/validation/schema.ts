@@ -129,9 +129,9 @@ export const schema = {
   resetPassword: {
     type: "object",
     additionalProperties: false,
-    required: ["secure", "password"],
+    required: ["secret", "password"],
     properties: {
-      secure: { type: "string" },
+      secret: { type: "string" },
       password: { type: "string", minLength: 6, maxLength: 60 },
     },
   },

@@ -177,9 +177,8 @@ class UserService extends Service {
     })
   }
 
-  // TODO: Verify Secret with Frontend
   public async refreshToken(token: string, secret: string): Promise<Record<string, any>> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const { valid, errors } = validator({ token }, schema.refreshToken)
 
       if (!valid) {
@@ -190,16 +189,15 @@ class UserService extends Service {
         return reject({ errors })
       } else {
         const verifiedToken = tokenHelper.verify(token)
-        const verifiedSecret = tokenHelper.verify(token)
 
-        if (!verifiedSecret.valid || !verifiedToken.valid) return reject({ errCode: 1010 })
-        else if (verifiedToken.data.type !== TokenType.REFRESH) return reject({ errCode: 1010 })
+        if (!verifiedToken.valid || verifiedToken.data.type !== TokenType.REFRESH) return reject({ errCode: 1010 })
         else {
-          // get user
-          // check user.email === verfiedSecret.data.email
-          // if
-          return resolve({ data: super.createToken({ id: verifiedToken.data.id }) })
-          // else return reject({ errCode: 1010 })
+          const decodedToken = cypherUtil.cypherToText(secret)
+          const [id, email] = decodedToken.split("--")
+          const user = await this.findOne({ id: +id, email })
+
+          if (!user) return reject({ errCode: 1010 })
+          else return resolve({ data: super.createToken({ id: verifiedToken.data.id }) })
         }
       }
     })
@@ -239,7 +237,7 @@ class UserService extends Service {
     })
   }
 
-  public async resetPassword(args: { secure: string; password: string }): Promise<Record<string, any>> {
+  public async resetPassword(args: { secret: string; password: string }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const { valid, errors } = validator(args, schema.resetPassword)
 
@@ -250,8 +248,8 @@ class UserService extends Service {
         })
         return reject({ errors })
       } else {
-        const { secure, password } = args
-        const decodedToken = cypherUtil.cypherToText(secure)
+        const { secret, password } = args
+        const decodedToken = cypherUtil.cypherToText(secret)
         const [id, email] = decodedToken.split("--")
         const user = await this.findOne({ id: +id, email })
 

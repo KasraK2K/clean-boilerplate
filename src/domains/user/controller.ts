@@ -87,6 +87,11 @@ class UserController extends Controller {
       .catch((err) => addMetaData(req, res, { ...err }))
   }
 
+  /**
+   * Refresh token if secret is valid
+   * You should send valid token by type refresh and secret that created using
+   * crypto-js encoded string `${user.id}--${user.email}`
+   */
   public async refreshToken(req: Request, res: Response): IControllerResponse {
     const { token, secret } = req.body
     return await service
@@ -95,6 +100,9 @@ class UserController extends Controller {
       .catch((err) => addMetaData(req, res, { ...err }))
   }
 
+  /**
+   * Forgot password send email to user that contain change password link
+   */
   public async forgotPassword(req: Request, res: Response): IControllerResponse {
     const { email } = req.body
     return await service
@@ -103,10 +111,15 @@ class UserController extends Controller {
       .catch((err) => addMetaData(req, res, { ...err }))
   }
 
+  /**
+   * Reset password get secret and new password
+   * Secret should created by forgot password and frontend get and send it to me
+   * Secret is crypto-js encoded string `${user.id}--${user.email}`
+   */
   public async resetPassword(req: Request, res: Response): IControllerResponse {
-    const { secure, password } = req.body
+    const { secret, password } = req.body
     return await service
-      .resetPassword({ secure, password })
+      .resetPassword({ secret, password })
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }

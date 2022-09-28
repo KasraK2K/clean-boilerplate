@@ -12,8 +12,12 @@ class Token {
   }
 
   public verify(cypherToken: string): IJwtVerify {
-    const jwtToken = cypher.cypherToText(cypherToken)
-    return jwt.verifyJwt(jwtToken)
+    try {
+      const jwtToken = cypher.cypherToText(cypherToken)
+      return jwt.verifyJwt(jwtToken)
+    } catch {
+      return { valid: false, data: {} }
+    }
   }
 }
 
