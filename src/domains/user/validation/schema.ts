@@ -116,6 +116,25 @@ export const schema = {
       secret: { type: "string" },
     },
   },
+
+  forgotPassword: {
+    type: "object",
+    additionalProperties: false,
+    required: ["email"],
+    properties: {
+      email: { type: "string", format: "email" },
+    },
+  },
+
+  resetPassword: {
+    type: "object",
+    additionalProperties: false,
+    required: ["secure", "password"],
+    properties: {
+      secure: { type: "string" },
+      password: { type: "string", minLength: 6, maxLength: 60 },
+    },
+  },
 }
 
 export default schema

@@ -1,10 +1,8 @@
 // import { PrismaClient } from "@prisma/client"
 import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
 import logger from "../../../../common/helpers/logger.helper"
-import { ServiceName, TokenType } from "../../../../common/enums/general.enum"
+import { ServiceName } from "../../../../common/enums/general.enum"
 import PgRepository from "../../../../base/repository/PgRepository"
-import tokenHelper from "../../../../common/helpers/token.helper"
-import bcryptHelper from "../../../../common/helpers/bcrypt.helper"
 
 /**
  * This method using the `PgRepository` builder pattern

@@ -59,6 +59,9 @@ export const error = (code: string | number): IError => {
     case 1015:
       return { code, message: "Authentication Failed", status: 401 }
 
+    case 1016:
+      return { code, message: "Not Found", status: 404 }
+
     /* -------------------------------------------------------------------------- */
     /*                                   Prisma                                   */
     /* -------------------------------------------------------------------------- */

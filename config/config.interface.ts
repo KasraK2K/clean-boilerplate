@@ -7,6 +7,7 @@ export interface IConfig {
   database: IDatabaseConfig
   cors: ICorsConfig
   upload: IUploadConfig
+  general: IGeneralConfig
 }
 
 // ────────────────────────────────────────────────────────────── APPLICATION ─────
@@ -131,4 +132,8 @@ export interface IUploadConfig {
   maxTotalFileSize: number
   maxFields: number
   maxFieldsSize: number
+}
+
+export interface IGeneralConfig {
+  frontendDomain: string
 }

@@ -10,3 +10,6 @@ application:
     treblle:
       apiKey: "_YOUR_API_KEY_"
       projectId: "_YOUR_PROJECT_ID_"
+
+general:
+  frontendDomain: "http://www.clean-boilerplate.com"

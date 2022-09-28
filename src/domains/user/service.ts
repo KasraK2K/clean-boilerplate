@@ -1,3 +1,5 @@
+import config from "config"
+import { IGeneralConfig } from "./../../../config/config.interface"
 import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import { repository } from "./module"
 import Service from "../../base/Service"
@@ -7,6 +9,10 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName, TokenType } from "../../common/enums/general.enum"
 import tokenHelper from "../../common/helpers/token.helper"
 import bcryptHelper from "../../common/helpers/bcrypt.helper"
+import cypherUtil from "../../common/utils/cypher.util"
+import mailgunJs from "../../integrations/mailgun.js"
+
+const generalConfig: IGeneralConfig = config.get("general")
 
 class UserService extends Service {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
@@ -164,13 +170,14 @@ class UserService extends Service {
           .getNonBlockedExistUser(args)
           .then((user) => {
             if (user && bcryptHelper.compareHash(args.password, user.password))
-              return resolve({ data: this.createToken({ id: user.id }) })
+              return resolve({ data: super.createToken({ id: user.id }) })
             else return reject({ errCode: 1015 })
           })
           .catch((err) => reject(err))
     })
   }
 
+  // TODO: Verify Secret with Frontend
   public async refreshToken(token: string, secret: string): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator({ token }, schema.refreshToken)
@@ -191,28 +198,98 @@ class UserService extends Service {
           // get user
           // check user.email === verfiedSecret.data.email
           // if
-          return resolve({ data: this.createToken({ id: verifiedToken.data.id }) })
+          return resolve({ data: super.createToken({ id: verifiedToken.data.id }) })
           // else return reject({ errCode: 1010 })
         }
       }
     })
   }
 
-  private createToken(payload: { id: number }): {
-    token: string
-    expire_token_in: string
-    refresh_token: string
-    expire_refresh_token_in: string
-  } {
-    const expire_token_in = "2 days"
-    const expire_refresh_token_in = "4 days"
+  public async forgotPassword(email: string): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      const { valid, errors } = validator({ email }, schema.forgotPassword)
 
-    const token = tokenHelper.sign({ id: payload.id, type: TokenType.TOKEN }, { expiresIn: expire_token_in })
-    const refresh_token = tokenHelper.sign(
-      { id: payload.id, type: TokenType.REFRESH },
-      { expiresIn: expire_refresh_token_in }
-    )
-    return { token, expire_token_in, refresh_token, expire_refresh_token_in }
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.forgotPassword: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else {
+        const user = await this.findOne({ email })
+        const forgotToken = cypherUtil.textToCypher(`${user.id}--${user.email}`)
+
+        if (user) {
+          mailgunJs.message.createMessage({
+            to: ["Kasra.Karami.Word@gmail.com"],
+            subject: "forgot clean-boilerplate password",
+            html: /* HTML */ `
+              <h1>Forgot Password</h1>
+              <br />
+              <p>
+                To reset your password click
+                <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank">here</a>
+              </p>
+            `,
+          })
+
+          return resolve({})
+        } else return reject({ errCode: 1016 })
+      }
+    })
+  }
+
+  public async resetPassword(args: { secure: string; password: string }): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      const { valid, errors } = validator(args, schema.resetPassword)
+
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.resetPassword: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else {
+        const { secure, password } = args
+        const decodedToken = cypherUtil.cypherToText(secure)
+        const [id, email] = decodedToken.split("--")
+        const user = await this.findOne({ id: +id, email })
+
+        if (user) {
+          const hashedPassword = bcryptHelper.hashGen(password)
+          this.upsert({ id: +id, email, password: hashedPassword })
+            .then((result) => resolve({ ...result }))
+            .catch((err) => reject(err))
+        } else return reject({ errCode: 1016 })
+      }
+    })
+  }
+
+  // TODO: Move to libs
+  private async findOne(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      const { valid, errors } = validator(args, schema.list)
+
+      if (!valid) {
+        logger.warn(`Validation has error on UserService.findOne: ${errors}`, {
+          service: ServiceName.USER,
+          dest: "service",
+        })
+        return reject({ errors })
+      } else
+        await this.list(args)
+          .then((result) => {
+            if (result.data.length) resolve(result.data[0])
+            else reject(undefined)
+          })
+          .catch((err) => {
+            logger.error(`Error on getting user in UserService.resetPassword: ${err.message}`, {
+              service: ServiceName.USER,
+              dest: "service",
+            })
+            return reject(undefined)
+          })
+    })
   }
 }
 

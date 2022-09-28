@@ -94,6 +94,22 @@ class UserController extends Controller {
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }
+
+  public async forgotPassword(req: Request, res: Response): IControllerResponse {
+    const { email } = req.body
+    return await service
+      .forgotPassword(email)
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
+
+  public async resetPassword(req: Request, res: Response): IControllerResponse {
+    const { secure, password } = req.body
+    return await service
+      .resetPassword({ secure, password })
+      .then((result) => addMetaData(req, res, { ...result }))
+      .catch((err) => addMetaData(req, res, { ...err }))
+  }
 }
 
 export default new UserController()
