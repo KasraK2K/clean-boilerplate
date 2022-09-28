@@ -79,7 +79,7 @@ export const addMetaData = (
     error: false,
     error_code: 0,
     error_messages: [],
-    result: data,
+    result: isDataArray ? data : [data],
   }
 
   const setMessage = !!(errors && errors.length)

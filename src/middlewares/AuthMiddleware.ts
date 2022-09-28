@@ -31,8 +31,8 @@ class AuthMiddleware extends Middleware {
         const { valid, data } = tokenHelper.verify(cypherToken)
         if (!valid) return addMetaData(req, res, { errCode: 1010 })
         else {
-          _.assign(res.locals.tokenData, data)
-          _.assign(context.tokenData, data)
+          res.locals.tokenData = _.assign(res.locals.tokenData, data)
+          context.tokenData = _.assign(context.tokenData, data)
         }
       } else return addMetaData(req, res, { errCode: 1011 })
     }

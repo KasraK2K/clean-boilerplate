@@ -52,8 +52,8 @@ _NOTE:_ If you forget to send `id`, new user will be create
 """
 input UpdateUserInput {
   id: ID!
-  email: String
-  password: String
+  email: String!
+  password: String!
   contact_number: String
   first_name: String
   surname: String
@@ -74,7 +74,7 @@ User Domain Queries
 """
 type UserQuery {
   list(id: ID, email: String): [User]!
-  profile: [User!]!
+  profile: [User]!
 }
 
 """
