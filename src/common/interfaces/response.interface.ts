@@ -8,7 +8,7 @@ export interface IResponseData {
   env: string
   mode: string
   count: number
-  result: Record<string, any>[]
+  result: Record<string, any> | Record<string, any>[]
   error: boolean
   error_code: number
   error_messages: string[]
