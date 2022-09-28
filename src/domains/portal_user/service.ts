@@ -5,6 +5,7 @@ import schema from "./validation/schema"
 import validator from "../../common/helpers/validator.helper"
 import logger from "../../common/helpers/logger.helper"
 import { ServiceName } from "../../common/enums/general.enum"
+import bcryptHelper from "../../common/helpers/bcrypt.helper"
 
 class PortalUserService extends Service {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
@@ -65,11 +66,13 @@ class PortalUserService extends Service {
           dest: "service",
         })
         return reject({ errors })
-      } else
+      } else {
+        args.password && (args.password = bcryptHelper.hashGen(args.password))
         repository
           .upsert(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
+      }
     })
   }
 

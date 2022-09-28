@@ -7,7 +7,6 @@ import logger from "../../common/helpers/logger.helper"
 import { ServiceName, TokenType } from "../../common/enums/general.enum"
 import tokenHelper from "../../common/helpers/token.helper"
 import bcryptHelper from "../../common/helpers/bcrypt.helper"
-import user from "src/swagger/domains/user"
 
 class UserService extends Service {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
@@ -68,11 +67,13 @@ class UserService extends Service {
           dest: "service",
         })
         return reject({ errors })
-      } else
+      } else {
+        args.password && (args.password = bcryptHelper.hashGen(args.password))
         repository
           .upsert(args)
           .then((result) => resolve({ data: result }))
           .catch((err) => reject(err))
+      }
     })
   }
 
