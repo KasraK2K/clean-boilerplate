@@ -22,7 +22,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on Service.list: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -40,7 +40,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.profile: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -70,7 +70,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.upsert: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -90,7 +90,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.archive: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -108,7 +108,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.restore: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -126,7 +126,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.toggle: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -144,7 +144,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.delete: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -162,7 +162,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.login: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else
@@ -184,7 +184,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.refreshToken: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -210,7 +210,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.forgotPassword: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -236,7 +236,7 @@ class UserService extends Service {
             })
             .then((response) => resolve({ data: response }))
             .catch((err) => {
-              logger.error(err, { service: ServiceName.USER, dest: "user/service.ts/forgotPassword" })
+              logger.error(err, { service: ServiceName.USER, dest: "domains/user/service.ts:forgotPassword" })
               return reject({ errCode: 1017 })
             })
         } else return reject({ errCode: 1016 })
@@ -251,7 +251,7 @@ class UserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on UserService.resetPassword: ${errors}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts",
+          dest: "domains/user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -279,7 +279,7 @@ class UserService extends Service {
       .catch((err) => {
         logger.error(`Error on getting user in UserService.getUserObject: ${err.message}`, {
           service: ServiceName.USER,
-          dest: "user/service.ts/getUserObject",
+          dest: "domains/user/service.ts:getUserObject",
         })
         return undefined
       })

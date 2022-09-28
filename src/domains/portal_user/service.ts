@@ -15,7 +15,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.list: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else
@@ -33,7 +33,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.profile: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else
@@ -63,7 +63,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.upsert: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else {
@@ -83,7 +83,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.archive: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else
@@ -101,7 +101,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.restore: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else
@@ -119,7 +119,7 @@ class PortalUserService extends Service {
       if (!valid) {
         logger.warn(`Validation has error on PortalUserService.delete: ${errors}`, {
           service: ServiceName.USER,
-          dest: "portal_user/service.ts",
+          dest: "domains/portal_user/service.ts",
         })
         return reject({ errors })
       } else
