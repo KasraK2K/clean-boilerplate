@@ -7,7 +7,7 @@ const domain_name = "portal_user"
 
 const resolvers = {
   Query: {
-    [domain_name]: (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    [domain_name]: (root: Record<string, any>, args: Record<string, any>, context: Context) => {
       const portalUser = context.connect.portalUser
       const tokenData = context.tokenData
 
@@ -34,7 +34,7 @@ const resolvers = {
   },
 
   Mutation: {
-    [domain_name]: (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    [domain_name]: (root: Record<string, any>, args: Record<string, any>, context: Context) => {
       const portalUser = context.connect.portalUser
 
       return {

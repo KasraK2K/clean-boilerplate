@@ -1,17 +1,25 @@
-import { IDefaultArgs } from "./../../../common/interfaces/general.interface"
+import { composeResolvers } from "@graphql-tools/resolvers-composition"
 import { Context } from "../../../graphql/context"
+import { IDefaultArgs } from "./../../../common/interfaces/general.interface"
 import { service } from "../module"
+import graphAuthMiddleware from "../../../graphql/middlewares/GraphAuthMiddleware"
 
 const domain_name = "user"
 
 const resolvers = {
   Query: {
-    [domain_name]: (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    [domain_name]: (
+      root: Record<string, any>,
+      args: Record<string, any>,
+      context: Context,
+      info: Record<string, any>
+    ) => {
       const user = context.connect.user
       const tokenData = context.tokenData
+      const thisResolver = info.fieldNodes[0].selectionSet.selections[0].name.value
 
       return {
-        list: (args: { id?: number; email?: string }) => {
+        list(args: { id?: number; email?: string }) {
           return new Promise((resolve, reject) => {
             user
               .list(args)
@@ -20,7 +28,7 @@ const resolvers = {
           })
         },
 
-        profile: () => {
+        profile() {
           return new Promise((resolve, reject) => {
             user
               .profile(tokenData.id)
@@ -33,7 +41,7 @@ const resolvers = {
   },
 
   Mutation: {
-    [domain_name]: (parent: Record<string, any>, args: Record<string, any>, context: Context) => {
+    [domain_name]: (root: Record<string, any>, args: Record<string, any>, context: Context) => {
       const user = context.connect.user
 
       return {
@@ -122,4 +130,12 @@ const resolvers = {
   },
 }
 
-export default resolvers
+const resolversComposition = {
+  "Query.user.profile": [graphAuthMiddleware.isAuthenticated],
+}
+
+const composedResolvers = composeResolvers(resolvers, resolversComposition)
+
+export default composedResolvers
+
+// export default resolvers

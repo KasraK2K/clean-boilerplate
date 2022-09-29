@@ -1,11 +1,11 @@
-import { IApplicationConfig } from "config/config.interface"
 import { Request, Response, NextFunction } from "express"
 import config from "config"
+import _ from "lodash"
+import { IApplicationConfig } from "../../config/config.interface"
 import { addMetaData } from "../common/helpers/addMetaData.helper"
 import Middleware from "./Middleware"
 import tokenHelper from "../common/helpers/token.helper"
 import { context } from "../graphql/context"
-import _ from "lodash"
 
 const applicationConfig: IApplicationConfig = config.get("application")
 
@@ -24,18 +24,7 @@ class AuthMiddleware extends Middleware {
       : !ignoreApikeys.some((ignoreApiKey) => endpoint.includes(`/${ignoreApiKey}`))
 
     /* ------------------------------- Check Token ------------------------------ */
-    if (checkToken) {
-      let cypherToken = req.headers[applicationConfig.bearerHeader] as string
-      if (cypherToken && cypherToken.startsWith(`${applicationConfig.bearer} `)) {
-        cypherToken = cypherToken.slice(applicationConfig.bearer.length + 1)
-        const { valid, data } = tokenHelper.verify(cypherToken)
-        if (!valid) return addMetaData(req, res, { errCode: 1010 })
-        else {
-          res.locals.tokenData = _.assign(res.locals.tokenData, data)
-          context.tokenData = _.assign(context.tokenData, data)
-        }
-      } else return addMetaData(req, res, { errCode: 1011 })
-    }
+    if (checkToken && !res.locals.tokenData) return addMetaData(req, res, { errCode: 1011 })
     /* -------------------------------------------------------------------------- */
 
     /* ------------------------------ Check API_KEY ----------------------------- */

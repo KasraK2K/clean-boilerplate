@@ -36,10 +36,10 @@ app.use(
 app.use(rateLimiterMiddleware.check())
 app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
+app.use(requestMiddleware.addTokenData)
+app.use("/graphql", graphqlServer)
 app.use(requestMiddleware.isMethodAllowed)
 app.use(authMiddleware.auth)
-app.use("/graphql", graphqlServer)
-
 app.use("/v1", routesV1)
 
 export default app
