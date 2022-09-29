@@ -110,9 +110,9 @@ export const schema = {
   refreshToken: {
     type: "object",
     additionalProperties: false,
-    required: ["token"],
+    required: ["refresh_token"],
     properties: {
-      token: { type: "string" },
+      refresh_token: { type: "string" },
       secret: { type: "string" },
     },
   },

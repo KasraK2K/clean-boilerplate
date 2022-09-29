@@ -93,9 +93,9 @@ class UserController extends Controller {
    * crypto-js encoded string `${user.id}--${user.email}`
    */
   public async refreshToken(req: Request, res: Response): IControllerResponse {
-    const { token, secret } = req.body
+    const { refresh_token, secret } = req.body
     return await service
-      .refreshToken(token, secret)
+      .refreshToken({ refresh_token, secret })
       .then((result) => addMetaData(req, res, { ...result }))
       .catch((err) => addMetaData(req, res, { ...err }))
   }
