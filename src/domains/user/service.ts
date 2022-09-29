@@ -221,16 +221,16 @@ class UserService extends Service {
 
           mailgunJs.message
             .createMessage({
-              to: ["Kasra.Karami.Word@gmail.com"],
-              subject: "forgot clean-boilerplate password",
+              to: [user.email],
+              subject: "clean-boilerplate reset password link",
               html: /* HTML */ `
                 <h1>Forgot Password</h1>
                 <br />
                 <p>
                   To reset your password click
-                  <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank"
-                    >here</a
-                  >
+                  <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank">
+                    here
+                  </a>
                 </p>
               `,
             })
@@ -260,12 +260,11 @@ class UserService extends Service {
         const [id, email] = decodedToken.split("--")
         const user = await this.getUserObject({ id: +id, email })
 
-        if (user) {
-          const hashedPassword = bcryptHelper.hashGen(password)
-          this.upsert({ id: +id, email, password: hashedPassword })
+        if (user)
+          this.upsert({ id: +id, email, password })
             .then((result) => resolve({ ...result }))
             .catch((err) => reject(err))
-        } else return reject({ errCode: 1016 })
+        else return reject({ errCode: 1016 })
       }
     })
   }
