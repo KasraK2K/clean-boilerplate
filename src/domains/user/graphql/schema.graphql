@@ -28,6 +28,9 @@ type User {
   archived_at: DateTime
 }
 
+"""
+`UserResponse` type is same as `User` type but without password so never password returned.
+"""
 type UserResponse {
   id: Int!
   email: String!
@@ -50,13 +53,6 @@ type UserResponse {
   created_at: DateTime!
   updated_at: DateTime!
   archived_at: DateTime
-}
-
-type TokenResponse {
-  token: String
-  expire_token_in: String
-  refresh_token: String
-  expire_refresh_token_in: String
 }
 
 """

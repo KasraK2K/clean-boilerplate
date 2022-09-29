@@ -7,7 +7,7 @@ import cors from "cors"
 import config from "config"
 import { resolve } from "path"
 import { locals, globals } from "./common/variables"
-import { ICorsConfig } from "../config/config.interface"
+import { ICorsConfig, IHelmetConfig } from "../config/config.interface"
 import routesV1 from "./routes/v1"
 import rateLimiterMiddleware from "./middlewares/RateLimiterMiddleware"
 import multipartMiddleware from "./middlewares/MultipartMiddleware"
@@ -17,29 +17,24 @@ import graphqlServer from "./graphql/graphql.server"
 
 const app = express()
 const corsConfig: ICorsConfig = config.get("cors")
+const helmetConfig: IHelmetConfig = config.get("helmet")
 app.locals = locals
 _.assign(global, globals)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(helmet())
+app.use(helmet(helmetConfig))
 app.use(compression())
 app.disable("x-powered-by")
 app.use(express.static(resolve(process.cwd(), "public")))
-app.use(
-  cors({
-    optionsSuccessStatus: 200,
-    methods: corsConfig.allow_method,
-    origin: corsConfig.allow_origin,
-  })
-)
+app.use(cors(corsConfig))
 app.use(rateLimiterMiddleware.check())
 app.use(multipartMiddleware.handle)
 app.use(requestMiddleware.processIdAdder)
 app.use(requestMiddleware.addTokenData)
-app.use("/graphql", graphqlServer)
 app.use(requestMiddleware.isMethodAllowed)
 app.use(authMiddleware.auth)
+app.use("/graphql", graphqlServer)
 app.use("/v1", routesV1)
 
 export default app

@@ -9,9 +9,9 @@ application:
   information: false
   request:
     allowMethods: ["POST"]
-    ignoreCheckMethods: ["swagger", "health"]
-    ignoreApiKey: ["swagger", "health"]
-    ignoreToken: ["login", "logout", "swagger", "health"]
+    ignoreCheckMethods: ["swagger", "health", "graphql"]
+    ignoreApiKey: ["swagger", "health", "graphql"]
+    ignoreToken: ["login", "logout", "swagger", "health", "graphql"]
 
 job:
   activeCronJobs: ["sample-job"]
@@ -54,8 +54,28 @@ database:
     maxRetriesPerRequest: null
 
 cors:
-  allow_origin: "*"
-  allow_method: ["POST"]
+  optionsSuccessStatus: 200
+  origin: "*"
+  methods: ["POST"]
+
+helmet:
+  contentSecurityPolicy:
+    useDefaults: true
+    reportOnly: true
+  crossOriginEmbedderPolicy: true
+  crossOriginOpenerPolicy: true
+  crossOriginResourcePolicy: true
+  dnsPrefetchControl: true
+  expectCt: true
+  frameguard: true
+  hidePoweredBy: true
+  hsts: true
+  ieNoOpen: true
+  noSniff: true
+  originAgentCluster: true
+  permittedCrossDomainPolicies: true
+  referrerPolicy: true
+  xssFilter: true
 
 rate_limiter:
   windowMs: 60_000

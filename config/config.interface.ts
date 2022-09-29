@@ -107,8 +107,31 @@ export interface IRedisIoConfig {
 
 // ───────────────────────────────────────────────────────────────────── CORS ─────
 export interface ICorsConfig {
-  allow_origin: string
-  allow_method: string[]
+  optionsSuccessStatus: number
+  origin: string
+  methods: string[]
+}
+
+// ─────────────────────────────────────────────────────────────────── HELMET ─────
+export interface IHelmetConfig {
+  contentSecurityPolicy?: {
+    useDefaults?: true
+    reportOnly?: true
+  }
+  crossOriginEmbedderPolicy?: true
+  crossOriginOpenerPolicy?: true
+  crossOriginResourcePolicy?: true
+  dnsPrefetchControl?: true
+  expectCt?: true
+  frameguard?: true
+  hidePoweredBy?: true
+  hsts?: true
+  ieNoOpen?: true
+  noSniff?: true
+  originAgentCluster?: true
+  permittedCrossDomainPolicies?: true
+  referrerPolicy?: true
+  xssFilter?: true
 }
 
 // ───────────────────────────────────────────────────────────── RATE LIMITER ─────
