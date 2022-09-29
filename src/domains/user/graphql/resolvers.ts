@@ -1,3 +1,4 @@
+import { IDefaultArgs } from "./../../../common/interfaces/general.interface"
 import { Context } from "../../../graphql/context"
 import { service } from "../module"
 
@@ -10,7 +11,7 @@ const resolvers = {
       const tokenData = context.tokenData
 
       return {
-        list: (args: Record<string, any>) => {
+        list: (args: { id?: number; email?: string }) => {
           return new Promise((resolve, reject) => {
             user
               .list(args)
@@ -36,7 +37,7 @@ const resolvers = {
       const user = context.connect.user
 
       return {
-        upsert: (args: Record<string, any>) => {
+        upsert: (args: IDefaultArgs) => {
           return new Promise((resolve, reject) => {
             user
               .upsert(args.update ?? args.create)
@@ -45,7 +46,7 @@ const resolvers = {
           })
         },
 
-        archive: (args: Record<string, any>) => {
+        archive: (args: { id: number }) => {
           return new Promise((resolve, reject) => {
             user
               .archive(args.id)
@@ -54,7 +55,7 @@ const resolvers = {
           })
         },
 
-        restore: (args: Record<string, any>) => {
+        restore: (args: { id: number }) => {
           return new Promise((resolve, reject) => {
             user
               .restore(args.id)
@@ -63,7 +64,7 @@ const resolvers = {
           })
         },
 
-        toggle: (args: Record<string, any>) => {
+        toggle: (args: { id: number }) => {
           return new Promise((resolve, reject) => {
             user
               .toggle(args.id)
@@ -72,10 +73,46 @@ const resolvers = {
           })
         },
 
-        delete: (args: Record<string, any>) => {
+        delete: (args: { id: number }) => {
           return new Promise((resolve, reject) => {
             user
               .delete(args.id)
+              .then((result) => resolve(result.data))
+              .catch((err) => reject(err))
+          })
+        },
+
+        login: (args: { email: string; password: string; reseller_id: number }) => {
+          return new Promise((resolve, reject) => {
+            user
+              .login(args)
+              .then((result) => resolve(result.data))
+              .catch((err) => reject(err))
+          })
+        },
+
+        refreshToken: (args: { refresh_token: string; secret: string }) => {
+          return new Promise((resolve, reject) => {
+            user
+              .refreshToken(args)
+              .then((result) => resolve(result.data))
+              .catch((err) => reject(err))
+          })
+        },
+
+        forgotPassword: (args: { email: string }) => {
+          return new Promise((resolve, reject) => {
+            user
+              .forgotPassword(args.email)
+              .then((result) => resolve(result.data))
+              .catch((err) => reject(err))
+          })
+        },
+
+        resetPassword: (args: { secret: string; password: string }) => {
+          return new Promise((resolve, reject) => {
+            user
+              .resetPassword(args)
               .then((result) => resolve(result.data))
               .catch((err) => reject(err))
           })

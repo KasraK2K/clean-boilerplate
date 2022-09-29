@@ -8,6 +8,16 @@ enum Gender {
 }
 
 """
+[MailGun Response](https://www.npmjs.com/package/mailgun.js)
+"""
+type MailGunResponse {
+  id: String
+  message: String
+  status: Int
+  details: String
+}
+
+"""
 Clean Boilerplate GraphQL Queries
 """
 type Query

@@ -28,6 +28,37 @@ type User {
   archived_at: DateTime
 }
 
+type UserResponse {
+  id: Int!
+  email: String!
+  contact_number: String!
+  first_name: String!
+  surname: String!
+  gender: Gender!
+
+  is_active: Boolean!
+  is_verified: Boolean!
+  is_blocked: Boolean!
+  is_archive: Boolean!
+
+  business_name: String!
+  business_category: String!
+  business_size: String!
+  permission: Int!
+  reseller_id: Int!
+
+  created_at: DateTime!
+  updated_at: DateTime!
+  archived_at: DateTime
+}
+
+type TokenResponse {
+  token: String
+  expire_token_in: String
+  refresh_token: String
+  expire_refresh_token_in: String
+}
+
 """
 Create new **user**
 """
@@ -73,19 +104,23 @@ input UpdateUserInput {
 User Domain Queries
 """
 type UserQuery {
-  list(id: ID, email: String): [User]!
-  profile: [User]!
+  list(id: ID, email: String): [UserResponse]!
+  profile: [UserResponse]!
 }
 
 """
 User Domain Mutations
 """
 type UserMutation {
-  upsert(create: CreateUserInput, update: UpdateUserInput): [User]!
-  archive(id: ID!): [User]!
-  restore(id: ID!): [User]!
-  toggle(id: ID!): [User]!
-  delete(id: ID!): [User]!
+  upsert(create: CreateUserInput, update: UpdateUserInput): [UserResponse]!
+  archive(id: ID!): [UserResponse]!
+  restore(id: ID!): [UserResponse]!
+  toggle(id: ID!): [UserResponse]!
+  delete(id: ID!): [UserResponse]!
+  login(email: String!, password: String!, reseller_id: Int): TokenResponse!
+  refreshToken(refresh_token: String!, secret: String!): TokenResponse!
+  forgotPassword(email: String!): MailGunResponse!
+  resetPassword(secret: String!, password: String!): [UserResponse]!
 }
 
 type Query {

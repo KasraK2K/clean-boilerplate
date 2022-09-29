@@ -15,7 +15,7 @@ import mailgunJs from "../../integrations/mailgun.js"
 const generalConfig: IGeneralConfig = config.get("general")
 
 class UserService extends Service {
-  public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>> {
+  public async list(args: { id?: number; email?: string }): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { valid, errors } = validator(args, schema.list)
 
@@ -51,7 +51,7 @@ class UserService extends Service {
     })
   }
 
-  public async upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
+  public async upsert(args: IDefaultArgs): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
       const { id } = args
       let valid: boolean
@@ -158,7 +158,6 @@ class UserService extends Service {
   public async login(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const { valid, errors } = validator(args, schema.login)
-
       if (!valid) {
         logger.warn(`Validation has error on UserService.login: ${errors}`, {
           service: ServiceName.USER,

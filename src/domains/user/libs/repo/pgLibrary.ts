@@ -40,7 +40,7 @@ class UserPgLibrary extends PgRepository {
   public upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await this.upsert_query("users", args)
-        .exec()
+        .exec({ omits: ["password"] })
         .then((result) => resolve(result))
         .catch(async (err) => {
           logger.error(err, { service: ServiceName.USER, dest: "domains/user/pgLibrary.ts:upsertEntity" })

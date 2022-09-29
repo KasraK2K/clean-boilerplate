@@ -6,7 +6,7 @@ class GeneralService extends Service {
   public async userList(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       await repository
-        .userList()
+        .userList(args)
         .then((result) => resolve({ data: result }))
         .catch((err) => reject({ errCode: err.code }))
     })
