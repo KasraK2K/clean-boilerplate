@@ -13,6 +13,7 @@ export interface Context {
   tokenData: { id: number }
   request: Request
   response: Response
+  graphQLParams: any
 }
 
 export const context: Context = {
@@ -22,4 +23,5 @@ export const context: Context = {
   tokenData: {} as { id: number },
   request: {} as Request,
   response: {} as Response,
+  graphQLParams: {},
 }

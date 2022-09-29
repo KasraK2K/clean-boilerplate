@@ -1,6 +1,5 @@
 import { composeResolvers } from "@graphql-tools/resolvers-composition"
 import { Context } from "../../../graphql/context"
-import { IDefaultArgs } from "./../../../common/interfaces/general.interface"
 import { service } from "../module"
 import graphAuthMiddleware from "../../../graphql/middlewares/GraphAuthMiddleware"
 
@@ -16,7 +15,7 @@ const resolvers = {
     ) => {
       const user = context.connect.user
       const tokenData = context.tokenData
-      const thisResolver = info.fieldNodes[0].selectionSet.selections[0].name.value
+      const operationName = info.fieldNodes[0].selectionSet.selections[0].name.value
 
       return {
         list(args: { id?: number; email?: string }) {
@@ -45,7 +44,7 @@ const resolvers = {
       const user = context.connect.user
 
       return {
-        upsert: (args: IDefaultArgs) => {
+        upsert: (args: Record<string, any>) => {
           return new Promise((resolve, reject) => {
             user
               .upsert(args.update ?? args.create)
@@ -131,7 +130,7 @@ const resolvers = {
 }
 
 const resolversComposition = {
-  "Query.user.profile": [graphAuthMiddleware.isAuthenticated],
+  // "Query.user": [graphAuthMiddleware.isAuthenticated],
 }
 
 const composedResolvers = composeResolvers(resolvers, resolversComposition)

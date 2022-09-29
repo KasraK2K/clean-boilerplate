@@ -11,7 +11,7 @@ const mode: string = config.get("mode")
 const graphqlServer = graphqlHTTP(async (request, response, graphQLParams) => ({
   schema: gatewaySchema,
   graphiql: { headerEditorEnabled: true },
-  context: { ...context, request, response },
+  context: { ...context, request, response, graphQLParams },
   extensions: () => ({
     api_version: applicationConfig.api_version,
     front_version: applicationConfig.front_version,
@@ -19,7 +19,7 @@ const graphqlServer = graphqlHTTP(async (request, response, graphQLParams) => ({
     env: String(process.env.NODE_ENV),
     mode,
   }),
-  pretty: true,
+  pretty: false,
   rootValue: scalarTypeDefs,
 }))
 
