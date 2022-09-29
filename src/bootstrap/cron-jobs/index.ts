@@ -134,4 +134,4 @@
  * https://momentjs.com/timezone/
  */
 
-import "./sampleJob"
+import "./sample-job"

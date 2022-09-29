@@ -14,8 +14,8 @@ application:
     ignoreToken: ["login", "logout", "swagger", "health"]
 
 job:
-  activeCronJobs: [] # ["sampleJob"]
-  activeConsumers: [] # ["sampleConsumer"]
+  activeCronJobs: [] # ["sample-job"]
+  activeConsumers: [] # ["sample-consumer-queue"]
 
 logger:
   logOnConsole: true

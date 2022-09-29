@@ -8,4 +8,4 @@
 //
 //=======================================================================
 
-import "./sampleConsumer"
+import "./sample-consumer-queue"

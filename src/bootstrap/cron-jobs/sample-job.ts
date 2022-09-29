@@ -1,7 +1,7 @@
 import { CronJob } from "cron"
 import config from "config"
 import path from "path"
-import { IJobsConfig } from "./../../../config/config.interface"
+import { IJobsConfig } from "../../../config/config.interface"
 
 const jobConfig: IJobsConfig = config.get("job")
 const filename = path.parse(__filename).name
