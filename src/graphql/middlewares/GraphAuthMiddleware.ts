@@ -33,7 +33,12 @@ class GraphAuthMiddleware {
       else if (api_key !== process.env.API_KEY) throw new Error(error(1013).message)
     }
 
-    return await resolve(root, args, context, info)
+    // ──────────────────────── CODE HERE EXECUTE BEFORE RESULT ─────
+    // console.log(`Input arguments: ${JSON.stringify(args)}`)
+    const result = await resolve(root, args, context, info)
+    // console.log(`Result: ${JSON.stringify(result)}`)
+    // ───────────────────────── CODE HERE EXECUTE AFTER RESULT ─────
+    return result
   }
 }
 
