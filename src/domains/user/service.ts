@@ -1,17 +1,21 @@
+// ─── PACKAGES ────────────────────────────────────────────────────────────────
 import config from "config"
-import { IGeneralConfig } from "./../../../config/config.interface"
-import { IDefaultArgs } from "../../common/interfaces/general.interface"
-import { repository } from "./module"
+
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import Service from "../../base/Service"
 import schema from "./validation/schema"
 import validator from "../../common/helpers/validator.helper"
 import logger from "../../common/helpers/logger.helper"
-import { ServiceName, TokenType } from "../../common/enums/general.enum"
 import tokenHelper from "../../common/helpers/token.helper"
 import bcryptHelper from "../../common/helpers/bcrypt.helper"
 import cypherUtil from "../../common/utils/cypher.util"
 import mailgunJs from "../../integrations/mailgun.js"
+import { IGeneralConfig } from "./../../../config/config.interface"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
+import { repository } from "./module"
+import { ServiceName, TokenType } from "../../common/enums/general.enum"
 
+// ─── CONSTANTS ───────────────────────────────────────────────────────────────
 const generalConfig: IGeneralConfig = config.get("general")
 
 class UserService extends Service {

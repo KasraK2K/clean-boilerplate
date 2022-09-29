@@ -1,8 +1,8 @@
-// import { PrismaClient } from "@prisma/client"
-import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
-import logger from "../../../../common/helpers/logger.helper"
-import { ServiceName } from "../../../../common/enums/general.enum"
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import PgRepository from "../../../../base/repository/PgRepository"
+import logger from "../../../../common/helpers/logger.helper"
+import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
+import { ServiceName } from "../../../../common/enums/general.enum"
 
 /**
  * This method using the `PgRepository` builder pattern

@@ -1,5 +1,8 @@
+// ─── PACKAGES ────────────────────────────────────────────────────────────────
 import express from "express"
 const router = express.Router()
+
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import { controller } from "./module"
 
 router.post("/list", controller.list)

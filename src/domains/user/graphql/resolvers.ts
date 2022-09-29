@@ -1,7 +1,10 @@
+// ─── PACKAGES ────────────────────────────────────────────────────────────────
 import { composeResolvers } from "@graphql-tools/resolvers-composition"
+
+// ─── MODULES ─────────────────────────────────────────────────────────────────
+import graphAuthMiddleware from "../../../graphql/middlewares/GraphAuthMiddleware"
 import { Context } from "../../../graphql/context"
 import { service } from "../module"
-import graphAuthMiddleware from "../../../graphql/middlewares/GraphAuthMiddleware"
 
 const domain_name = "user"
 

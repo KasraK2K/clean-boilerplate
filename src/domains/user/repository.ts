@@ -1,6 +1,7 @@
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import Repository from "../../base/repository/Repository"
-import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import * as library from "./libs"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
 
 class UserRepository extends Repository {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>[]> {
