@@ -51,12 +51,6 @@ class UserPgLibrary extends PgRepository {
 
   public archive(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("users", { id, is_archive: true, archived_at: "NOW()" })
-      //   .then(result => resolve(result))
-      //   .catch(async (err) => {
-      //     logger.error(err, { service: ServiceName.USER, dest: "domains/user/pgLibrary.ts:archiveUser" })
-      //     return reject(err)
-      //   })
       return await this.executeQuery({
         query: `
           UPDATE users
@@ -130,11 +124,7 @@ class UserPgLibrary extends PgRepository {
     })
   }
 
-  public getNonBlockedExistUser(args: {
-    email: string
-    password: string
-    reseller_id: number
-  }): Promise<Record<string, any>> {
+  public getExistUser(args: { email: string; password: string; reseller_id: number }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       const { email, reseller_id } = args
 

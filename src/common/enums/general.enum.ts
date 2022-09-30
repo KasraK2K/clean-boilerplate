@@ -9,6 +9,7 @@ export enum ServiceName {
   DEFAULT = "default",
   GENERAL = "general",
   USER = "user",
+  PORTAL_USER = "portal_user",
 }
 
 export enum BusinessSize {

@@ -1,6 +1,7 @@
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import Repository from "../../base/repository/Repository"
-import { IDefaultArgs } from "../../common/interfaces/general.interface"
 import * as library from "./libs"
+import { IDefaultArgs } from "../../common/interfaces/general.interface"
 
 class PortalUserRepository extends Repository {
   public async list(args: { id?: number; email?: string } = {}): Promise<Record<string, any>[]> {
@@ -48,10 +49,32 @@ class PortalUserRepository extends Repository {
     })
   }
 
+  public async toggle(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.pgLibrary
+        .toggle(id)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err))
+    })
+  }
+
   public async delete(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
         .delete(id)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err))
+    })
+  }
+
+  public async getExistPortalUser(args: {
+    email: string
+    password: string
+    reseller_id: number
+  }): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await library.repo.pgLibrary
+        .getExistPortalUser(args)
         .then((result) => resolve(result))
         .catch((err) => reject(err))
     })

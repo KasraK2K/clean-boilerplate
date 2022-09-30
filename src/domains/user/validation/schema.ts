@@ -66,7 +66,7 @@ export const schema = {
   update: {
     type: "object",
     additionalProperties: false,
-    required: ["id"],
+    required: ["id", "email", "password"],
     properties: {
       id: { type: "integer" },
       email: { type: "string", format: "email" },
@@ -82,7 +82,6 @@ export const schema = {
       reseller_id: { type: "integer", default: 0 },
       is_active: { type: "boolean" },
       is_verified: { type: "boolean" },
-      is_blocked: { type: "boolean" },
       is_archive: { type: "boolean" },
     },
   },

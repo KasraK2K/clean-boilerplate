@@ -74,7 +74,7 @@ class UserRepository extends Repository {
   }): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await library.repo.pgLibrary
-        .getNonBlockedExistUser(args)
+        .getExistUser(args)
         .then((result) => resolve(result))
         .catch((err) => reject(err))
     })

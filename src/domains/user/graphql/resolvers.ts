@@ -21,7 +21,7 @@ const resolvers = {
       const operationName = info.fieldNodes[0].selectionSet.selections[0].name.value
 
       return {
-        list(args: { id?: number; email?: string }) {
+        list: (args: { id?: number; email?: string }) => {
           return new Promise((resolve, reject) => {
             user
               .list(args)
@@ -30,7 +30,7 @@ const resolvers = {
           })
         },
 
-        profile() {
+        profile: () => {
           return new Promise((resolve, reject) => {
             user
               .profile(tokenData.id)
@@ -43,7 +43,12 @@ const resolvers = {
   },
 
   Mutation: {
-    [domain_name]: (root: Record<string, any>, args: Record<string, any>, context: Context) => {
+    [domain_name]: (
+      root: Record<string, any>,
+      args: Record<string, any>,
+      context: Context,
+      info: Record<string, any>
+    ) => {
       const user = context.connect.user
 
       return {

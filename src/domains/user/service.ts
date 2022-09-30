@@ -226,13 +226,13 @@ class UserService extends Service {
           mailgunJs.message
             .createMessage({
               to: [user.email],
-              subject: "clean-boilerplate reset password link",
+              subject: "user reset password link",
               html: /* HTML */ `
                 <h1>Forgot Password</h1>
                 <br />
                 <p>
                   To reset your password click
-                  <a href="${generalConfig.frontendDomain}/auth/forgot-password?i=${forgotToken}" target="_blank">
+                  <a href="${generalConfig.frontendDomain}/auth/user/forgot-password?i=${forgotToken}" target="_blank">
                     here
                   </a>
                 </p>

@@ -1,13 +1,14 @@
-//=============================================================================================
+//======================================================================================================================================================
 //
-//  ##   ##   ####  #####  #####           ####   ####  ##   ##  #####  ###    ###    ###
-//  ##   ##  ##     ##     ##  ##         ##     ##     ##   ##  ##     ## #  # ##   ## ##
-//  ##   ##   ###   #####  #####           ###   ##     #######  #####  ##  ##  ##  ##   ##
-//  ##   ##     ##  ##     ##  ##            ##  ##     ##   ##  ##     ##      ##  #######
-//   #####   ####   #####  ##   ##        ####    ####  ##   ##  #####  ##      ##  ##   ##
+//  #####    #####   #####    ######    ###    ##            ##   ##   ####  #####  #####           ####   ####  ##   ##  #####  ###    ###    ###
+//  ##  ##  ##   ##  ##  ##     ##     ## ##   ##            ##   ##  ##     ##     ##  ##         ##     ##     ##   ##  ##     ## #  # ##   ## ##
+//  #####   ##   ##  #####      ##    ##   ##  ##            ##   ##   ###   #####  #####           ###   ##     #######  #####  ##  ##  ##  ##   ##
+//  ##      ##   ##  ##  ##     ##    #######  ##            ##   ##     ##  ##     ##  ##            ##  ##     ##   ##  ##     ##      ##  #######
+//  ##       #####   ##   ##    ##    ##   ##  ######         #####   ####   #####  ##   ##        ####    ####  ##   ##  #####  ##      ##  ##   ##
 //
-//=============================================================================================
+//======================================================================================================================================================
 
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import { BusinessSize, Gender } from "../../../common/enums/general.enum"
 
 export const schema = {
@@ -79,6 +80,8 @@ export const schema = {
       business_size: { type: "string", enum: Object.values(BusinessSize) },
       permission: { type: "integer", default: 0 },
       reseller_id: { type: "integer", default: 0 },
+      is_active: { type: "boolean" },
+      is_archive: { type: "boolean" },
     },
   },
 
@@ -89,6 +92,46 @@ export const schema = {
     required: ["id"],
     properties: {
       id: { type: "integer" },
+    },
+  },
+
+  login: {
+    type: "object",
+    additionalProperties: false,
+    required: ["email", "password"],
+    properties: {
+      email: { type: "string", format: "email" },
+      password: { type: "string", minLength: 6, maxLength: 60 },
+      reseller_id: { type: "integer" },
+    },
+  },
+
+  refreshToken: {
+    type: "object",
+    additionalProperties: false,
+    required: ["refresh_token"],
+    properties: {
+      refresh_token: { type: "string" },
+      secret: { type: "string" },
+    },
+  },
+
+  forgotPassword: {
+    type: "object",
+    additionalProperties: false,
+    required: ["email"],
+    properties: {
+      email: { type: "string", format: "email" },
+    },
+  },
+
+  resetPassword: {
+    type: "object",
+    additionalProperties: false,
+    required: ["secret", "password"],
+    properties: {
+      secret: { type: "string" },
+      password: { type: "string", minLength: 6, maxLength: 60 },
     },
   },
 }

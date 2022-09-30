@@ -1,8 +1,8 @@
-// import { PrismaClient } from "@prisma/client"
-import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
-import logger from "../../../../common/helpers/logger.helper"
-import { ServiceName } from "../../../../common/enums/general.enum"
+// ─── MODULES ─────────────────────────────────────────────────────────────────
 import PgRepository from "../../../../base/repository/PgRepository"
+import logger from "../../../../common/helpers/logger.helper"
+import { IDefaultArgs } from "../../../../common/interfaces/general.interface"
+import { ServiceName } from "../../../../common/enums/general.enum"
 
 /**
  * This method using the `PgRepository` builder pattern
@@ -17,7 +17,7 @@ class PortalUserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:list" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:list" })
           return reject(err)
         })
     })
@@ -31,7 +31,7 @@ class PortalUserPgLibrary extends PgRepository {
         .exec()
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:profile" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:profile" })
           return reject(err)
         })
     })
@@ -40,10 +40,10 @@ class PortalUserPgLibrary extends PgRepository {
   public upsert(args: IDefaultArgs = {}): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
       return await this.upsert_query("portal_users", args)
-        .exec()
+        .exec({ omits: ["password"] })
         .then((result) => resolve(result))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:upsert" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:upsert" })
           return reject(err)
         })
     })
@@ -51,12 +51,6 @@ class PortalUserPgLibrary extends PgRepository {
 
   public archive(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("portal_users", { id, is_archive: true, archived_at: "NOW()" })
-      //   .then(result => resolve(result))
-      //   .catch(async (err) => {
-      //     logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:archiveUser" })
-      //     return reject(err)
-      //   })
       return await this.executeQuery({
         query: `
           UPDATE portal_users
@@ -69,7 +63,7 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:archive" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:archive" })
           return reject(err)
         })
     })
@@ -77,12 +71,6 @@ class PortalUserPgLibrary extends PgRepository {
 
   public restore(id: number): Promise<Record<string, any>> {
     return new Promise(async (resolve, reject) => {
-      // return await this.updateOne("portal_users", { id, is_archive: false, archived_at: null })
-      //   .then(result => resolve(result))
-      //   .catch(async (err) => {
-      //     logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:restoreUser" })
-      //     return reject(err)
-      //   })
       return await this.executeQuery({
         query: `
           UPDATE portal_users
@@ -95,7 +83,27 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:restore" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:restore" })
+          return reject(err)
+        })
+    })
+  }
+
+  public toggle(id: number): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      return await this.executeQuery({
+        query: `
+          UPDATE portal_users
+          SET is_admin = NOT is_admin
+          WHERE id = $1
+          RETURNING *
+        `,
+        parameters: [id],
+        omits: ["password"],
+      })
+        .then((result) => resolve(result.rows))
+        .catch(async (err) => {
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:toggle" })
           return reject(err)
         })
     })
@@ -110,7 +118,32 @@ class PortalUserPgLibrary extends PgRepository {
       })
         .then((result) => resolve(result.rows))
         .catch(async (err) => {
-          logger.error(err, { service: ServiceName.USER, dest: "domains/portal_user/pgLibrary.ts:delete" })
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:delete" })
+          return reject(err)
+        })
+    })
+  }
+
+  public getExistPortalUser(args: {
+    email: string
+    password: string
+    reseller_id: number
+  }): Promise<Record<string, any>> {
+    return new Promise(async (resolve, reject) => {
+      const { email, reseller_id } = args
+
+      let query = "SELECT * FROM portal_users WHERE email = $1 AND is_archive = false"
+      const parameters: (string | number)[] = [email]
+      if (reseller_id) {
+        query += " AND reseller_id = $2"
+        parameters.push(reseller_id)
+      }
+      query += " Limit 1"
+
+      return await this.executeQuery({ query, parameters })
+        .then((result) => resolve(result.rows[0]))
+        .catch(async (err) => {
+          logger.error(err, { service: ServiceName.PORTAL_USER, dest: "domains/portal_user/pgLibrary.ts:deleteEntity" })
           return reject(err)
         })
     })

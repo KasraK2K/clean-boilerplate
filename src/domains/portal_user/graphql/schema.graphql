@@ -28,6 +28,32 @@ type PortalUser {
 }
 
 """
+`PortalUserResponse` type is same as `PortalUser` type but without password so never password returned.
+"""
+type PortalUserResponse {
+  id: Int!
+  email: String!
+  contact_number: String!
+  first_name: String!
+  surname: String!
+  gender: Gender!
+
+  is_active: Boolean!
+  is_admin: Boolean!
+  is_archive: Boolean!
+
+  business_name: String!
+  business_category: String!
+  business_size: String!
+  permission: Int!
+  reseller_id: Int!
+
+  created_at: DateTime!
+  updated_at: DateTime!
+  archived_at: DateTime
+}
+
+"""
 Create new **portal_user**
 """
 input CreatePortalUserInput {
@@ -71,18 +97,23 @@ input UpdatePortalUserInput {
 PortalUser Domain Queries
 """
 type PortalUserQuery {
-  list(id: ID, email: String): [PortalUser]!
-  profile: [PortalUser!]!
+  list(id: ID, email: String): [PortalUserResponse]!
+  profile: [PortalUserResponse!]!
 }
 
 """
 PortalUser Domain Mutations
 """
 type PortalUserMutation {
-  upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUser]!
-  archive(id: ID!): [PortalUser]!
-  restore(id: ID!): [PortalUser]!
-  delete(id: ID!): [PortalUser]!
+  upsert(create: CreatePortalUserInput, update: UpdatePortalUserInput): [PortalUserResponse]!
+  archive(id: ID!): [PortalUserResponse]!
+  restore(id: ID!): [PortalUserResponse]!
+  toggle(id: ID!): [PortalUserResponse]!
+  delete(id: ID!): [PortalPortalUserResponse]!
+  login(email: String!, password: String!, reseller_id: Int): TokenResponse!
+  refreshToken(refresh_token: String!, secret: String!): TokenResponse!
+  forgotPassword(email: String!): MailGunResponse!
+  resetPassword(secret: String!, password: String!): [PortalUserResponse]!
 }
 
 type Query {
