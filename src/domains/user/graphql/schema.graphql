@@ -97,6 +97,17 @@ input UpdateUserInput {
 }
 
 """
+`UserTokenResponse` used to create response of `login` or `refreshToken` endpoints.
+"""
+type UserTokenResponse {
+  token: String!
+  expire_token_in: String!
+  refresh_token: String!
+  expire_refresh_token_in: String!
+  admin: UserResponse
+}
+
+"""
 User Domain Queries
 """
 type UserQuery {
@@ -113,8 +124,8 @@ type UserMutation {
   restore(id: ID!): [UserResponse]!
   toggle(id: ID!): [UserResponse]!
   delete(id: ID!): [UserResponse]!
-  login(email: String!, password: String!, reseller_id: Int): TokenResponse!
-  refreshToken(refresh_token: String!, secret: String!): TokenResponse!
+  login(email: String!, password: String!, reseller_id: Int): UserTokenResponse!
+  refreshToken(refresh_token: String!, secret: String!): UserTokenResponse!
   forgotPassword(email: String!): MailGunResponse!
   resetPassword(secret: String!, password: String!): [UserResponse]!
 }
