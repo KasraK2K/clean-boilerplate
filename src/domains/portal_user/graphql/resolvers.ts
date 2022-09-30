@@ -138,7 +138,7 @@ const resolvers = {
 }
 
 const resolversComposition = {
-  // "Query.user": [graphAuthMiddleware.isAuthenticated],
+  // "Query.portal_user": [graphAuthMiddleware.isAuthenticated],
 }
 
 const composedResolvers = composeResolvers(resolvers, resolversComposition)

@@ -59,7 +59,7 @@ class PortalUserController extends Controller {
   }
 
   /**
-   * Toggle user is_admin
+   * Toggle portal_user is_admin
    */
   public async toggle(req: Request, res: Response): IControllerResponse {
     const { id } = req.body
@@ -91,7 +91,7 @@ class PortalUserController extends Controller {
   /**
    * Refresh token if secret is valid
    * You should send valid token by type refresh and secret that created using
-   * crypto-js encoded string `${user.id}--${user.email}`
+   * crypto-js encoded string `${portal_user.id}--${portal_user.email}`
    */
   public async refreshToken(req: Request, res: Response): IControllerResponse {
     const { refresh_token, secret } = req.body
@@ -102,7 +102,7 @@ class PortalUserController extends Controller {
   }
 
   /**
-   * Forgot password send email to user that contain change password link
+   * Forgot password send email to portal_user that contain change password link
    */
   public async forgotPassword(req: Request, res: Response): IControllerResponse {
     const { email } = req.body
@@ -115,7 +115,7 @@ class PortalUserController extends Controller {
   /**
    * Reset password get secret and new password
    * Secret should created by forgot password and frontend get and send it to me
-   * Secret is crypto-js encoded string `${user.id}--${user.email}`
+   * Secret is crypto-js encoded string `${portal_user.id}--${portal_user.email}`
    */
   public async resetPassword(req: Request, res: Response): IControllerResponse {
     const { secret, password } = req.body

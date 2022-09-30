@@ -29,8 +29,8 @@ const subschema = makeExecutableSchema({
 
 // ─── MIDDLEWARE ──────────────────────────────────────────────────────────────
 const authMiddlewares = {
-  Query: { user: graphAuthMiddleware.isAuthenticated },
-  Mutation: { user: graphAuthMiddleware.isAuthenticated },
+  Query: { portal_user: graphAuthMiddleware.isAuthenticated },
+  Mutation: { portal_user: graphAuthMiddleware.isAuthenticated },
 }
 
 const schemaWithMiddlewares = applyMiddleware(subschema, authMiddlewares)

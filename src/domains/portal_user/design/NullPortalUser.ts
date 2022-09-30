@@ -1,5 +1,5 @@
 class NullPortalUser {
-  constructor(public email: string = "---@--.--", public name: string = "Guest User") {}
+  constructor(public email: string = "---@--.--", public name: string = "Guest PortalUser") {}
 }
 
 export default NullPortalUser
