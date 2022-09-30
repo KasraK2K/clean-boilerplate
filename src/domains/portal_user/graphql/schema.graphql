@@ -109,7 +109,7 @@ type PortalUserMutation {
   archive(id: ID!): [PortalUserResponse]!
   restore(id: ID!): [PortalUserResponse]!
   toggle(id: ID!): [PortalUserResponse]!
-  delete(id: ID!): [PortalPortalUserResponse]!
+  delete(id: ID!): [PortalUserResponse]!
   login(email: String!, password: String!, reseller_id: Int): TokenResponse!
   refreshToken(refresh_token: String!, secret: String!): TokenResponse!
   forgotPassword(email: String!): MailGunResponse!
