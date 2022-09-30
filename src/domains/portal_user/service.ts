@@ -173,7 +173,7 @@ class PortalUserService extends Service {
           .getExistPortalUser(args)
           .then((portal_user) => {
             if (portal_user && bcryptHelper.compareHash(args.password, portal_user.password))
-              return resolve({ data: super.createToken({ id: portal_user.id }) })
+              return resolve({ data: super.createToken(portal_user) })
             else return reject({ errCode: 1015 })
           })
           .catch((err) => reject(err))

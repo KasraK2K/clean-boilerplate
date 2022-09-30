@@ -67,7 +67,7 @@ class UserRepository extends Repository {
     })
   }
 
-  public async getNonBlockedExistUser(args: {
+  public async getExistUser(args: {
     email: string
     password: string
     reseller_id: number

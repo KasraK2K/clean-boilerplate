@@ -170,10 +170,10 @@ class UserService extends Service {
         return reject({ errors })
       } else
         await repository
-          .getNonBlockedExistUser(args)
+          .getExistUser(args)
           .then((user) => {
             if (user && bcryptHelper.compareHash(args.password, user.password))
-              return resolve({ data: super.createToken({ id: user.id }) })
+              return resolve({ data: super.createToken(user) })
             else return reject({ errCode: 1015 })
           })
           .catch((err) => reject(err))
