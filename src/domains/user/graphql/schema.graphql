@@ -104,7 +104,7 @@ type UserTokenResponse {
   expire_token_in: String!
   refresh_token: String!
   expire_refresh_token_in: String!
-  admin: UserResponse
+  admin: UserResponse!
 }
 
 """
