@@ -11,7 +11,7 @@ services:
       - postgresql
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@localhost:5432/grilla?schema=public
-      
+
   postgresql:
     image: postgres:latest
     environment:

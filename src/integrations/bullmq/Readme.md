@@ -30,11 +30,7 @@ function createJob() {
   const connection = bullmq.connection
   const queue = bullmq.queue
 
-  bullmq.job.create(
-    "jobName",
-    { name: "clean-boilerplate", auther: "Kasra" },
-    { delay: 5000, removeOnComplete: true }
-  )
+  bullmq.job.create("jobName", { name: "clean-boilerplate", auther: "Kasra" }, { delay: 5000, removeOnComplete: true })
 }
 ```
 
