@@ -1,5 +1,6 @@
+import { addMetaData } from "./common/helpers/addMetaData.helper"
 import "./bootstrap"
-import express from "express"
+import express, { Request, Response, NextFunction } from "express"
 import _ from "lodash"
 import helmet from "helmet"
 import compression from "compression"
@@ -36,5 +37,8 @@ app.use(requestMiddleware.isMethodAllowed)
 app.use(authMiddleware.auth)
 app.use("/graphql", graphqlServer)
 app.use("/v1", routesV1)
+app.use(async (err: any, req: Request, res: Response, next: NextFunction) =>
+  addMetaData(req, res, { ...err, errCode: err.errCode ?? 1000 })
+)
 
 export default app

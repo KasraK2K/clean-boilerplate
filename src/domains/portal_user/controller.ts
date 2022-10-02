@@ -1,91 +1,68 @@
+// ─── PACKAGES ────────────────────────────────────────────────────────────────
+import { Request, Response, NextFunction } from "express"
+
 // ─── MODULES ─────────────────────────────────────────────────────────────────
 import Controller from "../../base/Controller"
-import { Request, Response } from "express"
-import { addMetaData } from "../../common/helpers/addMetaData.helper"
 import { service } from "./module"
-import { IControllerResponse } from "../../common/interfaces/response.interface"
 
 class PortalUserController extends Controller {
   /**
    * Get all portal_users
    */
-  public async list(req: Request, res: Response): IControllerResponse {
-    return await service
-      .list(req.body)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+  public async list(req: Request, res: Response, next: NextFunction): Promise<void> {
+    await super.handle(service.list, req.body, req, res, next)
   }
 
   /**
    * Get current portal_user by token.id in res.locals.tokenData.id
    */
-  public async profile(req: Request, res: Response): IControllerResponse {
-    return await service
-      .profile(res.locals.tokenData.id)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+  public async profile(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = res.locals.tokenData
+    await super.handle(service.profile, id, req, res, next)
   }
 
   /**
    * Create new portal_user if req.body.id not found or Update existing portal_user if found req.body.id
    */
-  public async upsert(req: Request, res: Response): IControllerResponse {
-    return await service
-      .upsert(req.body)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+  public async upsert(req: Request, res: Response, next: NextFunction): Promise<void> {
+    await super.handle(service.upsert, req.body, req, res, next)
   }
 
   /**
    * Archive portal_user and set is_archive = true and archived_at = NOW()
    */
-  public async archive(req: Request, res: Response): IControllerResponse {
+  public async archive(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.body
-    return await service
-      .archive(id)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.archive, id, req, res, next)
   }
 
   /**
    * Restore portal_user and set is_archive = false and archived_at = null
    */
-  public async restore(req: Request, res: Response): IControllerResponse {
+  public async restore(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.body
-    return await service
-      .restore(id)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.restore, id, req, res, next)
   }
 
   /**
    * Toggle portal_user is_admin
    */
-  public async toggle(req: Request, res: Response): IControllerResponse {
+  public async toggle(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id } = req.body
-    return await service
-      .toggle(id)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.toggle, id, req, res, next)
   }
 
   /**
    * Permanently delete portal_user
    */
-  public async delete(req: Request, res: Response): IControllerResponse {
-    const { id } = req.body
-    return await service
-      .delete(id)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+  public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const args = req.body.id
+    await super.handle(service.delete, args, req, res, next)
   }
 
-  public async login(req: Request, res: Response): IControllerResponse {
+  public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email, password, reseller_id } = req.body
-    return await service
-      .login({ email, password, reseller_id })
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.login, { email, password, reseller_id }, req, res, next)
   }
 
   /**
@@ -93,23 +70,17 @@ class PortalUserController extends Controller {
    * You should send valid token by type refresh and secret that created using
    * crypto-js encoded string `${portal_user.id}--${portal_user.email}`
    */
-  public async refreshToken(req: Request, res: Response): IControllerResponse {
+  public async refreshToken(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { refresh_token, secret } = req.body
-    return await service
-      .refreshToken({ refresh_token, secret })
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.login, { refresh_token, secret }, req, res, next)
   }
 
   /**
    * Forgot password send email to portal_user that contain change password link
    */
-  public async forgotPassword(req: Request, res: Response): IControllerResponse {
+  public async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email } = req.body
-    return await service
-      .forgotPassword(email)
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.forgotPassword, email, req, res, next)
   }
 
   /**
@@ -117,12 +88,9 @@ class PortalUserController extends Controller {
    * Secret should created by forgot password and frontend get and send it to me
    * Secret is crypto-js encoded string `${portal_user.id}--${portal_user.email}`
    */
-  public async resetPassword(req: Request, res: Response): IControllerResponse {
+  public async resetPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { secret, password } = req.body
-    return await service
-      .resetPassword({ secret, password })
-      .then((result) => addMetaData(req, res, { ...result }))
-      .catch((err) => addMetaData(req, res, { ...err }))
+    await super.handle(service.resetPassword, { secret, password }, req, res, next)
   }
 }
 
