@@ -15,7 +15,7 @@
     "pm2": "cross-env NODE_ENV=production pm2 start ecosystem.config.js --env production",
     "pm2:dev": "cross-env NODE_ENV=development pm2 start ecosystem.config.js --env development",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write .",
+    "format": "prettier --write . --yes",
     "docs": "rimraf docs && typedoc --options typedoc.json"
   },
   "repository": {
