@@ -67,6 +67,7 @@
     "graphql-middleware": "^6.1.32",
     "graphql-scalars": "^1.18.0",
     "helmet": "^6.0.0",
+    "husky": "^8.0.1",
     "ioredis": "^5.2.3",
     "jsonwebtoken": "^8.5.1",
     "k2token": "^2.1.0",
