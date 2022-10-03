@@ -1,6 +1,6 @@
 {
   "watch": [],
   "ignore": ["node_modules", "build", "src/graphql/joined.graphql"],
-  "ext": "js,ts,html,json,pug,yml,yaml,graphql",
+  "ext": "js,ts,html,json,pug,yml,yaml,graphql,gql",
   "server": "./build/index.js"
 }
