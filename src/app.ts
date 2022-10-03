@@ -16,7 +16,8 @@ import requestMiddleware from "./middlewares/RequestMiddleware"
 import authMiddleware from "./middlewares/AuthMiddleware"
 import graphqlServer from "./graphql/graphql.server"
 
-const app = express()
+const app =
+ express()
 const corsConfig: ICorsConfig = config.get("cors")
 const helmetConfig: IHelmetConfig = config.get("helmet")
 app.locals = locals
